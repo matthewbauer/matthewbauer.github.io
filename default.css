@@ -8,6 +8,12 @@
 }
 
 .content {
-	width: 500px;
 	margin: 0 auto;
+	width: 250px;
+}
+
+@media (min-width: 500px) {
+	.content {
+		width: 500px;
+	}
 }
