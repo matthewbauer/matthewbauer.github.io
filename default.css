@@ -1,5 +1,6 @@
 .header {
 	text-align: center;
+	font-family: 'Pacifico', cursive;
 }
 
 .header a {
@@ -9,6 +10,7 @@
 
 .content {
 	margin: 0 auto;
+	font-family: 'Vollkorn', serif;
 	width: 250px;
 }
 
