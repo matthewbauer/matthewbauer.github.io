@@ -1,4 +1,13 @@
-body {
+.header {
+	text-align: center;
+}
+
+.header a {
+	color: black;
+	text-decoration: none;
+}
+
+.content {
 	width: 50%;
 	margin: 0 auto;
 }
