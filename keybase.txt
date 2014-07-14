@@ -1,1 +1,70 @@
-k
+==================================================================
+https://keybase.io/matthewbauer
+--------------------------------------------------------------------
+
+I hereby claim:
+
+  * I am an admin of http://matthewbauer.us
+  * I am matthewbauer (https://keybase.io/matthewbauer) on keybase.
+  * I have a public key with fingerprint C020 783F 42C1 6A31 78E6  5D46 B3E5 0665 BC09 3D8C
+
+To claim this, I am signing this object:
+
+{
+    "body": {
+        "key": {
+            "fingerprint": "c020783f42c16a3178e65d46b3e50665bc093d8c",
+            "host": "keybase.io",
+            "key_id": "b3e50665bc093d8c",
+            "uid": "19e253b9026500f7631dc5c5a5531a00",
+            "username": "matthewbauer"
+        },
+        "service": {
+            "hostname": "matthewbauer.us",
+            "protocol": "http:"
+        },
+        "type": "web_service_binding",
+        "version": 1
+    },
+    "ctime": 1405374705,
+    "expire_in": 157680000,
+    "prev": "84d9571229b8447b3afa5aaf717ce33272697dcea0693f201bdb5b74cfa022e9",
+    "seqno": 4,
+    "tag": "signature"
+}
+
+with the aforementioned key, yielding the PGP signature:
+
+-----BEGIN PGP MESSAGE-----
+Version: Keybase OpenPGP v0.1.23
+Comment: https://keybase.io/crypto
+
+yML7AnicbZF9TFPXG8cLBaZNyViIbmmALJctg1Lg3Pe2i845TIQsOmW8BJrU+3JK
+r8C9pb2lNsCEgAE3dZtgZ+LqC06EFZOKPw1NxmQMu002fAnE36SoxbkMl7maZsQt
+EL0l23+ef27O8/08n+fcPJPpapUm6cKDNPjV2g0HkqbGn7hV5ZPvPW5BWIn3IuYW
+pB6ufmyCWAedDqcgyogZ4QAGaCNuIzAOpRgcpY2QInmCYnFIAooiWQ6YcN7IIQbE
+LrkSHYqGZVywSJCUmnKxCrxSfQ7vXg1QE8RInDUBjCIBsNEUjvIcyZEMSeIoA0AC
+dEGnyDRChW5kZNkOPSzjhk6kzYAoSbPAKUnL6vjnUEVul6JwOCVZ4qQGJbTLssOc
+6JW9jgTsgaz1X42VFURe+X2loRk6XYIkImZUITlZSHhRApA4TdCANCBwj0NwQquQ
+IEiaMgLlJMbAZkVpJHgTSaMYZmKNBEGzOGNjSIax0SjNQRzHaIwy0TwHGUCZcBsG
+UJZnSZYmOBsDMAyalPku2CRKiJlQnsnUKUqXUCcystsJkbaJbywpqiSNKi01ObFA
+lWZtxn9rXYm9+LT693NfLAuxwV+wmvz5dotH7ibjXpv2s8Y/7iCxhetRua++ZI00
+sFA/WJFV5pUo2nyXCE11m4/H5l5rn962sGVRe/ovBI9MLG21bM6eHPxnNDxmz/J3
+eWZv1kcyV6LN+qD3zHjDyPQxfZzP7gRXbOFdgZnN2vmd8Yu1NdStaCDy8b7SHIIe
+s+/VPZrdN9N69abqSE9+8Y85Pa2zsxXEoYnLrSGsJO3LJ91ZGRtB8uc9/mJzfECf
+84b6sVk87J4ubCqU0OTv4rGxkfJle/a30eARf3TLeMXh0cUC/7upxPH4+6Eu3Qlf
+xNN4YSbvVM2Hw9Xhs0ux3shGX3rgbOAFw5Duk95D1/aH1n/9kmE+eCyyt/Nq0v9+
+ldYV+MMWvycj7dHcnXd6G7b/uTTsoT4tdb6suVa5veTNDYFcujaFAaO+Dt7yULrR
+2WJv29XBFF4aLF6+/Urh+tD53p36yv7k7+/nnfyt9HR6X9NHu7sLdJntV85fblY3
+VWd3ZcVTUzPLfz5w3ff/k+ra8R/2/33Pq1/3dEis2uoLahdz72pcaLru9e46vCM8
+NZRvLDt149IH6p8eHPT5Jetbw1Vt9yMl6qpzByeYyLYZS6iiLP/2iDE3smcNUEPu
+7Xbm1Ycnjlbu2LRpt7hCpZw5mnPRtdQ3GbxXNNwPtdW38vJ6+ncMzD0DTAiW4Q==
+=s4eR
+-----END PGP MESSAGE-----
+
+And finally, I am proving ownership of this host by posting or
+appending to this document.
+
+View my publicly-auditable identity here: https://keybase.io/matthewbauer
+
+==================================================================
