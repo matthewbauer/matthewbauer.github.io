@@ -1,0 +1,122 @@
+<!doctype html>
+<html>
+	<head>
+		<title>Reconstructing Past Ships</title>
+		<script src="jquery.js"></script>
+		<script src="jquery.scrollTo.min.js"></script>
+		<script src="index.js"></script>
+		<link href='http://fonts.googleapis.com/css?family=Droid+Serif' rel='stylesheet' type='text/css'>
+		<link href='http://fonts.googleapis.com/css?family=Oswald' rel='stylesheet' type='text/css'>
+		<link rel="stylesheet" href="index.css">
+	</head>
+	<body>
+		<h1 id="selectship">Select a ship to find its route</h1>
+		<select id="ships">
+		</select>
+		<div id="shipinfo">
+			<span id="name"></span>
+			<span id="year"></span>
+		</div>
+		<canvas id="mycanvas" width=1000 height=500></canvas>
+		<canvas id="anicanvas" width=1000 height=500></canvas>
+		<div id="header">
+			<h1 id="title">Reconstructing Past Ships</h1>
+		</div>
+		<div id="content">
+			<div id="description">
+				<h1>Description</h1>
+				<p>
+				This project looks at the logbooks of ships from 1750-1850. These logbooks provide an accurate record of a ship’s history of its location. Using this data, this project will recreate these ships and the paths that they sailed. The result of this project will create a 3d world populated by the records of these logbooks. This project would then be made freely available as an interactive 3d map.
+				</p>
+				<p>
+				This project will be created in Unity3d. Models of historically accurate ships and surrounding landscapes can be created in 3DS Max. Because the primary goal of the project is historical accuracy, more effort will be put into making the ships look correctly. Using data from the CLIWOC project, the ships can populate the map. The map of the world will have to be created using our knowledge of ports from the time period.
+				</p>
+				<p>
+				This project value is similar to other GIS projects. Utilizing mapping software such as GIS, researchers can find correlations and draw conclusions unseen in plain text analysis. Similarly, this project’s visualization will help researchers to find conclusions that would not be obvious just looking at the data.
+				</p>
+			</div>
+			<div id="imgcap">
+				<img width=500 height=500 src="http://www.knmi.nl/cliwoc/images/dunira.jpg"></img>
+				<p>The British vessel "Dunira" in the year 1818 from the <a href="http://www.knmi.nl/cliwoc/cliwocmeta_dunira.htm">CLIWOC website</a>.</p>
+			</div>
+			<div id="sources">
+				<h1>Sources</h1>
+				<div>
+				<p>
+				The primary source for this project will be from <a href="http://www.knmi.nl/cliwoc/download/cliwoc21.htm">CLIWOC</a>, or the climatological database for the world's oceans. Although originally intended for climatology, CLIWOC has digitized records of a large number of captains' ship logs between 1750 and 1850. Each entry in the log book contains the name of the ship, the time of the observation, the longitutude and latitude, and the nationality of the ship. While there are some errors, duplicates, and missing entries, the data set provides a significant view of that time period. This source is already digitized and available for free.
+				</p>
+				<p>
+				Another potential source for this project is the <a href="http://oldweather.org">Old Weather Project</a>. The Old Weather Project goal uses captains' ship logs as a source like CLIWOC. However, results will not be published until the project is finished. This will probably be within the 10 year scope. Provided that the data within the Old Weather project contains the right information, it could be used in addition to the CLIWOC project.
+				</p>
+			</div>
+			<div id="litreview">
+				<h1>Literature Review</h1>
+				<p>
+				Most of the literature describes the East India Company and how it functioned. "The Trading World of Asia and the English East India Company: 1660-1760" by Chaudhuri has been helpful. This is helpful for understanding the topic, but it is difficult to get information on how things looked like the style of the ships.
+				</p>
+				<p>
+				Projects have tried to map the data from CLIWOC before. Using ArcGIS, a project plotted global sailing from 1750 to 1850. (<a href="http://www.arcgis.com/home/item.html?id=13bdf456c4e34361a6775086cac89e6f">Original global sailings, captains ships logs 1750 - 1850</a>).
+				</p>
+				<p>
+				The ORBIS project has some similarities to this project. Unlike an ordinary map, ORBIS contains information on the costs associated with travel. Like this project, ORBIS displays information that would be impossible to display in a non-digital context. ORBIS is able to display this complex data in a way that makes it usable by people outside of academia. This is possible with a simple design approach that makes interacting with it clear. This project will try to learn from ORBIS’s successes. <a href="http://orbis.stanford.edu">ORBIS</a>
+				</p>
+			</div>
+			<div id="budget">
+			<h1>Budget</h1>
+			<p>
+			<table>
+			<tr>
+				<td>$120,000</td>
+				<td>Unity programmer</td>
+			</tr>
+			<tr>
+				<td>$150,000</td>
+				<td>3D reconstruction</td>
+			</tr>
+			<tr>
+				<td>$5,000</td>
+				<td>Webpage maintanence</td>
+			</tr>
+			<tr>
+				<td>$5,000</td>
+				<td>Software licenses</td>
+			</tr>
+			<tr>
+				<td>$70,000</td>
+				<td>Database management</td>
+			</tr>
+			<tr>
+				<td>$80,000</td>
+				<td>Office equipment and team management</td>
+			</tr>
+			<tr>
+				<td>$50,000</td>
+				<td>Travel and resources for ship reconstruction</td>
+			</tr>
+			</table>
+			</p>
+			</div>
+			<div id="schedule">
+				<h1>Schedule</h1>
+				<table>
+				  <tr>
+				    <td>January 2015</td>
+				    <td>Create initial database of observations.</td> 
+				  </tr>
+				  <tr>
+				    <td>February-August 2015</td>
+				    <td>Reconstruct historical ship types in database.</td>
+				  </tr>
+				  <tr>
+				    <td>September-December 2015</td>
+				    <td>Create world in Unity with attention on oceans.</td>
+				  </tr>
+				  <tr>
+				    <td>January-July 2016</td>
+				    <td>Populate world with ships from database.</td>
+				  </tr>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

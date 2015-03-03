@@ -1,0 +1,113 @@
+{
+  "basics": {
+    "name": "Matthew Bauer",
+    "label": "Programmer",
+    "summary": "",
+    "email": "mbauer@huskers.unl.edu",
+    "phone": "9136710636",
+    "website": "http://cse.unl.edu/~mjbauer",
+    "location": {
+      "address": "10118 Garnett",
+      "postalCode": "68508",
+      "city": "Overland Park",
+      "region": "KS",
+      "countryCode": "US"
+    },
+    "profiles": [
+      {
+        "network": "Github",
+        "username": "matthewbauer",
+        "url": "http://github.com/matthewbauer"
+      }
+    ]
+  },
+  "languages": [
+    {
+      "language": "Java",
+      "fluency": "5 years of experience through schooling"
+    },
+    {
+      "language": "Python",
+      "fluency": "4 years of experience through Open Source projects"
+    },
+    {
+      "language": "Go",
+      "fluency": "2 years of experience through Open Source projects"
+    },
+    {
+      "language": "C++",
+      "fluency": "2 years of experience through Open Source projects"
+    },
+    {
+      "language": "Javascript",
+      "fluency": "2 years of experience through Open Source projects"
+    }
+  ],
+  "awards": [
+    {
+      "title": "Google Code-in Grand Prize",
+      "date": "2013-01-29",
+      "awarder": "Google",
+      "summary": "1 of 4 from the United States chosen in competition. Completed 10 coding tasks for open source projects."
+    },
+    {
+      "title": "AP Scholar with Distinction",
+      "awarder": "The College Board",
+      "summary": "Took 7 AP tests, scoring a 5 on 5 of them."
+    },
+    {
+      "title": "National Merit Commended",
+      "awarder": "The College Board"
+    }
+  ],
+  "education": [
+    {
+      "institution": "University of Nebraska-Lincoln",
+      "area": "Bachelors",
+      "studyType": "Computer Science",
+      "courses": [
+        "Computer Problem Solving Essentials",
+        "Matrix Algebra",
+        "Leadership",
+        "Technical Communications"
+      ]
+    },
+    {
+      "institution": "Coursera",
+      "courses": [
+        "Machine Learning"
+      ]
+    },
+    {
+      "institution": "Shawnee Mission South",
+      "gpa": "4.75",
+      "courses": [
+          "Java Programming",
+          "Advance Java Programming",
+          "AP Computer Science",
+          "Calculus BC",
+          "Calculus 3",
+          "Differential Equations"
+      ]
+    }
+  ],
+  "skills": [
+    {
+        "name": "Frontend",
+        "keywords": [
+            "HTML",
+            "CSS",
+            "Javascript"
+        ]
+    },
+    {
+        "name": "Backend",
+        "keywords": [
+            "Node",
+            "Go",
+            "Python",
+            "Java"
+        ]
+    }
+  ]
+}

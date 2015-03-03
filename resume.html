@@ -1,0 +1,458 @@
+<!doctype html>
+<html>
+	<head>
+	
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, user-scalable=no, minimal-ui">
+	
+	<title>Matthew Bauer</title>
+	
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.2.0/css/bootstrap.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/octicons/2.0.2/octicons.min.css">
+	
+	<style type="text/css">
+	@import url(
+	http://fonts.googleapis.com/css?family=Lato:400,700
+);
+body {
+	background: #fff;
+	font-family: Lato, sans-serif;
+	margin: 0 0 80px;
+}
+a {
+	color: #2ecc71;
+}
+a:focus,
+a:hover {
+	color: #f1c40f;
+	text-decoration: none;
+}
+p {
+	line-height: 1.5;
+	margin: 0;
+}
+p + p {
+	margin-top: 10px;
+}
+h1,
+h2,
+h3,
+h4 {
+	margin-top: 0
+}
+section {
+	margin-top: 30px;
+}
+li {
+	line-height: 1.8;
+	list-style: none;
+}
+li:before {
+	content: "\f052";
+	float: left;
+	font: 13px Octicons;
+	margin-top: 6px;
+	margin-left: -20px;
+	opacity: .1;
+	position: absolute;
+}
+blockquote {
+	border-left: 5px solid #e7e9ec;
+	font-size: 14px;
+}
+em {
+	color: #95a5a6;
+	font-weight: normal;
+	font-style: normal;
+}
+h4 span:first-child {
+	color: #000;
+	font-weight: bold;
+}
+.container {
+	max-width: 750px;
+	padding: 0 30px;
+}
+.col-sm-6 {
+	margin-bottom: 10px;
+}
+.col-sm-12 h4 {
+	margin-top: 12px; 
+}
+.col-sm-12 + .col-sm-12 {
+	margin-top: 30px;
+}
+#header {
+	background: #f4f6f6;
+	padding: 50px 0;
+	margin-bottom: 30px;
+}
+#header h2 {
+	color: #95a5a6;
+	font-size: 24px;
+}
+#content h3 {
+	color: #f1c40f;
+	font-size: 26px;
+	margin-top: -4px;
+}
+#content aside {
+	text-align: right;
+	padding-right: 30px;
+}
+#profiles .network {
+	text-transform: capitalize;
+}
+#work .position,
+#volunteer .position {
+	font-weight: bold;
+	margin-bottom: 8px;
+}
+#education .area {
+	font-weight: bold;
+}
+#education .area:before {
+	content: "\f0d7";
+	font: 16px Octicons;
+	margin-right: 6px;
+}
+#education .studyType {
+	margin-left: 25px;
+}
+#awards .summary,
+#publications .summary {
+	margin-top: 8px;
+}
+#publications .website a:before {
+	content: attr(href);
+}
+
+@media (min-width: 480px) {
+	.strike-through {
+		border-top: 1px solid #f4f6f6;
+		height: 20px;
+		margin-top: 12px;
+		margin-bottom: -2px;
+		position: relative;
+	}
+	.strike-through span,
+	.strike-through a {
+		background: #fff;
+		position: absolute;
+	}
+	.strike-through span:first-child {
+		padding-right: 20px;
+		margin-top: -12px;
+	}
+	.strike-through span + span {
+		font-size: 14px;
+		margin-top: -10px;
+		padding-left: 20px;
+		right: 0;
+	}
+}
+@media (max-width: 768px) {
+	.col-sm-6:last-child {
+		margin-bottom: 0px;
+	}
+	#content aside {
+		margin-bottom: 20px;
+		padding-right: 0;
+		text-align: left;
+	}
+	#publications .website a:before {
+		content: "View publication";
+	}
+}
+@media (max-width: 480px) {
+	h1 {
+		font-size: 26px;
+	}
+	.date {
+		font-size: 14px;
+		margin-bottom: 5px;
+	}
+	.strike-through span:first-child {
+		margin-bottom: 7px;
+	}
+	.strike-through span {
+		display: block;
+	}	
+	#header {
+		margin-bottom: 10px;
+		padding: 40px 0;
+	}
+	#actions {
+		display: none;
+	}
+}
+
+	</style>
+	
+	</head>
+	<body>
+	
+	<header id="header">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-9 col-sm-push-3">
+					<h1>
+						Matthew Bauer
+					</h1>
+					<h2>
+						Programmer
+					</h2>
+				</div>
+			</div>
+		</div>
+	</header>
+	<div id="content" class="container">
+
+	<section id="contact" class="row">
+		<aside class="col-sm-3">
+			<h3>Contact</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<strong>Email</strong>
+				<div class="email">mbauer@huskers.unl.edu</div>
+			</div>
+			<div class="col-sm-6">
+				<strong>Phone</strong>
+				<div class="phone">9136710636</div>
+			</div>
+			<div class="col-sm-6">
+				<strong>Website</strong>
+				<div class="website">
+					<a href="http://cse.unl.edu/~mjbauer">http://cse.unl.edu/~mjbauer</a>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+	<section id="about" class="row">
+		<aside class="col-sm-3">
+			<h3>About</h3>
+		</aside>
+		<div class="col-sm-9">
+			<p></p>
+		</div>
+	</section>
+	<section id="profiles" class="row">
+		<aside class="col-sm-3">
+			<h3>Profiles</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+				<div class="col-sm-6">
+					<strong class="network">
+						Github
+					</strong>
+					<div class="username">
+						<div class="url">
+							<a href="http://github.com/matthewbauer">matthewbauer</a>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+	
+	<section id="education" class="row">
+		<aside class="col-sm-3">
+			<h3>Education</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>University of Nebraska-Lincoln</span>
+					<span class="date">
+						 — 
+					</span>
+				</h4>
+				<div class="area">
+					Bachelors
+				</div>
+				<div class="studyType">
+					Computer Science
+				</div>
+				<h4>Courses</h4>
+				<ul class="courses">
+					<li>Computer Problem Solving Essentials</li>
+					<li>Matrix Algebra</li>
+					<li>Leadership</li>
+					<li>Technical Communications</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Coursera</span>
+					<span class="date">
+						 — 
+					</span>
+				</h4>
+				<h4>Courses</h4>
+				<ul class="courses">
+					<li>Machine Learning</li>
+				</ul>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Shawnee Mission South</span>
+					<span class="date">
+						 — 
+					</span>
+				</h4>
+				<h4>Courses</h4>
+				<ul class="courses">
+					<li>Java Programming</li>
+					<li>Advance Java Programming</li>
+					<li>AP Computer Science</li>
+					<li>Calculus BC</li>
+					<li>Calculus 3</li>
+					<li>Differential Equations</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+	
+	<section id="awards" class="row">
+		<aside class="col-sm-3">
+			<h3>Awards</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>Google Code-in Grand Prize</span>
+				</h4>
+				<div class="date pull-right">
+					<em>Awarded</em>
+					2013-01-29
+				</div>
+				<div class="awarder">
+					<em>by</em>
+					<strong>Google</strong>
+				</div>
+				<div class="summary">
+					1 of 4 from the United States chosen in competition. Completed 10 coding tasks for open source projects.
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>AP Scholar with Distinction</span>
+				</h4>
+				<div class="awarder">
+					<em>by</em>
+					<strong>The College Board</strong>
+				</div>
+				<div class="summary">
+					Took 7 AP tests, scoring a 5 on 5 of them.
+				</div>
+			</div>
+			<div class="col-sm-12">
+				<h4 class="strike-through">
+					<span>National Merit Commended</span>
+				</h4>
+				<div class="awarder">
+					<em>by</em>
+					<strong>The College Board</strong>
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+	
+	
+	<section id="skills" class="row">
+		<aside class="col-sm-3">
+			<h3>Skills</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Frontend</h4>
+				</div>
+				<ul class="keywords">
+					<li>HTML</li>
+					<li>CSS</li>
+					<li>Javascript</li>
+				</ul>
+			</div>
+			<div class="col-sm-6">
+				<div class="name">
+					<h4>Backend</h4>
+				</div>
+				<ul class="keywords">
+					<li>Node</li>
+					<li>Go</li>
+					<li>Python</li>
+					<li>Java</li>
+				</ul>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	<section id="languages" class="row">
+		<aside class="col-sm-3">
+			<h3>Languages</h3>
+		</aside>
+		<div class="col-sm-9">
+			<div class="row">
+			<div class="col-sm-4">
+				<div class="language">
+					<strong>Java</strong>
+				</div>
+				<div class="fluency">
+					5 years of experience through schooling
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="language">
+					<strong>Python</strong>
+				</div>
+				<div class="fluency">
+					4 years of experience through Open Source projects
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="language">
+					<strong>Go</strong>
+				</div>
+				<div class="fluency">
+					2 years of experience through Open Source projects
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="language">
+					<strong>C++</strong>
+				</div>
+				<div class="fluency">
+					2 years of experience through Open Source projects
+				</div>
+			</div>
+			<div class="col-sm-4">
+				<div class="language">
+					<strong>Javascript</strong>
+				</div>
+				<div class="fluency">
+					2 years of experience through Open Source projects
+				</div>
+			</div>
+			</div>
+		</div>
+	</section>
+
+	
+
+	</div>
+	
+	</body>
+</html>

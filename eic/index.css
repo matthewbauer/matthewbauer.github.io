@@ -1,0 +1,70 @@
+html, body {
+	margin: 0;
+	padding: 0;
+	width: 100%;
+	height: 100%;
+}
+
+body {
+	background-repeat: no-repeat;
+	height:100%;
+	background-color: black;
+	background-image: url("East_Indiaman_Warley.jpg");
+	background-attachment: fixed;
+	margin-left: 50px;
+}
+
+#header {
+	font-family: 'Oswald', serif;
+	padding-top: 100px;
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+
+#title {
+	font-size: 48px;
+	margin: 0;
+}
+
+#subtitle {
+	margin: 0;
+	font-size: 16px;
+	margin-left: 320px;
+	font-style: italic;
+}
+
+table, th, td {
+   border: 1px solid black;
+}
+#imgcap {
+	float: right;
+	margin-right: 100px;
+	margin-top: 100px;
+	margin-left: 100px;
+}
+
+#ships {
+	display: block;
+}
+
+#description {
+	float: left;
+	width: 50%;
+}
+
+#litreview {
+	width: 50%;
+}
+
+#budget {
+	float: left;
+	width: 50%;
+}
+
+#selectship {
+}
+
+#subtext {
+	margin-top: -250px;
+}

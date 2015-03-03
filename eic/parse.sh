@@ -1,0 +1,1 @@
+cat CLIWOC21.txt | while read line; do echo "${line:0:4}${line:4:2}${line:6:2}${line:8:4}${line:12:5}${line:17:6}${line:705:30}"; done > CLIWOC12.short.txt

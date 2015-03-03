@@ -1,0 +1,23 @@
+body {
+	font-family: 'Droid Sans', sans-serif;	
+}
+.btn {
+	font-family: 'Voltaire', sans-serif;
+}
+#form {
+}
+#loading {
+}
+#buttons {
+	margin-top: 30px;
+}
+.progress-bar {
+	text-align: left;
+	font-size: 20px;
+	font-style: bold;
+	padding-left: 25px;
+}
+.progress {
+	height: 40px;
+	line-height: 40px;
+}
