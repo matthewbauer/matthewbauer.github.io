@@ -1,3 +1,6 @@
 [submodule "hangman"]
 	path = hangman
 	url = https://github.com/matthewbauer/hangman.git
+[submodule "eic"]
+	path = eic
+	url = https://github.com/matthewbauer/eic.git
