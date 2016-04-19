@@ -4,3 +4,7 @@
 [submodule "eic"]
 	path = eic
 	url = https://github.com/matthewbauer/eic.git
+[submodule "eu4-map"]
+	path = eu4-map
+	url = https://github.com/matthewbauer/eu4-parser.git
+	branch = gh-pages
