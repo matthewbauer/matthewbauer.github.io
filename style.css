@@ -1,0 +1,195 @@
+@media all {html {font-size: 24px;}}
+@media all and (max-width:1000px){html {font-size: 24px;}}
+@media all and (max-width:960px){html {font-size: 23px;}}
+@media all and (max-width:920px){html {font-size: 22px;}}
+@media all and (max-width:880px){html {font-size: 21px;}}
+@media all and (max-width:840px){html {font-size: 20px;}}
+@media all and (max-width:800px){html {font-size: 19px;}}
+@media all and (max-width:760px){html {font-size: 18px;}}
+@media all and (max-width:720px){html {font-size: 17px;}}
+@media all and (max-width:680px){html {font-size: 16px;}}
+@media all and (max-width:640px){html {font-size: 15px;}}
+@media all and (max-width:600px){html {font-size: 14px;}}
+@media all and (max-width:560px){html {font-size: 13px;}}
+@media all and (max-width:520px){html {font-size: 12px;}}
+
+@media all and (max-width:520px) {
+    html {
+        font-size: 18px;
+    }
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body, li p {
+    font-family: "Charter";
+}
+
+li {
+    column-break-inside: avoid;
+    break-inside: avoid-column;
+}
+
+html {
+    height: 100%;
+}
+
+body {
+    padding: 0rem 0em 0rem 0em;
+
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    max-width: 1000px;
+    min-height: 100%;
+
+    text-rendering: optimizeLegibility;
+    font-feature-settings: 'kern' 1, 'liga' 1;
+
+    border-top: 0px solid black;
+    border-bottom: 0px solid black;
+
+    position: relative;
+    z-index: -10000;
+}
+
+body > * {
+    font-size: 100%;
+
+    margin-left: 11.5rem;
+    margin-right: 2.5rem;
+}
+
+@media all and (max-width:520px) {
+    body > * {
+        margin: 2rem;
+    }
+}
+
+body {
+    display: block;
+    padding: 3rem 0 1rem 0;
+}
+
+@media all and (max-width:520px) {
+    body { padding: 0;}
+}
+
+hr {
+    border: none;
+    background-color: #8c8b8b;
+    height: 1px;
+    /* margin-left: -15px; */
+    /* margin-right: -1em; */
+}
+
+h1 {
+    font-size: 120%;
+    line-height: 1.10;
+    margin-top: 0.2rem;
+    margin-bottom: 1rem;
+    font-weight: bolder;
+    border-top: 0;
+    padding-top: 0;
+    font-family: "Fira";
+}
+
+h2 {
+    font-size: 100%;
+    line-height: 1;
+    margin-top: 0.8rem;
+    margin-bottom: 0.4rem;
+    font-weight: bolder;
+    border-top: 0;
+    padding-top: 0;
+    font-family: "Fira";
+    text-transform: uppercase;
+}
+
+p, li {
+    margin-bottom: 1em;
+    line-height: 1.35;
+}
+
+a {
+    text-decoration: none;
+    transition-property: background;
+    transition-duration: 0.2s;
+}
+
+a:active { color: #777; }
+
+a:after {
+    position: relative;
+    /* content: "\FEFF"; */
+    margin-left: 0.10em;
+    font-size: 90%;
+    top: -0.10em;
+    color: #933;
+}
+
+a:hover {
+    background: #fbf3f3;
+    transition-property: background;
+    transition-duration: 0.2s;
+
+    border-radius: 8px;
+}
+
+ul li {
+    list-style: none;
+}
+
+ul li:before {
+    content: "⇒";
+    margin-left: -1.25em;
+}
+
+ul.children {
+    font-size: 90%;
+    column-count: 2;
+    column-gap: 2.5rem;
+}
+
+@media all and (max-width:520px) {
+    ul.children {
+        font-size: 100%;
+        column-count: 1;
+        column-gap: 2em;
+    }
+}
+
+ul.children li {
+    margin-bottom: 0;
+    padding-bottom: 1em;
+}
+
+li p {
+    display: inline;
+}
+
+li .date {
+    /* display: inline-block; */
+    /* width: 10em; */
+    float: right;
+    padding-left: 1em;
+    padding-bottom: 1em;
+}
+
+li .link {
+}
+
+li .link:after {
+    content: "»";
+}
+
+li .link:before {
+    content: "«";
+}
+
+a.name {
+    font-weight: 500;
+}
