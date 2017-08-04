@@ -38,8 +38,6 @@ html {
 }
 
 body {
-    padding: 0rem 0em 0rem 0em;
-
     margin-left: auto;
     margin-right: auto;
     width: 100%;
@@ -137,8 +135,6 @@ a:hover {
 
     border-radius: 8px;
 }
-
-
 
 ul li {
     list-style: none;
