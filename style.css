@@ -75,7 +75,7 @@ body {
 }
 
 @media all and (max-width:520px) {
-    body { padding: 0;}
+    body { padding: 0; }
 }
 
 hr {
@@ -89,8 +89,7 @@ hr {
 h1 {
     font-size: 120%;
     line-height: 1.10;
-    margin-top: 0.2rem;
-    margin-bottom: 1rem;
+    margin-bottom: 2rem;
     font-weight: bolder;
     border-top: 0;
     padding-top: 0;
@@ -101,7 +100,7 @@ h2 {
     font-size: 100%;
     line-height: 1;
     margin-top: 0.8rem;
-    margin-bottom: 0.4rem;
+    margin-bottom: 0.8rem;
     font-weight: bolder;
     border-top: 0;
     padding-top: 0;
@@ -138,6 +137,8 @@ a:hover {
 
     border-radius: 8px;
 }
+
+
 
 ul li {
     list-style: none;
