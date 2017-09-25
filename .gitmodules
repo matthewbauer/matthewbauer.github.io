@@ -8,6 +8,3 @@
 	path = eu4-map
 	url = https://github.com/matthewbauer/eu4-parser.git
 	branch = gh-pages
-[submodule "blog"]
-	path = blog
-	url = https://github.com/matthewbauer/blog
