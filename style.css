@@ -143,9 +143,9 @@ a:hover {
 
 ul li {
     /* line-height: 1.35; */
-    list-style: none;
+    /* list-style: none; */
 }
-
+p
 ul.cv-list li {
     list-style: none;
     margin-bottom: 1em;
