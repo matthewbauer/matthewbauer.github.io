@@ -106,7 +106,7 @@ h2 {
     text-transform: uppercase;
 }
 
-pre {
+pre, code {
     font-size: 50%;
     font-family: "Source Code Pro";
 }
