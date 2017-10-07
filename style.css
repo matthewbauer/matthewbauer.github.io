@@ -145,7 +145,7 @@ ul li {
     /* line-height: 1.35; */
     /* list-style: none; */
 }
-p
+
 ul.cv-list li {
     list-style: none;
     margin-bottom: 1em;
@@ -358,4 +358,9 @@ textarea {
 
 #text-table-of-contents ul li ul li {
     text-transform: lowercase;
+}
+
+pre {
+    margin-left: 0;
+    margin-right: 0;
 }
