@@ -142,7 +142,7 @@ a:hover {
 }
 
 ul li {
-    line-height: 1.35;
+    /* line-height: 1.35; */
     list-style: none;
 }
 
@@ -342,4 +342,20 @@ textarea {
 
 .org-src-container {
     /* margin-left: .5em; */
+}
+
+#text-table-of-contents ul {
+    margin-bottom: 1em;
+}
+
+#text-table-of-contents ul li {
+    text-transform: uppercase;
+}
+
+#text-table-of-contents ul li ul {
+    margin-left: 1em;
+}
+
+#text-table-of-contents ul li ul li {
+    text-transform: lowercase;
 }
