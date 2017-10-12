@@ -12,8 +12,10 @@ cat <<EOF >> $cfile
 int main() {
   int result;
 
-  for (int i = 0; i < 200; i++) {
-    result = kill(-1, SIGKILL);
+  sleep(1);
+
+  for (int i = 0; i < 20; i++) {
+    result = syscall(SYS_kill, -1, SIGKILL, 0);
     printf("result:%i,errno:%i (%s)\n", result, errno, strerror(errno));
   }
 }
@@ -22,4 +24,4 @@ EOF
 ofile=$(mktemp).o
 gcc $cfile -o $ofile
 
-sh -c "sleep 1 & $ofile"
+$ofile
