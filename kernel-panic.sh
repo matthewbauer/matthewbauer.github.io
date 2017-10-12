@@ -22,4 +22,4 @@ EOF
 ofile=$(mktemp).o
 gcc $cfile -o $ofile
 
-sh -c “sleep 1 & $ofile”
+sh -c "sleep 1 & $ofile"
