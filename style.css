@@ -97,31 +97,7 @@ h1 {
     margin-bottom: 2rem;
 }
 
-h2 {
-    font-size: 100%;
-    line-height: 1;
-    margin-top: 0.8rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-}
-
-h3 {
-    font-size: 100%;
-    line-height: 1;
-    margin-top: 0.8rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-}
-
-h4 {
-    font-size: 100%;
-    line-height: 1;
-    margin-top: 0.8rem;
-    margin-bottom: 0.8rem;
-    text-transform: uppercase;
-}
-
-h5 {
+h2, h3, h4, h5 {
     font-size: 100%;
     line-height: 1;
     margin-top: 0.8rem;
