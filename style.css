@@ -63,7 +63,10 @@ body > * {
 
 @media all and (max-width:520px) {
     body > * {
-        margin: 2rem;
+        margin-left: 2rem;
+        margin-right: 2rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
     }
 }
 
