@@ -106,6 +106,42 @@ h2 {
     text-transform: uppercase;
 }
 
+h3 {
+    font-size: 90%;
+    line-height: 1;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: bolder;
+    border-top: 0;
+    padding-top: 0;
+    font-family: "Fira";
+    text-transform: uppercase;
+}
+
+h4 {
+    font-size: 80%;
+    line-height: 1;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: bolder;
+    border-top: 0;
+    padding-top: 0;
+    font-family: "Fira";
+    text-transform: uppercase;
+}
+
+h5 {
+    font-size: 70%;
+    line-height: 1;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
+    font-weight: bolder;
+    border-top: 0;
+    padding-top: 0;
+    font-family: "Fira";
+    text-transform: uppercase;
+}
+
 pre, code {
     font-size: 50%;
     font-family: "Source Code Pro";
