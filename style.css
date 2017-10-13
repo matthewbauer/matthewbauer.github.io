@@ -84,14 +84,17 @@ hr {
     /* margin-right: -1em; */
 }
 
+h1, h2, h3, h4, h5 {
+    font-family: "Fira";
+    border-top: 0;
+    padding-top: 0;
+    font-weight: bolder;
+}
+
 h1 {
     font-size: 120%;
     line-height: 1.10;
     margin-bottom: 2rem;
-    font-weight: bolder;
-    border-top: 0;
-    padding-top: 0;
-    font-family: "Fira";
 }
 
 h2 {
@@ -99,46 +102,30 @@ h2 {
     line-height: 1;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
-    font-weight: bolder;
-    border-top: 0;
-    padding-top: 0;
-    font-family: "Fira";
     text-transform: uppercase;
 }
 
 h3 {
-    font-size: 90%;
+    font-size: 100%;
     line-height: 1;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
-    font-weight: bolder;
-    border-top: 0;
-    padding-top: 0;
-    font-family: "Fira";
     text-transform: uppercase;
 }
 
 h4 {
-    font-size: 80%;
+    font-size: 100%;
     line-height: 1;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
-    font-weight: bolder;
-    border-top: 0;
-    padding-top: 0;
-    font-family: "Fira";
     text-transform: uppercase;
 }
 
 h5 {
-    font-size: 70%;
+    font-size: 100%;
     line-height: 1;
     margin-top: 0.8rem;
     margin-bottom: 0.8rem;
-    font-weight: bolder;
-    border-top: 0;
-    padding-top: 0;
-    font-family: "Fira";
     text-transform: uppercase;
 }
 
