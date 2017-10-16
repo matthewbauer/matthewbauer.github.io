@@ -133,6 +133,7 @@ pre {
 
 code {
     font-size: 70%;
+    word-break: keep-all;
 }
 
 p {
