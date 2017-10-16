@@ -124,8 +124,15 @@ h5 {
 }
 
 pre, code {
-    font-size: 70%;
     font-family: "Source Code Pro";
+}
+
+pre {
+    font-size: 50%;
+}
+
+code {
+    font-size: 70%;
 }
 
 p {
@@ -261,7 +268,7 @@ p.verse { margin-left: 3%; }
 pre {
     border: 1px solid #ccc;
     box-shadow: 3px 3px 3px #eee;
-    /* padding: 8pt; */
+    padding: 8pt;
     font-family: monospace;
     overflow: auto;
     margin: 1em;
@@ -353,10 +360,6 @@ textarea {
     font-weight: bold;
 }
 
-#postamble {
-    border: 2px solid black;
-}
-
 .org-src-container {
     /* margin-left: .5em; */
 }
@@ -384,4 +387,66 @@ pre {
 
 pre.src.src-sh span {
     background-color: inherit;
+}
+
+.header {
+    margin-bottom: 1em;
+}
+
+#archive {
+    margin-top: 2em;
+    /* text-align: center; */
+}
+
+pre                                      {background-color:#FFFFFF;}
+pre span.org-builtin                     {color:#006FE0;font-weight:bold;}
+pre span.org-string                      {color:#008000;}
+pre span.org-keyword                     {color:#0000FF;}
+pre span.org-variable-name               {color:#BA36A5;}
+pre span.org-function-name               {color:#006699;}
+pre span.org-type                        {color:#6434A3;}
+pre span.org-preprocessor                {color:#808080;font-weight:bold;}
+pre span.org-constant                    {color:#D0372D;}
+pre span.org-comment-delimiter           {color:#8D8D84;}
+pre span.org-comment                     {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-1            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-2            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-3            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-4            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-5            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-6            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-7            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-8            {color:#8D8D84;font-style:italic}
+pre span.org-outshine-level-9            {color:#8D8D84;font-style:italic}
+pre span.org-rainbow-delimiters-depth-1  {color:#707183;}
+pre span.org-rainbow-delimiters-depth-2  {color:#7388d6;}
+pre span.org-rainbow-delimiters-depth-3  {color:#909183;}
+pre span.org-rainbow-delimiters-depth-4  {color:#709870;}
+pre span.org-rainbow-delimiters-depth-5  {color:#907373;}
+pre span.org-rainbow-delimiters-depth-6  {color:#6276ba;}
+pre span.org-rainbow-delimiters-depth-7  {color:#858580;}
+pre span.org-rainbow-delimiters-depth-8  {color:#80a880;}
+pre span.org-rainbow-delimiters-depth-9  {color:#887070;}
+pre span.org-sh-quoted-exec              {color:#FF1493;}
+
+pre span.org-org-block-begin-line        {color:#909183;}
+pre span.org-org-meta-line               {color:#909183;}
+pre span.org-org-document-info-keyword   {color:#BA36A5;}
+pre span.org-org-document-title          {color:#0000FF;}
+pre span.org-org-document-info           {color:#0000FF;}
+
+pre span.org-nix-builtin                 {color:#006FE0;font-weight:bold;}
+pre span.org-nix-string                  {color:#008000;}
+pre span.org-nix-keyword                 {color:#0000FF;}
+pre span.org-nix-variable-name           {color:#BA36A5;}
+pre span.org-nix-function-name           {color:#006699;}
+pre span.org-nix-type                    {color:#6434A3;}
+pre span.org-nix-preprocessor            {color:#808080;font-weight:bold;}
+pre span.org-nix-constant                {color:#D0372D;}
+pre span.org-nix-comment-delimiter       {color:#8D8D84;}
+pre span.org-nix-comment                 {color:#8D8D84;font-style:italic}
+
+pre.src-sh {
+    background-color: black;
+    color: white;
 }
