@@ -4,7 +4,7 @@
   <title>Matthew's Blog</title>
   <description>Matthew's Blog</description>
   <link>./</link>
-  <lastBuildDate>Mon, 16 Oct 2017 02:56:22 -0500</lastBuildDate>
+  <lastBuildDate>Mon, 16 Oct 2017 03:23:49 -0500</lastBuildDate>
 <item>
   <title>Nix and Org</title>
   <description><![CDATA[<p>
@@ -31,11 +31,11 @@ using Org is to download Emacs directly from <a href="https://www.gnu.org/softwa
 
 <p>
 Let’s start by creating a new Org file. Once you have Emacs started, you can
-create a new file by pressing <code>C-x C-f</code>. If you are unfamiliar with this
+create a new file by pressing <code>C‑x C‑f</code>. If you are unfamiliar with this
 notation, that means press and hold the Control key, then press x, then press f.
 Now we can name the new file at the ‘Find file: ’ prompt. Let’s type ‘demo.org’
 here and then press enter. Now we have an empty Org mode file to type into. You
-can save it at any time with <code>C-x C-s</code>.
+can save it at any time with <code>C‑x C‑s</code>.
 </p>
 
 <div class="org-src-container">
@@ -165,7 +165,7 @@ package using the <code>stdenv</code> and <code>fetchurl</code> defined in <a hr
 </div>
 
 <p>
-Let’s see if this works. Type <code>M-x</code> (which means hold down the meta key and
+Let’s see if this works. Type <code>M‑x</code> (which means hold down the meta key and
 press x) and then type <code>org-babel-tangle-file</code> followed by enter. After this was
 run, you’ll have a file called <code>hello.nix</code> and a file called <code>bootstrap.nix</code> in
 the current directory. Open up a terminal and we can build Hello World.
@@ -220,7 +220,7 @@ Org’s tangler.
 </div>
 
 <p>
-We still need to tangle everything one last time. Type <code>M-x</code> and then type
+We still need to tangle everything one last time. Type <code>M‑x</code> and then type
 <code>org-babel-tangle-file</code> followed by enter. A new <code>default.nix</code> file will appear.
 That <code>default.nix</code> file along with <code>test.org</code> is all you need to build this
 expression. To verify this, let’s first remove those old files so we know they
@@ -253,7 +253,7 @@ else up. I recommend reading through <a href="https://nixos.org/nixos/nix-pills/
 <a href="http://orgmode.org/guide/">the Org Mode Guide</a> for learning Org.
 </p>
 ]]></description>
-  <link>./nix-ifd.html</link>
+  <link>./nix-and-org.html</link>
   <pubDate>Sun, 15 Oct 2017 23:26:00 -0500</pubDate>
 </item>
 </channel>
