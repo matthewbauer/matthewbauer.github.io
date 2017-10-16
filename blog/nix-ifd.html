@@ -1,0 +1,271 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="alternate"
+      type="appliation/rss+xml"
+      href="./feed.xml"
+      title="RSS feed for ./">
+<title>Nix and Org</title><meta  name="author" content="Matthew Bauer" />
+<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
+<link rel=stylesheet href="../style.css" /></head>
+<body>
+<div id="preamble" class="status"><div class="header">
+<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
+</div></div>
+<div id="content">
+<div class="post-date">15 Oct 2017</div>
+<h1 class="post-title">Nix and Org</h1>
+<p>
+This is a guide on getting Org to work with Nix. Specifically, I want to show
+how you can write Nix expressions within an Org document. This might not seem
+useful at first, but I think by the end of this guide it will become clear how
+powerful the combination of these tools are. First, some background on what
+these tools are for those unfamiliar.
+</p>
+
+<p>
+Org was started in 2003 as an extension, or ‘mode’, to the Emacs text editor.
+Carsten Dominik, frustrated with Emacs builtin outliner, sought to create
+something that he could use to organize all of his notes and projects in a tree
+structure. Since then, Org has grown to include features for note-taking,
+hyperlinking, todo lists, spreadsheets, literate programming, and even exporting
+to HTML and LaTeX (in fact, this blog is composed in Org). It is the <b>literate
+programming</b> feature, called <i>Babel</i>, that will be used extensively in this
+guide. All of Org’s features are written in extensible Lisp that manipulate
+plain-text ‘.org’ files. Carsten’s creation has become extremely popular among
+Emacs users and since 2007 has been included in Emacs. The easiest way to start
+using Org is to download Emacs directly from <a href="https://www.gnu.org/software/emacs/">the GNU website</a>.
+</p>
+
+<p>
+Let’s start by creating a new Org file. Once you have Emacs started, you can
+create a new file by pressing <code>C-x C-f</code>. If you are unfamiliar with this
+notation, that means press and hold the Control key, then press x, then press f.
+Now we can name the new file at the ‘Find file: ’ prompt. Let’s type ‘demo.org’
+here and then press enter. Now we have an empty Org mode file to type into. You
+can save it at any time with <code>C-x C-s</code>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span class="org-org-document-info-keyword">#+title:</span> <span class="org-org-document-title">Org Demo</span>
+<span class="org-org-document-info-keyword">#+date:</span> <span class="org-org-document-info">&lt;2017-10-15 Sun&gt;</span>
+
+This is just a plain-text document. Keep this document open because we&#8217;ll be
+editing this file throughout the tutorial.
+</pre>
+</div>
+
+<p>
+Now that you have an Org file setup, make sure you leave Emacs open and we’ll
+refer back to this file later. Next, some background on Nix.
+</p>
+
+<p>
+Nix was started in 2004 as a <i>purely functional package manager</i>. It solves many
+problems in traditional package management. For instance, multiple versions of a
+package can be used at the same time, each package gets unique dependencies, bad
+upgrades can be rolled back, and unused packages can be garbage collected. More
+information on Nix is available from the <a href="https://nixos.org/nix/">Nix homepage</a>. Nix can be installed on
+both Linux and macOS machines. It is fairly easy to setup, provided you have
+<b>sudo</b> access. Run the following in a terminal to install Nix,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ curl https://nixos.org/nix/install | sh
+</pre>
+</div>
+
+<p>
+Once Nix has been installed, we can go back to Emacs and start writing to
+<code>demo.org</code>. Let’s append some documentation to the Org file on what we’ll be building.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org">This Org file builds the Nix expression for &#8216;Hello World&#8217;.
+</pre>
+</div>
+
+<p>
+To put source code in our Org file, we’ll need to know some Org syntax. The
+directives <code>#+begin_src</code> and <code>#+end_src</code> tell Org that we are writing in another
+language. <b>nix</b> is the name of the language and <code>hello.nix</code> is the file that Org
+will write (tangle) the code to.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org">#+begin_src nix :tangle hello.nix
+<span class="org-italic">/* Nix code goes here */</span>
+</pre>
+</div>
+
+<p>
+Finally, we can write in Nix’s expression language to create a Hello World
+package. Nix’s syntax can be confusing to new users so I’ll be as verbose as
+possible. Almost everything is a function in Nix, so, let’s define some
+arguments for a <i>Hello World</i> function. Functions with multiple arguments are
+defined with <code>{ a, b, c }:</code> where each argument is a comma separated identifier
+between <code>{</code> and <code>}</code>. We’ll need <code>stdenv</code> (Nix’s standard environment) and
+<code>fetchurl</code> (Nix’s function to download a URL) to build Hello World.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org">{ stdenv, fetchurl }:
+</pre>
+</div>
+
+<p>
+Next, we need to provide a definition for Hello World. We want to build Hello
+World from some source files. That’s called a derivation in Nix and we can
+accomplish it by calling the <code>stdenv.mkDerivation</code> function. The keyword <code>rec</code>
+tells Nix that our arguments to <code>stdenv.mkDerivation</code> might be recursive,
+meaning our args might need to reference each other.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org">stdenv.mkDerivation rec {
+</pre>
+</div>
+
+<p>
+Let’s give this derivation a name.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org">  name = "hello-2.10";
+</pre>
+</div>
+
+<p>
+Then provide a source using fetchurl.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org">  src = fetchurl {
+    url = "mirror://gnu/hello/${name}.tar.gz";
+    sha256 = "0ssi1wpaf7plaswqqjwigppsg5fyh99vdlb9kzl7c9lng89ndq1i";
+  };
+}
+<span class="org-org-meta-line">#+end_src</span>
+</pre>
+</div>
+
+<p>
+That’s it! We’ve defined a Nix expression that will build Hello World.
+</p>
+
+<p>
+Unfortunately, this won’t work on it’s own because Nix doesn’t know what stdenv
+and fetchurl refer to. We’ll need to define another Nix expression to bootstrap
+this one. Since this is all in Org mode that’s as easy as just adding another
+code block. We’ll call it <code>bootstrap.nix</code> and it will just call <code>hello.nix</code> as a
+package using the <code>stdenv</code> and <code>fetchurl</code> defined in <a href="https://nixos.org/nixpkgs/">Nixpkgs</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span class="org-org-block-begin-line">#+begin_src nix :tangle bootstrap.nix</span>
+<span class="org-org-block">{ nixpkgs ? </span><span class="org-org-block"><span class="org-nix-constant">&lt;nixpkgs&gt;</span></span><span class="org-org-block"> }:</span>
+
+<span class="org-org-block"><span class="org-nix-keyword">with</span></span><span class="org-org-block"> </span><span class="org-org-block"><span class="org-nix-builtin">import</span></span><span class="org-org-block"> nixpkgs {};</span>
+
+<span class="org-org-block">callPackage </span><span class="org-org-block"><span class="org-nix-constant">./hello.nix</span></span><span class="org-org-block"> {}</span>
+<span class="org-org-block-end-line">#+end_src</span>
+</pre>
+</div>
+
+<p>
+Let’s see if this works. Type <code>M-x</code> (which means hold down the meta key and
+press x) and then type <code>org-babel-tangle-file</code> followed by enter. After this was
+run, you’ll have a file called <code>hello.nix</code> and a file called <code>bootstrap.nix</code> in
+the current directory. Open up a terminal and we can build Hello World.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix-build
+/nix/store/&#8230;-hello-2.10
+$ ./result/bin/hello
+Hello World!
+</pre>
+</div>
+
+<p>
+This is pretty useful on its own, but I don’t want to have to <i>tangle</i> the file
+each time I make a change. Let’s tangle Org within a Nix expression. Is this
+possible in Nix?
+</p>
+
+<p>
+Recently Nix has added a feature called IFD which stands for <b>Import From
+Derivation</b>. It allows us to use generated Nix expressions within another Nix
+expression. That way we can derive hello.nix from a Nix expression and then
+derive hello.nix, avoiding <code>org-babel-tangle-file</code> completely.
+</p>
+
+<p>
+To do this, we’ll need to create another Nix file that we’ll call <code>default.nix</code>.
+Like the boostraper, I won’t break down exactly what’s going on in this post,
+but it follows the basic Import From Derivation process outlined above calling
+Org’s tangler.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-org"><span class="org-org-block-begin-line">#+begin_src nix :tangle default.nix</span>
+<span class="org-org-block">{ nixpkgs ? </span><span class="org-org-block"><span class="org-nix-constant">&lt;nixpkgs&gt;</span></span><span class="org-org-block"> }:</span>
+
+<span class="org-org-block"><span class="org-nix-keyword">with</span></span><span class="org-org-block"> </span><span class="org-org-block"><span class="org-nix-builtin">import</span></span><span class="org-org-block"> nixpkgs {};</span>
+
+<span class="org-org-block"><span class="org-nix-builtin">import</span></span><span class="org-org-block"> (runCommand </span><span class="org-org-block"><span class="org-string">"bootstrap.nix-generated"</span></span><span class="org-org-block"> {</span>
+<span class="org-org-block">  </span><span class="org-org-block"><span class="org-nix-attribute">buildInputs</span></span><span class="org-org-block"> = [ emacs ];</span>
+<span class="org-org-block">} </span><span class="org-org-block"><span class="org-string">''</span></span>
+<span class="org-org-block"><span class="org-string">    mkdir -p $out</span></span>
+<span class="org-org-block"><span class="org-string">    cd $out</span></span>
+<span class="org-org-block"><span class="org-string">    cp </span></span><span class="org-org-block"><span class="org-nix-antiquote">${</span></span><span class="org-org-block"><span class="org-nix-constant">./test.org</span></span><span class="org-org-block"><span class="org-nix-antiquote">}</span></span><span class="org-org-block"><span class="org-string"> test.org</span></span>
+<span class="org-org-block"><span class="org-string">    emacs --batch -l ob-tangle --eval "(org-babel-tangle-file \"test.org\")"</span></span>
+<span class="org-org-block"><span class="org-string">    cp bootstrap.nix default.nix</span></span>
+<span class="org-org-block"><span class="org-string">  ''</span></span>
+<span class="org-org-block">) { </span><span class="org-org-block"><span class="org-nix-keyword">inherit</span></span><span class="org-org-block"> nixpkgs; }</span>
+<span class="org-org-block-end-line">#+end_src</span>
+</pre>
+</div>
+
+<p>
+We still need to tangle everything one last time. Type <code>M-x</code> and then type
+<code>org-babel-tangle-file</code> followed by enter. A new <code>default.nix</code> file will appear.
+That <code>default.nix</code> file along with <code>test.org</code> is all you need to build this
+expression. To verify this, let’s first remove those old files so we know they
+aren’t being referenced accidentally.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ rm -f hello.nix bootstrap.nix
+</pre>
+</div>
+
+<p>
+Finally, we can build our <i>Hello World</i> expression!
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix-build
+/nix/store/&#8230;-hello-2.10
+$ ./result/bin/hello
+Hello World!
+</pre>
+</div>
+
+<p>
+In this guide I’ve shown you an easy way to write Nix expressions in Org. Now
+that you have this environment setup, you should try hacking around <code>test.org</code>.
+You can always run <code>nix-build</code> to see if a binary builds. Try using other
+sources, creating a new derivation, adding other dependencies, or hack something
+else up. I recommend reading through <a href="https://nixos.org/nixos/nix-pills/">the Nix Pills series</a> for learning Nix and
+<a href="http://orgmode.org/guide/">the Org Mode Guide</a> for learning Org.
+</p>
+</div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="archive.html">Other posts</a>
+</div></div>
+</body>
+</html>
