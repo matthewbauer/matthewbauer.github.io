@@ -1,0 +1,663 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="alternate"
+      type="appliation/rss+xml"
+      href="./feed.xml"
+      title="RSS feed for ./">
+<title>Reproducible résumés</title><meta  name="author" content="Matthew Bauer" />
+<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
+<link rel=stylesheet href="../fonts.css" />
+<link rel=stylesheet href="../style.css" /></head>
+<body>
+<div id="preamble" class="status"><div class="header">
+<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
+</div></div>
+<div id="content">
+<div class="post-date">13 Nov 2017</div>
+<h1 class="post-title">Reproducible résumés</h1>
+<p>
+Recently, ‘reproducible’ papers have appeared in Academia. The idea is to make
+all of a paper’s data and code openly available so that readers can reproduce
+its findings. For software-heavy papers, it makes perfect sense to include code
+in papers because the code is often as important as the paper’s text.
+</p>
+
+<p>
+Outside of Academia, there’s not as much interest in this idea of
+<i>reproducibility</i>. That’s unfortunate because it’s a really neat idea.
+</p>
+
+<p>
+To make this idea more accessible for those outside Academia, I’m going to
+introduce a new kind of reproducibility. Everyone in the working world needs to
+apply for a job at some point. So, let’s figure out how to make a résumé,
+reproducible. This document will be all that is needed to generate my résumé.
+With some minor adjustments you can use it to generate your own.
+</p>
+
+<p>
+At the end of this guide, you should have all of the information needed produce
+a PDF version of your résume.
+</p>
+
+<div id="outline-container-orgf751c32" class="outline-2">
+<h2 id="orgf751c32">The Résumé</h2>
+<div class="outline-text-2" id="text-orgf751c32">
+<p>
+LaTeX makes it very easy to generate Résumés. It provides extremely powerful
+typesetting features and can output PDF. Some of the syntax is scary to the
+unexperienced but I’ve tried to keep it as simple as possible.
+</p>
+
+<p>
+LaTeX syntax can be a little confuging at first but basically everything is
+made up of <b>commands</b>. Each command starts with a <code>\</code> followed by a command
+name. Each command can take a variable number of arguments and they are
+specified with <code>{</code> and <code>}</code>. LaTeX is made up a series of packages that provide
+these commands and do most of the work of typography automatically.
+</p>
+</div>
+
+<div id="outline-container-org06cfeeb" class="outline-3">
+<h3 id="org06cfeeb">Document class</h3>
+<div class="outline-text-3" id="text-org06cfeeb">
+<p>
+Every LaTeX document has a document class. Think of it like the CSS to the
+Résumé’s HTML. Classes tells LaTeX how to layout the document and there are a
+few builtin ones like ‘article’ that work fairly well for basic document.
+I’ve built up my own class that works well for résumés. It’s largely based
+off of @posquit0’s Awesome-CV but with some minor adjustments to make it a
+little cleaner. In addition, I’ve followed some of Matthew Butterick’s guide
+on résumés. You can read about them at <a href="http://practicaltypography.com/resumes.html">Practical Typography</a>.
+</p>
+
+<p>
+I’ve make it available at <a href="./resume.cls">resume.cls</a> of this repo’s root but I won’t include
+it in this blog post (but it’s still in the <a href="./README.html">./README.html</a> file).
+</p>
+</div>
+</div>
+
+<div id="outline-container-org65c5db9" class="outline-3">
+<h3 id="org65c5db9">Header</h3>
+<div class="outline-text-3" id="text-org65c5db9">
+<p>
+Every LaTeX document has a document class. For this document, I will use a
+custom <b>resume</b> class.
+</p>
+
+<p>
+Next, I’ll provide some semantic information. Each of these commands is
+defined in the résumé class. You can make your own commands but I’ve tried to
+make this document as simple as possible.
+</p>
+
+<p>
+All of the following elements correspond to my name, address, mobile, email
+and homepage. The contents are not parsed by LaTeX so you could put anything
+here, but you should aim to make each command as semantic as possible.
+</p>
+
+<p>
+My personal info follows,
+</p>
+
+<p>
+This begins the document. The command <code>makecvheader</code> is from resume.cls and
+will setup the basic template.
+</p>
+
+<p>
+Everything that follows is my own résume, but the ideas should be fairly self-explanatory.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orga7101ad" class="outline-3">
+<h3 id="orga7101ad">Education</h3>
+<div class="outline-text-3" id="text-orga7101ad">
+<p>
+This LaTeX class defines <code>\cvsection</code> to separate sections of the résumé by a
+horizontal line and some blank space. The only argument for <code>\cvsection</code> sets
+the contents of the section header.
+</p>
+
+<p>
+I start my résume with the ‘Eduction’ section.
+</p>
+
+<p>
+Each <code>cvsection</code> is composed of multiple <code>cventries</code>.
+</p>
+
+<p>
+<code>cventry</code> can be though of as a function that takes a variable 5 arguments.
+The first will be the heading used. The second will be on the right-hand side
+in <i>italics</i>. The third will be in <i>italics</i> immediately below the first. The
+fourth will be on the right-hand side of the third argument. The last argument
+provides items for the entry.
+</p>
+
+<p>
+For my résumé, I have chosen to use each of these arguments for certain
+purposes. It’s not necessary to do the same, but you should use a consistent
+style throughout your résumé.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">left</th>
+<th scope="col" class="org-left">right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">argument 1</td>
+<td class="org-left"><i>argument 2</i></td>
+</tr>
+
+<tr>
+<td class="org-left"><i>argument 3</i></td>
+<td class="org-left"><i>argument 4</i></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+For me, they correspond to,
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">left</th>
+<th scope="col" class="org-left">right</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Company or University</td>
+<td class="org-left"><i>Location</i></td>
+</tr>
+
+<tr>
+<td class="org-left"><i>Position or degree</i></td>
+<td class="org-left"><i>Start date - end date</i></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The next section has work experience. It follows the same pattern outlined in
+the Education section.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orge9d61d3" class="outline-3">
+<h3 id="orge9d61d3">Work Experience</h3>
+<div class="outline-text-3" id="text-orge9d61d3">
+<p>
+Here we end <code>cventries</code>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7b607ca" class="outline-3">
+<h3 id="org7b607ca">Honors &amp; Awards</h3>
+<div class="outline-text-3" id="text-org7b607ca">
+<p>
+Again we must define a new section, this time for honors and awards.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org7984c58" class="outline-3">
+<h3 id="org7984c58">Footer</h3>
+<div class="outline-text-3" id="text-org7984c58">
+<p>
+The <code>makecvfooter</code> command gives a nice footer that will be put at the bottom
+of each page. This can give us the document title and page numbering. In
+addition, the LastPage command will tell us how many pages there are in case
+we misplace a page while printing.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orge6d3dbf" class="outline-2">
+<h2 id="orge6d3dbf">Building it</h2>
+<div class="outline-text-2" id="text-orge6d3dbf">
+<p>
+Nix makes it possible to make this Résumé truly reproducible. Nix is a purely
+functional package manager. This means that each package is defined in a
+functional language and we have much more powerful tools at our disposal.
+</p>
+
+<p>
+Nix can be installed on both Linux and macOS machines. It is fairly easy to
+setup, provided you have <b>sudo</b> access. Run the following and follow some
+simple steps to get Nix working,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">curl https://nixos.org/nix/install | sh
+</pre>
+</div>
+
+<p>
+More information on Nix is available from the <a href="https://nixos.org/nix/">Nix homepage</a>. On <a href="#orgec08746">the next page</a>, I’ll explain
+how build this résumé using Nix.
+</p>
+</div>
+
+<div id="outline-container-orgec08746" class="outline-3">
+<h3 id="orgec08746"><code>resume.nix</code></h3>
+<div class="outline-text-3" id="text-orgec08746">
+<p>
+To start, we’ll this need to pull in Nixpkgs. Nixpkgs provides a set of
+packages for Nix to use. Because Nix is functional, we’ll make nixpkgs an
+optional argument if we ever want to work with multiple package set versions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">{nixpkgs ? <span class="org-nix-constant">&lt;nixpkgs&gt;</span>}: <span class="org-nix-keyword">with</span> <span class="org-nix-builtin">import</span> nixpkgs {};
+</pre>
+</div>
+
+<p>
+This syntax may be a little hard to understand for users new to Nix. <code>{}:</code>
+declares a function. This particular function will take up the entire file and
+Nix will <code>autocall</code> it when no arguments are necessary. This particular
+function has one arguments, nixpkgs, that refers to the package set being
+used. To make things easier we provide a default after the <code>?</code> symbol.
+<code>&lt;nixpkgs&gt;</code> refers to the nixpkgs channels that the user has setup. It can be
+updated with,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nix-channel --update
+</pre>
+</div>
+
+<p>
+Giving us a potentially newer version of Nixpkgs and its software to work
+with.
+</p>
+
+<p>
+Almost everything in Nix is a derivation (including Nix itself). Each
+derivation has its own store path so we can reference it through
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">stdenv.mkDerivation {
+  <span class="org-nix-attribute">name</span> = <span class="org-string">"resume"</span>;
+  <span class="org-nix-attribute">src</span> = <span class="org-nix-constant">./.</span>;
+</pre>
+</div>
+
+<p>
+We’ll name this derivation resume and tell it to use the files in the current
+directory as source.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">  <span class="org-nix-attribute">buildInputs</span> = [
+    (texlive.combine {
+      <span class="org-nix-keyword">inherit</span> (texlive) scheme-basic xetex xetex-def setspace fontspec
+                        chktex enumitem xifthen ifmtarg filehook
+                        upquote tools ms geometry graphics oberdiek
+                        fancyhdr lastpage xcolor etoolbox unicode-math
+                        ucharcat sourcesanspro tcolorbox pgf environ
+                        trimspaces parskip hyperref url euenc
+                        collection-fontsrecommended;
+    })
+  ];
+</pre>
+</div>
+
+<p>
+Inputs in Nix are similar to dependencies in other package managers. Here, we
+list only one dependency which provides our LaTeX distribution.
+<code>texlive.combine</code> is a function that produces a derivation which will provide
+the <code>xetex</code> binary. Each attribute listed in between <code>{</code> and <code>}</code> will be
+passed as LaTeX packages to TeX Live. The <code>inherit</code> keyword tells Nix to pass
+everything after <code>(texlive)</code> as attributes of <code>texlive</code> to <code>texlive.combine</code>.
+Each one of those names listed should correspond to TeX Live packages that are
+needed to build the résumé PDF.
+</p>
+
+<p>
+In the future, I’d like to get Tex Live to actually recognize the packages we
+are using within LaTeX, but nothing seems to exist to do this.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">  <span class="org-nix-attribute">buildPhase</span> = <span class="org-string">''</span>
+<span class="org-string">    xelatex -file-line-error -interaction=nonstopmode resume.tex</span>
+<span class="org-string">  ''</span>;
+</pre>
+</div>
+
+<p>
+Here we actually build the <code>xelatex</code> file. These options make it easier to
+debug <code>xelatex</code> when something goes wrong and makes sure we don’t get
+<code>xelatex</code> doesn’t require any user input. It will produce a file called
+<code>resume.pdf</code> that we can use as a résumé.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">  <span class="org-nix-attribute">installPhase</span> = <span class="org-string">''</span>
+<span class="org-string">    cp resume.pdf $out</span>
+<span class="org-string">  ''</span>;
+</pre>
+</div>
+
+<p>
+Finally, we copy this résumé to <code>$out</code> where the derivation will live.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">}
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9af8bb7" class="outline-3">
+<h3 id="org9af8bb7">Running the build</h3>
+<div class="outline-text-3" id="text-org9af8bb7">
+<p>
+This entire document is built with ~org-mode~’s Babel engine. This means that
+we can generate the files needed to build the résumé from scratch. To do
+this, first we must clone this repository (if you haven’t already).
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">git clone https://github.com/matthewbauer/resume
+<span class="org-builtin">cd</span> resume
+</pre>
+</div>
+
+<p>
+Next, we need to open this file in Emacs and generate the files (<i>tangle</i> it
+in Babel lingo). Run this now, if you haven’t already,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">emacs README.org
+</pre>
+</div>
+
+<p>
+Finally, let’s build these files. From Emacs, type the following: <code>C-c C-v t</code>
+(org-babel-tangle). This will take a little bit, but at the end of it you will
+have all of the files <i>tangled</i> inside README.org. You can build the résumé
+with,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nix-build resume.nix
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc357a9c" class="outline-2">
+<h2 id="orgc357a9c">Automating it</h2>
+<div class="outline-text-2" id="text-orgc357a9c">
+<p>
+Sadly, Nix does not understand raw Org mode (yet). We need a bootstrap to
+generate a Nix script from this file to truly automate this. I’ve included it
+here for completeness, but you’ll need to generate it first before Nix will
+work. If you haven’t already, generate this in <code>org-mode</code> by moving the cursor
+into the src block below and pressing <code>C-u C-c C-v t</code> (org-babel-tangle).
+Alternatively, I’ve provided a pregenerated file at <a href="./default.nix">./default.nix</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">{nixpkgs ? <span class="org-nix-constant">&lt;nixpkgs&gt;</span>}: <span class="org-nix-keyword">with</span> <span class="org-nix-builtin">import</span> nixpkgs {};
+<span class="org-nix-keyword">let</span>
+</pre>
+</div>
+
+<p>
+Again, we’re be defining a function. Now, we will be using the let&#x2026;in
+syntax to define a derivation to use.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span class="org-nix-attribute">README</span> = stdenv.mkDerivation {
+  <span class="org-nix-attribute">name</span> = <span class="org-string">"README"</span>;
+  <span class="org-nix-attribute">unpackPhase</span> = <span class="org-string">"true"</span>;
+  <span class="org-nix-attribute">buildInputs</span> = [ emacs ];
+  <span class="org-nix-attribute">installPhase</span> = <span class="org-string">''</span>
+<span class="org-string">    mkdir -p $out</span>
+<span class="org-string">    cd $out</span>
+<span class="org-string">    cp -r </span><span class="org-nix-antiquote">${</span><span class="org-nix-constant">./fonts</span><span class="org-nix-antiquote">}</span><span class="org-string"> fonts</span>
+<span class="org-string">    cp </span><span class="org-nix-antiquote">${</span><span class="org-nix-constant">./README.org</span><span class="org-nix-antiquote">}</span><span class="org-string"> README.org</span>
+<span class="org-string">    emacs --batch -l ob-tangle --eval "(org-babel-tangle-file \"README.org\")"</span>
+<span class="org-string">    cp resume.nix default.nix</span>
+<span class="org-string">  ''</span>;
+};
+</pre>
+</div>
+
+<p>
+The README derivation builds all of the things contained within this
+README.org file. Almost every code block here will make a file that we’ll feed
+into Nix. Fonts are external to the README because they are binary and cannot
+be put in an Org file, but you can view them in <a href="./fonts">./fonts</a>.
+</p>
+
+<p>
+Now, we’ll create another derivation with Nix. This will utilize a little
+known feature of Nix called IFD.
+It might not make sense right now, but it runs the <code>README</code> derivation’s
+<code>resume.nix</code> file as its own Nix expression.
+</p>
+
+<p>
+<i>IFD</i> stands for Import From Derivation. Basically, it means we can import
+data generated in one derivation, <code>README</code>, in Nix to generate another
+derivation. This will bootstrap the <a href="./README.html">./README.html</a> and allow us to avoid
+generated files.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span class="org-nix-keyword">in</span> <span class="org-nix-builtin">import</span> README {<span class="org-nix-keyword">inherit</span> nixpkgs;}
+</pre>
+</div>
+
+<p>
+This can be thought of as a recursive call to Nix. It basically lets us use
+the Nix output of README.org as an input for Nix. The derivation will produce
+a <code>./result</code> file that will contain the output of <code>build.nix</code> for the Building
+it section.
+</p>
+
+<p>
+Now, we can finally build the Résumé! To do this, we just need to run
+<code>nix-build</code> from the command line.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nix-build
+</pre>
+</div>
+
+<p>
+Look at <code>./result</code> and it will be PDF file you can open.
+</p>
+</div>
+
+<div id="outline-container-org979e0f3" class="outline-3">
+<h3 id="org979e0f3">Continous Integration</h3>
+<div class="outline-text-3" id="text-org979e0f3">
+<p>
+Travis makes it easy to run continuous integration on our résumé.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">language</span>: nix
+</pre>
+</div>
+
+<p>
+Travis supports Nix projects out-of-the-box so all that’s really needed is
+the above. However, matrices are useful to make sure it runs on more than one
+machine and accross different versions.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">script</span>: nix-build --arg nixpkgs <span class="org-string">"builtins.fetchTarball \"$NIXPKGS\""</span>
+</pre>
+</div>
+
+<p>
+This line tells Travis what to build. The <code>$NIXPKGS</code> variable should become
+clear after reading the usage below.
+</p>
+
+<p>
+We want to target Linux and macOS. This will make sure the build script is
+portable. Unfortunately, Nix does not support Windows systems and Travis does
+not support any BSDs.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">os</span>:
+  - linux
+  - osx
+</pre>
+</div>
+
+<p>
+Each value of <code>NIXPKGS</code> corresponds to a tarball release of Nixpkgs. This
+means that we can avoid problems that arise when the Nixpkgs repo is broken.
+Any URL to a tarball with a Nixpkgs set will work, but in Nix we call these
+‘channels’. Each channel has a set of tests that are required to run before a
+new release of the channel. You could actually point directly to Nixpkgs HEAD
+using <a href="https://github.com/nixos/nixpkgs/archive/master.tar.gz">GitHub’s archive URL</a> but this would constantly break as you would
+frequently have to rebuild whole packages when you could just let Hydra do it
+for you. You can find a whole listing at <a href="https://nixos.org/channels">NixOS.org</a> but I have included
+the most recent channels below.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">env</span>:
+  - NIXPKGS=nixos.org/channels/nixos-17.09/nixexprs.tar.xz
+  - NIXPKGS=nixos.org/channels/nixpkgs-17.09-darwin/nixexprs.tar.xz
+  - NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+  - NIXPKGS=nixos.org/channels/nixpkgs-unstable/nixexprs.tar.xz
+</pre>
+</div>
+
+<p>
+Travis works with ‘matrices’ meaning that every attribute of one property
+(os) will get crossed with another property (env). We need to modify some of
+these to get a working matrix.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml"><span class="org-variable-name">matrix</span>:
+</pre>
+</div>
+
+<p>
+We exclude some (os, env) pairs here. It doesn’t really make sense to use a
+Darwin channel on Linux or a NixOS channel on macOS.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">  <span class="org-variable-name">exclude</span>:
+    - <span class="org-variable-name">os</span>: linux
+      <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixpkgs-17.09-darwin/nixexprs.tar.xz
+    - <span class="org-variable-name">os</span>: osx
+      <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-17.09/nixexprs.tar.xz
+    - <span class="org-variable-name">os</span>: osx
+      <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+</pre>
+</div>
+
+<p>
+We allow some failure for unstable branches. We don’t expect stable releases
+to always work.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-yaml">  <span class="org-variable-name">allow_failures</span>:
+    - <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+    - <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixpkgs-unstable/nixexprs.tar.xz
+</pre>
+</div>
+
+<p>
+This will end up building five résumés three on Linux machines and two on
+macOS machines. So, using <a href="./.travis.yml">./.travis.yml</a>, you can make Travis automatically
+build a <code>resume.pdf</code> every time you commit a change. You should be able to
+set this up yourself but alternatively you can look at <a href="https://travis-ci.org/matthewbauer/resume">my Travis dashboard</a>.
+</p>
+
+<a href="https://travis-ci.org/matthewbauer/bauer">
+  <img src="https://travis-ci.org/matthewbauer/bauer.svg?branch=master"></img>
+</a>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgc4b5af6" class="outline-2">
+<h2 id="orgc4b5af6">Conclusion</h2>
+<div class="outline-text-2" id="text-orgc4b5af6">
+<p>
+More information on reproducible research is available at <a href="https://reproducibleresearch.net">Reproducible
+Research</a>. My hope is that eventually more things will become ‘reproducible’.
+Technologies like Nix and Babel make this fairly easy but they have not yet
+entered into the average Software Developer’s toolbelt. Reproducible projects
+may take longer to setup, but they lead to more robust software systems.
+</p>
+
+<p>
+Résumé require a careful mix of informative content and flashy styling. Too
+much information and employers will be overwhelmed but too little and
+employers assume you are inexperienced. Likewise, . Perhaps eventually,
+software companies will read through résumés in org-mode instead of PDFs, but
+alas Silicon Valley has not yet reached this level of Nirvana.
+</p>
+
+<p>
+I welcome everyone to fork <a href="https://github.com/matthewbauer/resume">the repo</a> containing these files. You should be able
+to generate your own Résumé by modifying the contents of Semantic info and
+LaTeX document. Any contributions to the process of reproducible résumés are
+welcome and you can open them as issues under that GitHub repo. Alternatively,
+you can email me at <a href="mailto:mjbauer95@gmail.com">mjbauer95@gmail.com</a>.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="archive.html">Other posts</a>
+</div></div>
+</body>
+</html>

@@ -201,6 +201,10 @@ ul.children li {
     padding-bottom: 1em;
 }
 
+ul {
+    margin-bottom: 1em;
+}
+
 li p {
     display: inline;
 }
@@ -451,4 +455,8 @@ pre span.org-nix-comment                 {color:#8D8D84;font-style:italic}
 pre.src-sh {
     background-color: black;
     color: white;
+}
+
+.post-date {
+    margin-top: 2em;
 }

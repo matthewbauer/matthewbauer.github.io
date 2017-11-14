@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="alternate"
+      type="appliation/rss+xml"
+      href="./feed.xml"
+      title="RSS feed for ./">
+<title>Announcing Omnix</title><meta  name="author" content="Matthew Bauer" />
+<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
+<link rel=stylesheet href="../fonts.css" />
+<link rel=stylesheet href="../style.css" /></head>
+<body>
+<div id="preamble" class="status"><div class="header">
+<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
+</div></div>
+<div id="content">
+<div class="post-date">20 Oct 2017</div>
+<h1 class="post-title">Announcing Omnix</h1>
+<p>
+I’ve started a new project that I’m calling Omnix. I don’t want to oversell it
+but I think it’s a really cool project.
+</p>
+
+<p>
+Omnix is based on the Nix package manager and you need to have Nix installed for
+it to work. To install Nix follow the instructions on <a href="https://nixos.org/nix/">the Nix homepage</a>.
+</p>
+
+<div id="outline-container-org03eec45" class="outline-2">
+<h2 id="org03eec45">What does it do?</h2>
+<div class="outline-text-2" id="text-org03eec45">
+<p>
+Omnix allows you to have every app available at your finger tips without
+actually installing every app. It allows you to download apps when you need them
+or just run them when they’re already downloaded. No true installation is
+required, everything is provided just-in-time. This works because Nix’s
+functional model mean that new software can be added with zero side-effects. If
+you run out of space on your computer, just use Nix’s garbage collector!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org04a544f" class="outline-2">
+<h2 id="org04a544f">How can I install it?</h2>
+<div class="outline-text-2" id="text-org04a544f">
+<p>
+Make sure you have Nix installed by running:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">curl https://nixos.org/nix/install | sh
+</pre>
+</div>
+
+<p>
+Now we can actually setup Omnix. 
+</p>
+
+<p>
+Unfortunately, it’s fairly time intensive. First let’s clone the Git repo.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-builtin">cd</span> ~
+git clone https://github.com/matthewbauer/omnix
+<span class="org-builtin">cd</span> omnix
+</pre>
+</div>
+
+<p>
+Now install the Omnix drv:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">nix-env -if.
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgcb63b68" class="outline-2">
+<h2 id="orgcb63b68">How does it work?</h2>
+<div class="outline-text-2" id="text-orgcb63b68">
+<p>
+Omnix is a kind of <i>lazy</i> app store. That’s lazy in the functional programming
+sense where values aren’t evaluated until their needed. With Omnix, packages
+aren’t downloaded until their invoked.
+</p>
+
+<p>
+Omnix can create three different types of wrappers:
+</p>
+
+<ul class="org-ul">
+<li><code>/bin/*</code>: This is where all of the basic commands are put. Running one of
+these wrapper will download that command and execute it for you.</li>
+<li><code>/Applications/*.app</code>: These are macOS skeleton bundles that you can open
+through Finder.app like any other software. To save space, only a few
+essential parts of the .app folder have been kept.</li>
+<li><code>/share/applications</code>: This is the Freedesktop Linux spec. Each of these apps
+are identical to the ones found in each pakage.</li>
+</ul>
+
+<p>
+Invoking any of these wrapper may take time dependening on how many and how big
+of packages are needed.
+</p>
+
+<p>
+Here’s what a wrapper looks like internally:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">!/nix/store/&#8230;-bash-4.4-p12/bin/</span><span class="org-keyword">sh</span>
+/nix/store/&#8230;-omnix/share/omnix/omnix.sh <span class="org-sh-escaped-newline">\</span>
+  /nix/store/&#8230;-nixexprs.tar.xz qt4.out <span class="org-sh-escaped-newline">\</span>
+  Applications/Assistant.app/Contents/MacOS/Assistant <span class="org-string">'%s %s'</span> $<span class="org-variable-name">@</span>
+</pre>
+</div>
+
+<p>
+<code>omnix.sh</code> is the ensurer script that will fetch the <code>qt4.out</code> for you.
+Arg 1 keeps a reference to Nixpkgs so we can make sure we get the right
+attribute. Arg 2 is the Nixpkgs attribute. Arg 3 is the path to the binary
+within Nixpkgs and arg 4 is how to execute the command.
+</p>
+
+<p>
+<code>omnix.sh</code> is a pretty straightforward script that just build the Nixpkgs
+attribute and then runs it:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-comment-delimiter">#</span><span class="org-comment">!/bin/</span><span class="org-keyword">sh</span>
+
+<span class="org-keyword">if</span> [ $<span class="org-variable-name">#</span> -lt 4 ]; <span class="org-keyword">then</span>
+    cat &lt;&lt;EOF &gt;&amp;2
+<span class="org-sh-heredoc">This is a wrapper script for Omnix that is not mean to be run on its own.</span>
+<span class="org-sh-heredoc">Please see Omnix documentation for more info.</span>
+<span class="org-sh-heredoc">EOF</span>
+    <span class="org-keyword">exit</span> 1
+<span class="org-keyword">fi</span>
+
+<span class="org-keyword">if</span> [ -z <span class="org-string">"$OMNIX_AUTO_INSTALL"</span> ]; <span class="org-keyword">then</span>
+    <span class="org-variable-name">OMNIX_AUTO_INSTALL</span>=0
+<span class="org-keyword">fi</span>
+
+<span class="org-variable-name">nixpkgs</span>=<span class="org-string">"$1"</span>; <span class="org-builtin">shift</span>
+<span class="org-variable-name">attr</span>=<span class="org-string">"$1"</span>; <span class="org-builtin">shift</span>
+<span class="org-variable-name">path</span>=<span class="org-string">"$1"</span>; <span class="org-builtin">shift</span>
+<span class="org-variable-name">cmd</span>=<span class="org-string">"$1"</span>; <span class="org-builtin">shift</span>
+
+<span class="org-variable-name">expr</span>=<span class="org-string">"(import $nixpkgs {}).$attr"</span>
+<span class="org-variable-name">drv</span>=$(nix-instantiate --no-gc-warning -E <span class="org-string">"$expr"</span>)
+
+<span class="org-keyword">if</span> [ -z <span class="org-string">"$drv"</span> ]; <span class="org-keyword">then</span>
+    cat &lt;&lt;EOF &gt;&amp;2
+<span class="org-sh-heredoc">Nix cannot evaluate $expr.</span>
+<span class="org-sh-heredoc">EOF</span>
+    <span class="org-keyword">exit</span> 1
+<span class="org-keyword">fi</span>
+
+<span class="org-variable-name">out</span>=$(nix-store --no-gc-warning -r <span class="org-string">"$drv"</span> | head -1)
+
+<span class="org-keyword">if</span> <span class="org-negation-char">!</span> [ -d <span class="org-string">"$out"</span> ]; <span class="org-keyword">then</span>
+    cat &lt;&lt;EOF &gt;&amp;2
+<span class="org-sh-heredoc">Nix cannot build $attr.</span>
+<span class="org-sh-heredoc">EOF</span>
+    <span class="org-keyword">exit</span> 1
+<span class="org-keyword">fi</span>
+
+$(printf <span class="org-string">"$cmd"</span> <span class="org-string">"$out/$path"</span> <span class="org-string">"$@"</span>)
+
+<span class="org-keyword">if</span> [ <span class="org-string">"$OMNIX_AUTO_INSTALL"</span> -eq 1 ]; <span class="org-keyword">then</span>
+    nix-env -i <span class="org-string">"$out"</span>
+<span class="org-keyword">fi</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb1b9930" class="outline-2">
+<h2 id="orgb1b9930">Contact</h2>
+<div class="outline-text-2" id="text-orgb1b9930">
+<p>
+Tell me what you think about this project! There are many improvements to be
+made.
+</p>
+</div>
+</div>
+</div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="archive.html">Other posts</a>
+</div></div>
+</body>
+</html>

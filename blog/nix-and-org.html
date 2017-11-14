@@ -177,7 +177,7 @@ package using the <code>stdenv</code> and <code>fetchurl</code> defined in <a hr
 
 <p>
 Let’s see if this works. Type <code>M‑x</code> (which means hold down the meta key and
-press x) and then type <code>org-babel-tangle-file</code> followed by enter. After this was
+press x) and then type <code>org‑babel‑tangle‑file</code> followed by enter. After this was
 run, you’ll have a file called <code>hello.nix</code> and a file called <code>bootstrap.nix</code> in
 the current directory. Open up a terminal and we can build Hello World.
 </p>
@@ -200,7 +200,7 @@ possible in Nix?
 Recently Nix has added a feature called IFD which stands for <b>Import From
 Derivation</b>. It allows us to use generated Nix expressions within another Nix
 expression. That way we can derive hello.nix from a Nix expression and then
-derive hello.nix, avoiding <code>org-babel-tangle-file</code> completely.
+derive hello.nix, avoiding <code>org‑babel‑tangle‑file</code> completely.
 </p>
 
 <p>
@@ -232,7 +232,7 @@ Org’s tangler.
 
 <p>
 We still need to tangle everything one last time. Type <code>M‑x</code> and then type
-<code>org-babel-tangle-file</code> followed by enter. A new <code>default.nix</code> file will appear.
+<code>org‑babel‑tangle‑file</code> followed by enter. A new <code>default.nix</code> file will appear.
 That <code>default.nix</code> file along with <code>test.org</code> is all you need to build this
 expression. To verify this, let’s first remove those old files so we know they
 aren’t being referenced accidentally.
@@ -258,7 +258,7 @@ Hello World!
 <p>
 In this guide I’ve shown you an easy way to write Nix expressions in Org. Now
 that you have this environment setup, you should try hacking around <code>test.org</code>.
-You can always run <code>nix-build</code> to see if a binary builds. Try using other
+You can always run <code>nix‑build</code> to see if a binary builds. Try using other
 sources, creating a new derivation, adding other dependencies, or hack something
 else up. I recommend reading through <a href="https://nixos.org/nixos/nix-pills/">the Nix Pills series</a> for learning Nix and
 <a href="http://orgmode.org/guide/">the Org Mode Guide</a> for learning Org.
