@@ -6,8 +6,8 @@
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="alternate"
       type="appliation/rss+xml"
-      href="./feed.xml"
-      title="RSS feed for ./">
+      href="https://matthewbauer.us/blog/feed.xml"
+      title="RSS feed for https://matthewbauer.us/blog/">
 <title>Matthew's Blog</title><meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
 <link rel=stylesheet href="../fonts.css" />
@@ -16,7 +16,7 @@
 <div id="preamble" class="status"><div class="header">
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
 </div></div>
-<div id="content"><div class="post-date">10 Feb 2018</div><h1 class="post-title"><a href="./nix-buffer.html">nix-buffer: nix-shell in Emacs</a></h1>
+<div id="content"><div class="post-date">10 Feb 2018</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/nix-buffer.html">nix-buffer: nix-shell in Emacs</a></h1>
 <p>
 Shea Levy has a wonderful package out for users of Nix and Emacs. It’s
 called <a href="https://github.com/shlevy/nix-buffer">nix-buffer</a> and it greatly improves working on Nix stuff in
@@ -45,6 +45,12 @@ To setup, just create <code>dir-locals.nix</code> that looks like this:
 You can put anything from Nixpkgs inside of <code>withPackages</code>. That path
 is added to your exec-path in Emacs. Using this you can wrap your
 project in a container and avoid conflicts between project configurations!
+</p>
+
+<p>
+There’s lot of future extensions for this. Ideally we could skip and
+the <code>dir-locals.nix</code> configuration and automatically detect what
+dependencies you need based on your <code>default.nix</code> file.
 </p>
 <div id="archive">
   <a href="archive.html">Older posts</a>
