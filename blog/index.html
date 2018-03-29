@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN""https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -8,7 +7,8 @@
       type="appliation/rss+xml"
       href="https://matthewbauer.us/blog/feed.xml"
       title="RSS feed for https://matthewbauer.us/blog/">
-<title>Matthew's Blog</title><meta  name="author" content="Matthew Bauer" />
+<title>Matthew's Blog</title>
+<meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
 <link rel=stylesheet href="../fonts.css" />
 <link rel=stylesheet href="../style.css" /></head>
@@ -16,44 +16,66 @@
 <div id="preamble" class="status"><div class="header">
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
 </div></div>
-<div id="content"><div class="post-date">10 Feb 2018</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/nix-buffer.html">nix-buffer: nix-shell in Emacs</a></h1>
+<div id="content">
+
+<div class="post-date">28 Mar 2018</div><h1 class="post-title"><a href="nixpkgs-fresh.html">66% of Nixpkgs are up-to-date</a></h1>
 <p>
-Shea Levy has a wonderful package out for users of Nix and Emacs. It’s
-called <a href="https://github.com/shlevy/nix-buffer">nix-buffer</a> and it greatly improves working on Nix stuff in
-Emacs. To try it just get it from MELPA by running <code>M-x
-package-install&lt;RET&gt;nix-buffer</code>.
+Just wanted to congratulate everyone for all of the work in keeping
+Nixpkgs up-to-date!
 </p>
 
 <p>
-To use it in a project you need to create a new file in your project
-directory called <code>dir-locals.nix</code>. It works a lot like
-<code>.dir-locals.el</code> but it allows you to evaluate Nix expressions.
+Repology has just updated our stats and we have shown significant
+improvement. 66% of nixpkgs-unstable packages are up-to-date, with a
+total of 6112 up-to-date packages<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. Nixpkgs is slowly growing to
+match package sets that come in many of the big Linux distros. We now
+have more up-to-date packages than rolling release distros Arch (5924)
+and Manjaro (5708)! We certainly have a ways to go to compete with
+heavyweights like FreeBSD Ports (15410), DragonFly BSD Ports (14268),
+and Debian (14915) but these are ancient projects that have had a huge
+headstart. We are definitely making progress and it’s visible in the
+Repology graphs<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </p>
 
 <p>
-To setup, just create <code>dir-locals.nix</code> that looks like this:
+For comparison, in February, nixpkgs-unstable had 60% of packages
+up-to-date, with a total of 5439 up-to-date packages<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. This kind
+of progress over 1 month is tremendously helpful. Remember that most
+of these updates will be included in 18.09, not the soon to be release
+18.03. This protects users from potentially breaking changes as well
+as giving maintainers plenty of time to verify that the updates have
+not had any negative effects.
 </p>
 
-<div class="org-src-container">
+<p>
+Ryan Mulligan’s <a href="https://github.com/ryantm/nix-update">nix-update</a> has made updating packages much easier and
+I think it will be a game changer for Nixpkgs in the long run. There
+are still some kinks in it but I think it is slowly getting better. It
+has certainly been a headache to handle the huge increase in pull
+requests, but we are slowly clearing through that glut of outdated
+software. If an update to nixpkgs-unstable breaks something for you,
+please be sure to open an issue.
+</p>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
 
-<pre class="src src-nix"><span class="org-nix-keyword">let</span> <span class="org-nix-attribute">pkgs</span> = <span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {};
-<span class="org-nix-keyword">in</span> <span class="org-nix-keyword">with</span> pkgs; nixBufferBuilders.withPackages [ &#8230; ]
-</pre>
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://repology.org/statistics/newest">https://repology.org/statistics/newest</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://repology.org/repository/nix_unstable">https://repology.org/repository/nix_unstable</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://web.archive.org/web/20180216091523/https://repology.org/statistics/newest">https://web.archive.org/web/20180216091523/https://repology.org/statistics/newest</a>
+</p></div></div>
+
+
 </div>
-
-<p>
-You can put anything from Nixpkgs inside of <code>withPackages</code>. That path
-is added to your exec-path in Emacs. Using this you can wrap your
-project in a container and avoid conflicts between project configurations!
-</p>
-
-<p>
-There’s lot of future extensions for this. Ideally we could skip and
-the <code>dir-locals.nix</code> configuration and automatically detect what
-dependencies you need based on your <code>default.nix</code> file.
-</p>
-<div id="archive">
-  <a href="archive.html">Older posts</a>
+</div><div id="archive">
+<a href="archive.html">Other posts</a>
 </div>
 </div>
 </body>
