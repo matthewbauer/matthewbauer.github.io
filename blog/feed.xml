@@ -4,7 +4,69 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Thu, 29 Mar 2018 15:35:22 -0500</lastBuildDate>
+<lastBuildDate>Thu, 29 Mar 2018 15:39:51 -0500</lastBuildDate>
+<item>
+  <title>66% of Nixpkgs are up-to-date</title>
+  <description><![CDATA[
+<p>
+Just wanted to congratulate everyone for all of the work in keeping
+Nixpkgs up-to-date!
+</p>
+
+<p>
+Repology has just updated our stats and we have shown significant
+improvement. 66% of nixpkgs-unstable packages are up-to-date, with a
+total of 6112 up-to-date packages<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. Nixpkgs is slowly growing to
+match package sets that come in many of the big Linux distros. We now
+have more up-to-date packages than rolling release distros Arch (5924)
+and Manjaro (5708)! We certainly have a ways to go to compete with
+heavyweights like FreeBSD Ports (15410), DragonFly BSD Ports (14268),
+and Debian (14915) but these are ancient projects that have had a huge
+headstart. We are definitely making progress and it’s visible in the
+Repology graphs<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
+</p>
+
+<p>
+For comparison, in February, nixpkgs-unstable had 60% of packages
+up-to-date, with a total of 5439 up-to-date packages<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. This kind
+of progress over 1 month is tremendously helpful. Remember that most
+of these updates will be included in 18.09, not the soon to be release
+18.03. This protects users from potentially breaking changes as well
+as giving maintainers plenty of time to verify that the updates have
+not had any negative effects.
+</p>
+
+<p>
+Ryan Mulligan’s <a href="https://github.com/ryantm/nix-update">nix-update</a> has made updating packages much easier and
+I think it will be a game changer for Nixpkgs in the long run. There
+are still some kinks in it but I think it is slowly getting better. It
+has certainly been a headache to handle the huge increase in pull
+requests, but we are slowly clearing through that glut of outdated
+software. If an update to nixpkgs-unstable breaks something for you,
+please be sure to open an issue.
+</p>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://repology.org/statistics/newest">https://repology.org/statistics/newest</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://repology.org/repository/nix_unstable">https://repology.org/repository/nix_unstable</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<a href="https://web.archive.org/web/20180216091523/https://repology.org/statistics/newest">https://web.archive.org/web/20180216091523/https://repology.org/statistics/newest</a>
+</p></div></div>
+
+
+</div>
+</div>]]></description>
+  <link>https://matthewbauer.us/blog/nixpkgs-fresh.html</link>
+  <pubDate>Wed, 28 Mar 2018 19:00:00 -0500</pubDate>
+</item>
 <item>
   <title>nix-buffer: nix-shell in Emacs</title>
   <description><![CDATA[
@@ -5818,68 +5880,6 @@ your channel. Having this file available means you can place this repo in
 ]]></description>
   <link>https://matthewbauer.us/blog/bauer.html</link>
   <pubDate>Sun, 05 Nov 2017 18:00:00 -0600</pubDate>
-</item>
-<item>
-  <title>66% of Nixpkgs are up-to-date</title>
-  <description><![CDATA[
-<p>
-Just wanted to congratulate everyone for all of the work in keeping
-Nixpkgs up-to-date!
-</p>
-
-<p>
-Repology has just updated our stats and we have shown significant
-improvement. 66% of nixpkgs-unstable packages are up-to-date, with a
-total of 6112 up-to-date packages<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. Nixpkgs is slowly growing to
-match package sets that come in many of the big Linux distros. We now
-have more up-to-date packages than rolling release distros Arch (5924)
-and Manjaro (5708)! We certainly have a ways to go to compete with
-heavyweights like FreeBSD Ports (15410), DragonFly BSD Ports (14268),
-and Debian (14915) but these are ancient projects that have had a huge
-headstart. We are definitely making progress and it’s visible in the
-Repology graphs<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
-</p>
-
-<p>
-For comparison, in February, nixpkgs-unstable had 60% of packages
-up-to-date, with a total of 5439 up-to-date packages<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. This kind
-of progress over 1 month is tremendously helpful. Remember that most
-of these updates will be included in 18.09, not the soon to be release
-18.03. This protects users from potentially breaking changes as well
-as giving maintainers plenty of time to verify that the updates have
-not had any negative effects.
-</p>
-
-<p>
-Ryan Mulligan’s <a href="https://github.com/ryantm/nix-update">nix-update</a> has made updating packages much easier and
-I think it will be a game changer for Nixpkgs in the long run. There
-are still some kinks in it but I think it is slowly getting better. It
-has certainly been a headache to handle the huge increase in pull
-requests, but we are slowly clearing through that glut of outdated
-software. If an update to nixpkgs-unstable breaks something for you,
-please be sure to open an issue.
-</p>
-<div id="footnotes">
-<h2 class="footnotes">Footnotes: </h2>
-<div id="text-footnotes">
-
-<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://repology.org/statistics/newest">https://repology.org/statistics/newest</a>
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://repology.org/repository/nix_unstable">https://repology.org/repository/nix_unstable</a>
-</p></div></div>
-
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-<a href="https://web.archive.org/web/20180216091523/https://repology.org/statistics/newest">https://web.archive.org/web/20180216091523/https://repology.org/statistics/newest</a>
-</p></div></div>
-
-
-</div>
-</div>]]></description>
-  <link>https://matthewbauer.us/blog/nixpkgs-fresh.html</link>
-  <pubDate>Sun, 15 Oct 2017 23:26:00 -0500</pubDate>
 </item>
 <item>
   <title>Nix and Org</title>
