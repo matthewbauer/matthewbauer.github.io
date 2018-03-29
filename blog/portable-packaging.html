@@ -1,0 +1,502 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<link rel="alternate"
+      type="appliation/rss+xml"
+      href="https://matthewbauer.us/blog/feed.xml"
+      title="RSS feed for https://matthewbauer.us/blog/">
+<title>Portable Packaging in Nix</title>
+<meta  name="author" content="Matthew Bauer" />
+<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
+<link rel=stylesheet href="../fonts.css" />
+<link rel=stylesheet href="../style.css" /></head>
+<body>
+<div id="preamble" class="status">
+<div class="header">
+<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
+</div></div>
+<div id="content">
+<div class="post-date">27 Mar 2018</div><h1 class="post-title"><a href="portable-packaging.html">Portable Packaging in Nix</a></h1>
+<p>
+One of the goals of Nixpkgs is to ensure that packages are portable.
+This means that when a package builds on an Intel64 Linux machine
+should be buildable on Intel32 Linux, ARM Linux, and even macOS
+machines (in fact, any machine should work, provided a valid standard
+environment). Issues in various packages come up to make this
+difficult but we try to make things as consistent as possible. This is
+in sharp contrast to macOS-specific package managers like
+Homebrew<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup> and almost all Linux package managers.
+</p>
+
+<p>
+Like most Linux distributions, NixOS uses GNU software for much of its
+userland. This tradition of GNU/Linux<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup> means that most Linux
+software will only build with GNU tools.
+</p>
+
+<p>
+Let’s look at the packages guaranteed to be in a standard environment
+within Nixpkgs. These are some of the few packages that you can assume
+exist in Nixpkgs without listing them explicitly. Because these
+“common paths” are required to bootstrap the standard environment
+completely, we can safely assume that they will always be available in
+Nixpkgs.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-right" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Name</th>
+<th scope="col" class="org-left">Nix attribute</th>
+<th scope="col" class="org-left">Maintainer</th>
+<th scope="col" class="org-left">Tools</th>
+<th scope="col" class="org-left">Created by</th>
+<th scope="col" class="org-right">Date</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Unix shell</td>
+<td class="org-left">bash</td>
+<td class="org-left">GNU</td>
+<td class="org-left">sh</td>
+<td class="org-left">Thompson</td>
+<td class="org-right">1971</td>
+</tr>
+
+<tr>
+<td class="org-left">coreutils</td>
+<td class="org-left">coreutils</td>
+<td class="org-left">GNU</td>
+<td class="org-left">cat, cp, etc.</td>
+<td class="org-left">Thompson</td>
+<td class="org-right">1971</td>
+</tr>
+
+<tr>
+<td class="org-left">findutils</td>
+<td class="org-left">findutils</td>
+<td class="org-left">GNU</td>
+<td class="org-left">find, xargs</td>
+<td class="org-left">Haight</td>
+<td class="org-right">1974</td>
+</tr>
+
+<tr>
+<td class="org-left">diffutils</td>
+<td class="org-left">diffutils</td>
+<td class="org-left">GNU</td>
+<td class="org-left">diff</td>
+<td class="org-left">McIlroy</td>
+<td class="org-right">1974</td>
+</tr>
+
+<tr>
+<td class="org-left">tar</td>
+<td class="org-left">gnutar</td>
+<td class="org-left">GNU</td>
+<td class="org-left">tar</td>
+<td class="org-left">Fenlason</td>
+<td class="org-right">1990</td>
+</tr>
+
+<tr>
+<td class="org-left">gzip</td>
+<td class="org-left">gzip</td>
+<td class="org-left">GNU</td>
+<td class="org-left">gzip</td>
+<td class="org-left">Gailly &amp; Adler</td>
+<td class="org-right">1992</td>
+</tr>
+
+<tr>
+<td class="org-left">bzip2</td>
+<td class="org-left">bzip2</td>
+<td class="org-left">Seward</td>
+<td class="org-left">bzip2</td>
+<td class="org-left">Seward</td>
+<td class="org-right">1996</td>
+</tr>
+
+<tr>
+<td class="org-left">xz</td>
+<td class="org-left">xz</td>
+<td class="org-left">Tukaani</td>
+<td class="org-left">xz</td>
+<td class="org-left">Collin</td>
+<td class="org-right">2005</td>
+</tr>
+
+<tr>
+<td class="org-left">sed</td>
+<td class="org-left">gnused</td>
+<td class="org-left">GNU</td>
+<td class="org-left">sed</td>
+<td class="org-left">McMahon</td>
+<td class="org-right">1974</td>
+</tr>
+
+<tr>
+<td class="org-left">grep</td>
+<td class="org-left">gnugrep</td>
+<td class="org-left">GNU</td>
+<td class="org-left">grep</td>
+<td class="org-left">Thompson</td>
+<td class="org-right">1974</td>
+</tr>
+
+<tr>
+<td class="org-left">patch</td>
+<td class="org-left">gnupatch</td>
+<td class="org-left">GNU</td>
+<td class="org-left">patch</td>
+<td class="org-left">Wall</td>
+<td class="org-right">1985</td>
+</tr>
+
+<tr>
+<td class="org-left">awk</td>
+<td class="org-left">gawk</td>
+<td class="org-left">GNU</td>
+<td class="org-left">awk</td>
+<td class="org-left">Aho, Weinberger &amp; Kernighan</td>
+<td class="org-right">1977</td>
+</tr>
+
+<tr>
+<td class="org-left">make</td>
+<td class="org-left">gnumake</td>
+<td class="org-left">GNU</td>
+<td class="org-left">make</td>
+<td class="org-left">Feldman</td>
+<td class="org-right">1976</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The tools in the standard environment have a long history dating back
+to the original version of Unix (1975)<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. While Nix
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Package</th>
+<th scope="col" class="org-left">Linux &amp; Hurd</th>
+<th scope="col" class="org-left">BSDs</th>
+<th scope="col" class="org-left">Darwin (macOS)</th>
+<th scope="col" class="org-left">MinGW (Windows)</th>
+<th scope="col" class="org-left">&#xa0;</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">C Compiler</td>
+<td class="org-left">GCC (GNU)</td>
+<td class="org-left">Clang (LLVM)</td>
+<td class="org-left">Clang (LLVM)</td>
+<td class="org-left">Visual Studio</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Standard C Library</td>
+<td class="org-left">Glibc (GNU)</td>
+<td class="org-left">libc ()</td>
+<td class="org-left">libSystem (Apple)</td>
+<td class="org-left">MSVCRT</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+
+<tr>
+<td class="org-left">Standard C++ Library</td>
+<td class="org-left">libstdc++</td>
+<td class="org-left">libstdc++</td>
+<td class="org-left">libc++</td>
+<td class="org-left">MSVCP</td>
+<td class="org-left">&#xa0;</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Traditionally, the GNU project’s Glibc has been assumed in NixOS.
+Glibc provides us with a standard C library, but is very closely
+coupled with Linux. In fact, Glibc will not run on macOS at all. Many
+incompatibilities will naturally exist between libSystem and Glibc.
+For instance, both Glibc and libSystem provides a number of built-in
+“bonus libraries” that are always available.
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">Library</th>
+<th scope="col" class="org-left">Glibc</th>
+<th scope="col" class="org-left">libSystem</th>
+<th scope="col" class="org-left">musl</th>
+<th scope="col" class="org-left">MSVCRT</th>
+<th scope="col" class="org-left">BSD libc</th>
+<th scope="col" class="org-left">Bionic</th>
+<th scope="col" class="org-left">Newlib</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">libm</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libiconv</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libintl</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libpthread</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libinfo</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libcurses</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libresolv</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">librt</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libcrypt</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libxnet</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libdl</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+
+<tr>
+<td class="org-left">libutil</td>
+<td class="org-left">[ ]</td>
+<td class="org-left">[X]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+<td class="org-left">[?]</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+This presents a challenge to
+</p>
+
+<div id="outline-container-orgac96891" class="outline-2">
+<h2 id="orgac96891"><span class="section-number-2">1</span> FAQs</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org8702a39" class="outline-3">
+<h3 id="org8702a39"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Not all packages are portable. In these cases we have a way to
+ensure that GCC is used as the compiler. For example, the tool
+"masscan" will only build with GCC.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span class="org-nix-attribute">masscan</span> = callPackage <span class="org-nix-constant">../tools/security/masscan</span> {
+  <span class="org-nix-attribute">stdenv</span> = gccStdenv;
+};
+</pre>
+</div>
+
+<p>
+gccStdenv will ensure that our standard environment uses GCC
+instead of the default (which will depend on what platform you
+use). Likewise if you’re package requires Clang to build, you can
+do the same.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span class="org-nix-attribute">afl</span> = callPackage <span class="org-nix-constant">../tools/security/afl</span> {
+  <span class="org-nix-attribute">stdenv</span> = clangStdenv;
+};
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org59567a8" class="outline-3">
+<h3 id="org59567a8"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
+<div class="outline-text-3" id="text-1-2">
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+LinuxBrew is available for Linux systems, but it is technically
+a fork of Homebrew.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+While rms insists we always call it GNU/Linux, in Nixpkgs, at
+least in theory we can build a Linux
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+You will find a few notable additions
+</p></div></div>
+
+
+</div>
+</div></div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="archive.html">Other posts</a>
+</div></div>
+</body>
+</html>
