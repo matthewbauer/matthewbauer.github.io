@@ -4,7 +4,19 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Thu, 29 Mar 2018 15:41:45 -0500</lastBuildDate>
+<lastBuildDate>Sat, 31 Mar 2018 18:38:47 -0500</lastBuildDate>
+<item>
+  <title>2018 Summer</title>
+  <description><![CDATA[
+<p>
+Quick post to annouce summer plans. I have accepted a summer
+internship position at <a href="https://obsidian.systems">Obsidian Systems</a> in <a href="https://en.wikipedia.org/wiki/New_York_City">the greatest city in the
+world</a>. Very excited to be working with a team of really smart people.
+</p>
+]]></description>
+  <link>https://matthewbauer.us/blog/2018-summer.html</link>
+  <pubDate>Fri, 30 Mar 2018 19:00:00 -0500</pubDate>
+</item>
 <item>
   <title>66% of Nixpkgs are up-to-date</title>
   <description><![CDATA[
