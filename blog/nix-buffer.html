@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
@@ -8,17 +7,18 @@
       type="appliation/rss+xml"
       href="https://matthewbauer.us/blog/feed.xml"
       title="RSS feed for https://matthewbauer.us/blog/">
-<title>nix-buffer: nix-shell in Emacs</title><meta  name="author" content="Matthew Bauer" />
+<title>nix-buffer: nix-shell in Emacs</title>
+<meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
 <link rel=stylesheet href="../fonts.css" />
 <link rel=stylesheet href="../style.css" /></head>
 <body>
-<div id="preamble" class="status"><div class="header">
+<div id="preamble" class="status">
+<h1>
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</div></div>
+</h1></div>
 <div id="content">
-<div class="post-date">11 Feb 2018</div>
-<h1 class="post-title">nix-buffer: nix-shell in Emacs</h1>
+<div class="post-date">10 Feb 2018</div><h1 class="post-title"><a href="nix-buffer.html">nix-buffer: nix-shell in Emacs</a></h1>
 <p>
 Shea Levy has a wonderful package out for users of Nix and Emacs. It’s
 called <a href="https://github.com/shlevy/nix-buffer">nix-buffer</a> and it greatly improves working on Nix stuff in
@@ -37,7 +37,6 @@ To setup, just create <code>dir-locals.nix</code> that looks like this:
 </p>
 
 <div class="org-src-container">
-
 <pre class="src src-nix"><span class="org-nix-keyword">let</span> <span class="org-nix-attribute">pkgs</span> = <span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {};
 <span class="org-nix-keyword">in</span> <span class="org-nix-keyword">with</span> pkgs; nixBufferBuilders.withPackages [ &#8230; ]
 </pre>

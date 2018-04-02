@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="alternate"
       type="appliation/rss+xml"
-      href="./feed.xml"
-      title="RSS feed for ./">
-<title>Why <a href="https://nixos.org/nix/">Nix</a>?</title><meta  name="author" content="Matthew Bauer" />
+      href="https://matthewbauer.us/blog/feed.xml"
+      title="RSS feed for https://matthewbauer.us/blog/">
+<title>Why Nix?</title>
+<meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
 <link rel=stylesheet href="../fonts.css" />
 <link rel=stylesheet href="../style.css" /></head>
 <body>
-<div id="preamble" class="status"><div class="header">
+<div id="preamble" class="status">
+<h1>
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</div></div>
+</h1></div>
 <div id="content">
-<div class="post-date">21 Nov 2017</div>
-<h1 class="post-title">Why <a href="https://nixos.org/nix/">Nix</a>?</h1>
+<div class="post-date">20 Nov 2017</div><h1 class="post-title"><a href="why-nix.html">Why Nix?</a></h1>
 <p>
 <b>THIS IS A WORK IN PROGRESS ESSAY</b>
 </p>
@@ -29,7 +29,7 @@ to how the average package manager works. You expect it to be able to install
 and uninstall apps and services and then mostly get out of the way. With that in
 mind, you look for ease-of-use, community support, and number of packages in
 your package manager. These are all important in any package manager and Nix
-compares well in some of these metrics<sup><a id="fnr.1" name="fnr.1" class="footref" href="#fn.1">1</a></sup>. But just looking at this, you’ll
+compares well in some of these metrics<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. But just looking at this, you’ll
 miss what makes Nix useful.
 </p>
 
@@ -43,19 +43,19 @@ model of package management takes some getting used to.
 <p>
 Packages are represented in Nix as a special data type called a derivation. The
 name <b>derivation</b> comes from the idea that each package is <i>derived</i> from some
-inputs like source code, libraries, and build tools<sup><a id="fnr.2" name="fnr.2" class="footref" href="#fn.2">2</a></sup>. Each derivation has
+inputs like source code, libraries, and build tools<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. Each derivation has
 its own directory, unique to every unique derivation written in code.
 </p>
 
 <p>
 Together, these ideas make Nix really useful. To demonstrate its usefulness,
 I’ve outlined three points where Nix is much better than an ordinary package
-manager. There are many others<sup><a id="fnr.3" name="fnr.3" class="footref" href="#fn.3">3</a></sup> but these are the ones that I think are
+manager. There are many others<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup> but these are the ones that I think are
 most convincing.
 </p>
 
-<div id="outline-container-sec-1" class="outline-2">
-<h2 id="sec-1"><span class="todo TODO">TODO</span> Building</h2>
+<div id="outline-container-org90454e2" class="outline-2">
+<h2 id="org90454e2"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Building</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Package managers like RPM or Homebrew think of packages as tables.
@@ -63,21 +63,21 @@ Package managers like RPM or Homebrew think of packages as tables.
 </div>
 </div>
 
-<div id="outline-container-sec-2" class="outline-2">
-<h2 id="sec-2"><span class="todo TODO">TODO</span> Using packages without installing</h2>
+<div id="outline-container-org9b32d4a" class="outline-2">
+<h2 id="org9b32d4a"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> Using packages without installing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-We are so used to installing software to use it. The Nix model gives you 
+We are so used to installing software to use it. The Nix model gives you
 </p>
 </div>
 </div>
 
-<div id="outline-container-sec-3" class="outline-2">
-<h2 id="sec-3"><span class="todo TODO">TODO</span> Rollbacks</h2>
+<div id="outline-container-org19f0506" class="outline-2">
+<h2 id="org19f0506"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> Rollbacks</h2>
 </div>
 
-<div id="outline-container-sec-4" class="outline-2">
-<h2 id="sec-4">Comments</h2>
+<div id="outline-container-orgf698c67" class="outline-2">
+<h2 id="orgf698c67"><span class="section-number-2">4</span> Comments</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Thanks for reading! I’ve been trying to improve my writing skills. This blog
@@ -90,15 +90,15 @@ post is part of that effort. Feedback on this is welcome. My email is
 <h2 class="footnotes">Footnotes: </h2>
 <div id="text-footnotes">
 
-<div class="footdef"><sup><a id="fn.1" name="fn.1" class="footnum" href="#fnr.1">1</a></sup> <p class="footpara">
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
 Not all, but we’re improving every day. Usability is still a major issue.
-</p></div>
+</p></div></div>
 
-<div class="footdef"><sup><a id="fn.2" name="fn.2" class="footnum" href="#fnr.2">2</a></sup> </div>
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"></div></div>
 
-<div class="footdef"><sup><a id="fn.3" name="fn.3" class="footnum" href="#fnr.3">3</a></sup> <p class="footpara">
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
 For more features of Nix, you can checkout the <a href="https://nixos.org/nix/">Nix website</a>.
-</p></div>
+</p></div></div>
 
 
 </div>

@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="alternate"
       type="appliation/rss+xml"
-      href="./feed.xml"
-      title="RSS feed for ./">
-<title>Reproducible résumés</title><meta  name="author" content="Matthew Bauer" />
+      href="https://matthewbauer.us/blog/feed.xml"
+      title="RSS feed for https://matthewbauer.us/blog/">
+<title>Reproducible résumés</title>
+<meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
 <link rel=stylesheet href="../fonts.css" />
 <link rel=stylesheet href="../style.css" /></head>
 <body>
-<div id="preamble" class="status"><div class="header">
+<div id="preamble" class="status">
+<h1>
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</div></div>
+</h1></div>
 <div id="content">
-<div class="post-date">13 Nov 2017</div>
-<h1 class="post-title">Reproducible résumés</h1>
+<div class="post-date">12 Nov 2017</div><h1 class="post-title"><a href="resume.html">Reproducible résumés</a></h1>
 <p>
 Recently, ‘reproducible’ papers have appeared in Academia. The idea is to make
 all of a paper’s data and code openly available so that readers can reproduce
@@ -44,9 +44,9 @@ At the end of this guide, you should have all of the information needed produce
 a PDF version of your résume.
 </p>
 
-<div id="outline-container-orgf751c32" class="outline-2">
-<h2 id="orgf751c32">The Résumé</h2>
-<div class="outline-text-2" id="text-orgf751c32">
+<div id="outline-container-org6d9b3f5" class="outline-2">
+<h2 id="org6d9b3f5"><span class="section-number-2">1</span> The Résumé</h2>
+<div class="outline-text-2" id="text-1">
 <p>
 LaTeX makes it very easy to generate Résumés. It provides extremely powerful
 typesetting features and can output PDF. Some of the syntax is scary to the
@@ -62,9 +62,9 @@ these commands and do most of the work of typography automatically.
 </p>
 </div>
 
-<div id="outline-container-org06cfeeb" class="outline-3">
-<h3 id="org06cfeeb">Document class</h3>
-<div class="outline-text-3" id="text-org06cfeeb">
+<div id="outline-container-org9f7fdb5" class="outline-3">
+<h3 id="org9f7fdb5"><span class="section-number-3">1.1</span> Document class</h3>
+<div class="outline-text-3" id="text-1-1">
 <p>
 Every LaTeX document has a document class. Think of it like the CSS to the
 Résumé’s HTML. Classes tells LaTeX how to layout the document and there are a
@@ -82,13 +82,18 @@ it in this blog post (but it’s still in the <a href="./README.html">./README.h
 </div>
 </div>
 
-<div id="outline-container-org65c5db9" class="outline-3">
-<h3 id="org65c5db9">Header</h3>
-<div class="outline-text-3" id="text-org65c5db9">
+<div id="outline-container-orgb49031d" class="outline-3">
+<h3 id="orgb49031d"><span class="section-number-3">1.2</span> Header</h3>
+<div class="outline-text-3" id="text-1-2">
 <p>
 Every LaTeX document has a document class. For this document, I will use a
 custom <b>resume</b> class.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate"><span class="org-keyword">\documentclass</span></span>[<span class="org-variable-name">11pt</span>]{<span class="org-function-name">resume</span>}
+</pre>
+</div>
 
 <p>
 Next, I’ll provide some semantic information. Each of these commands is
@@ -106,10 +111,26 @@ here, but you should aim to make each command as semantic as possible.
 My personal info follows,
 </p>
 
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\name</span>{Matthew}{Bauer}
+<span class="org-font-latex-sedate"><span class="org-keyword">\address</span></span>{<span class="org-type">10118 GARNETT ST, OVERLAND PARK KS 66214</span>}
+<span class="org-font-latex-sedate">\mobile</span>{(913) 671 0636}
+<span class="org-font-latex-sedate">\email</span>{mjbauer95@gmail.com}
+<span class="org-font-latex-sedate">\homepage</span>{www.matthewbauer.us}
+</pre>
+</div>
+
 <p>
 This begins the document. The command <code>makecvheader</code> is from resume.cls and
 will setup the basic template.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">document</span>}
+
+<span class="org-font-latex-sedate">\makecvheader</span>[C]
+</pre>
+</div>
 
 <p>
 Everything that follows is my own résume, but the ideas should be fairly self-explanatory.
@@ -117,9 +138,9 @@ Everything that follows is my own résume, but the ideas should be fairly self-e
 </div>
 </div>
 
-<div id="outline-container-orga7101ad" class="outline-3">
-<h3 id="orga7101ad">Education</h3>
-<div class="outline-text-3" id="text-orga7101ad">
+<div id="outline-container-org9890005" class="outline-3">
+<h3 id="org9890005"><span class="section-number-3">1.3</span> Education</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 This LaTeX class defines <code>\cvsection</code> to separate sections of the résumé by a
 horizontal line and some blank space. The only argument for <code>\cvsection</code> sets
@@ -130,9 +151,32 @@ the contents of the section header.
 I start my résume with the ‘Eduction’ section.
 </p>
 
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cvsection</span>{Education}
+
+<span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cventries</span>}
+</pre>
+</div>
+
 <p>
 Each <code>cvsection</code> is composed of multiple <code>cventries</code>.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cventry</span>
+  {University of Kansas}
+  {Lawrence, KS, USA}
+  {B.S. in Computer Science}
+  {Aug. 2015 &#8211; Exp. Dec. 2018}
+  {
+    <span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cvitems</span>}
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Participated in ACM and hackathon competitions }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Coursework includes Software Engineering, Programming Languages,
+        and Communication Networks }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cvitems</span>}
+  }
+</pre>
+</div>
 
 <p>
 <code>cventry</code> can be though of as a function that takes a variable 5 arguments.
@@ -206,6 +250,11 @@ For me, they correspond to,
 </tbody>
 </table>
 
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cventries</span>}
+</pre>
+</div>
+
 <p>
 The next section has work experience. It follows the same pattern outlined in
 the Education section.
@@ -213,40 +262,152 @@ the Education section.
 </div>
 </div>
 
-<div id="outline-container-orge9d61d3" class="outline-3">
-<h3 id="orge9d61d3">Work Experience</h3>
-<div class="outline-text-3" id="text-orge9d61d3">
+<div id="outline-container-org99a7d0b" class="outline-3">
+<h3 id="org99a7d0b"><span class="section-number-3">1.4</span> Work Experience</h3>
+<div class="outline-text-3" id="text-1-4">
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cvsection</span>{Work Experience}
+
+<span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cventries</span>}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cventry</span>
+  {Amazon.com, Inc.}
+  {Seattle, WA, USA}
+  {SDE Intern}
+  {Summer 2017}
+  {
+    <span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cvitems</span>}
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Worked on Mobile Identity team which manages the login screens for
+            Amazon apps }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Project made it easier for teams to register new devices through
+            Identity Services }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Used Agile development principles in design and development of
+            project }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cvitems</span>}
+  }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cventry</span>
+  {Lexmark Enterprise Software}
+  {Lenexa, KS, USA}
+  {Software Engineer Intern}
+  {Summer 2015, Summer 2016}
+  {
+    <span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cvitems</span>}
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Worked on the Client Architecture team which builds the JavaScript
+        web framework which other teams use to build enterprise solutions }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Participated in high level design decision conversations }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Project moved the web framework away from in-house solutions to
+        better maintained open source projects while preserving legacy
+        compatibility }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Asked to return after impressive first year }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cvitems</span>}
+  }
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cventry</span>
+  {Together+Clinic}
+  {Lincoln, NE, USA}
+  {Design Studio Intern}
+  {Spring 2015}
+  {
+    <span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cvitems</span>}
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Startup building web app to let doctors track patients recovering
+        from surgery without frequent checkup visits }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { The web interface is used by both patients to record progress and
+        doctors to track progress }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\item</span></span> { Team used Scrum development principles for quick response and user
+        focused design }
+    <span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cvitems</span>}
+  }
+</pre>
+</div>
+
 <p>
 Here we end <code>cventries</code>.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cventries</span>}
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org7b607ca" class="outline-3">
-<h3 id="org7b607ca">Honors &amp; Awards</h3>
-<div class="outline-text-3" id="text-org7b607ca">
+<div id="outline-container-org22a90b0" class="outline-3">
+<h3 id="org22a90b0"><span class="section-number-3">1.5</span> Honors &amp; Awards</h3>
+<div class="outline-text-3" id="text-1-5">
 <p>
 Again we must define a new section, this time for honors and awards.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cvsection</span>{Honors \&amp; Awards}
+<span class="org-font-latex-sedate"><span class="org-keyword">\begin</span></span>{<span class="org-function-name">cvhonors</span>}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cvhonor</span>
+{3rd Place}
+{JayHacks Hackathon}
+{Lawrence, KS, USA}
+{2017}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\cvhonor</span>
+{Grand Prize}
+{Google Code-in}
+{Mountain View, CA, USA}
+{2013}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">cvhonors</span>}
+</pre>
+</div>
 </div>
 </div>
 
-<div id="outline-container-org7984c58" class="outline-3">
-<h3 id="org7984c58">Footer</h3>
-<div class="outline-text-3" id="text-org7984c58">
+<div id="outline-container-orga076418" class="outline-3">
+<h3 id="orga076418"><span class="section-number-3">1.6</span> Footer</h3>
+<div class="outline-text-3" id="text-1-6">
 <p>
 The <code>makecvfooter</code> command gives a nice footer that will be put at the bottom
 of each page. This can give us the document title and page numbering. In
 addition, the LastPage command will tell us how many pages there are in case
 we misplace a page while printing.
 </p>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate">\makecvfooter</span>
+{BAUER}
+{<span class="org-font-latex-sedate">\thepage</span>}
+{<span class="org-font-latex-sedate"><span class="org-keyword">\pageref</span></span>{<span class="org-constant">LastPage</span>}}
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-latex"><span class="org-font-latex-sedate"><span class="org-keyword">\end</span></span>{<span class="org-function-name">document</span>}
+</pre>
+</div>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orge6d3dbf" class="outline-2">
-<h2 id="orge6d3dbf">Building it</h2>
-<div class="outline-text-2" id="text-orge6d3dbf">
+<div id="outline-container-orgcc5a493" class="outline-2">
+<h2 id="orgcc5a493"><span class="section-number-2">2</span> Building it</h2>
+<div class="outline-text-2" id="text-2">
 <p>
 Nix makes it possible to make this Résumé truly reproducible. Nix is a purely
 functional package manager. This means that each package is defined in a
@@ -265,14 +426,14 @@ simple steps to get Nix working,
 </div>
 
 <p>
-More information on Nix is available from the <a href="https://nixos.org/nix/">Nix homepage</a>. On <a href="#orgec08746">the next page</a>, I’ll explain
+More information on Nix is available from the <a href="https://nixos.org/nix/">Nix homepage</a>. On <a href="#org27b7eb5">the next page</a>, I’ll explain
 how build this résumé using Nix.
 </p>
 </div>
 
-<div id="outline-container-orgec08746" class="outline-3">
-<h3 id="orgec08746"><code>resume.nix</code></h3>
-<div class="outline-text-3" id="text-orgec08746">
+<div id="outline-container-org27b7eb5" class="outline-3">
+<h3 id="org27b7eb5"><span class="section-number-3">2.1</span> <code>resume.nix</code></h3>
+<div class="outline-text-3" id="text-2-1">
 <p>
 To start, we’ll this need to pull in Nixpkgs. Nixpkgs provides a set of
 packages for Nix to use. Because Nix is functional, we’ll make nixpkgs an
@@ -322,17 +483,17 @@ directory as source.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix">  <span class="org-nix-attribute">buildInputs</span> = [
-    (texlive.combine {
-      <span class="org-nix-keyword">inherit</span> (texlive) scheme-basic xetex xetex-def setspace fontspec
-                        chktex enumitem xifthen ifmtarg filehook
-                        upquote tools ms geometry graphics oberdiek
-                        fancyhdr lastpage xcolor etoolbox unicode-math
-                        ucharcat sourcesanspro tcolorbox pgf environ
-                        trimspaces parskip hyperref url euenc
-                        collection-fontsrecommended;
-    })
-  ];
+<pre class="src src-nix"><span class="org-nix-attribute">buildInputs</span> = [
+  (texlive.combine {
+    <span class="org-nix-keyword">inherit</span> (texlive) scheme-basic xetex xetex-def setspace fontspec
+          chktex enumitem xifthen ifmtarg filehook
+          upquote tools ms geometry graphics oberdiek
+          fancyhdr lastpage xcolor etoolbox unicode-math
+          ucharcat sourcesanspro tcolorbox pgf environ
+          trimspaces parskip hyperref url euenc
+          collection-fontsrecommended;
+  })
+];
 </pre>
 </div>
 
@@ -353,9 +514,9 @@ are using within LaTeX, but nothing seems to exist to do this.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix">  <span class="org-nix-attribute">buildPhase</span> = <span class="org-string">''</span>
-<span class="org-string">    xelatex -file-line-error -interaction=nonstopmode resume.tex</span>
-<span class="org-string">  ''</span>;
+<pre class="src src-nix"><span class="org-nix-attribute">buildPhase</span> = <span class="org-string">''</span>
+<span class="org-string">  xelatex -file-line-error -interaction=nonstopmode resume.tex</span>
+<span class="org-string">''</span>;
 </pre>
 </div>
 
@@ -367,9 +528,9 @@ debug <code>xelatex</code> when something goes wrong and makes sure we don’t g
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix">  <span class="org-nix-attribute">installPhase</span> = <span class="org-string">''</span>
-<span class="org-string">    cp resume.pdf $out</span>
-<span class="org-string">  ''</span>;
+<pre class="src src-nix"><span class="org-nix-attribute">installPhase</span> = <span class="org-string">''</span>
+<span class="org-string">  cp resume.pdf $out</span>
+<span class="org-string">''</span>;
 </pre>
 </div>
 
@@ -384,9 +545,9 @@ Finally, we copy this résumé to <code>$out</code> where the derivation will li
 </div>
 </div>
 
-<div id="outline-container-org9af8bb7" class="outline-3">
-<h3 id="org9af8bb7">Running the build</h3>
-<div class="outline-text-3" id="text-org9af8bb7">
+<div id="outline-container-org2f3b4f7" class="outline-3">
+<h3 id="org2f3b4f7"><span class="section-number-3">2.2</span> Running the build</h3>
+<div class="outline-text-3" id="text-2-2">
 <p>
 This entire document is built with ~org-mode~’s Babel engine. This means that
 we can generate the files needed to build the résumé from scratch. To do
@@ -424,9 +585,9 @@ with,
 </div>
 </div>
 
-<div id="outline-container-orgc357a9c" class="outline-2">
-<h2 id="orgc357a9c">Automating it</h2>
-<div class="outline-text-2" id="text-orgc357a9c">
+<div id="outline-container-orge897349" class="outline-2">
+<h2 id="orge897349"><span class="section-number-2">3</span> Automating it</h2>
+<div class="outline-text-2" id="text-3">
 <p>
 Sadly, Nix does not understand raw Org mode (yet). We need a bootstrap to
 generate a Nix script from this file to truly automate this. I’ve included it
@@ -512,9 +673,9 @@ Look at <code>./result</code> and it will be PDF file you can open.
 </p>
 </div>
 
-<div id="outline-container-org979e0f3" class="outline-3">
-<h3 id="org979e0f3">Continous Integration</h3>
-<div class="outline-text-3" id="text-org979e0f3">
+<div id="outline-container-orgbe6e3e8" class="outline-3">
+<h3 id="orgbe6e3e8"><span class="section-number-3">3.1</span> Continous Integration</h3>
+<div class="outline-text-3" id="text-3-1">
 <p>
 Travis makes it easy to run continuous integration on our résumé.
 </p>
@@ -591,13 +752,13 @@ Darwin channel on Linux or a NixOS channel on macOS.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-yaml">  <span class="org-variable-name">exclude</span>:
-    - <span class="org-variable-name">os</span>: linux
-      <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixpkgs-17.09-darwin/nixexprs.tar.xz
-    - <span class="org-variable-name">os</span>: osx
-      <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-17.09/nixexprs.tar.xz
-    - <span class="org-variable-name">os</span>: osx
-      <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+<pre class="src src-yaml"><span class="org-variable-name">exclude</span>:
+  - <span class="org-variable-name">os</span>: linux
+    <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixpkgs-17.09-darwin/nixexprs.tar.xz
+  - <span class="org-variable-name">os</span>: osx
+    <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-17.09/nixexprs.tar.xz
+  - <span class="org-variable-name">os</span>: osx
+    <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
 </pre>
 </div>
 
@@ -607,9 +768,9 @@ to always work.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-yaml">  <span class="org-variable-name">allow_failures</span>:
-    - <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
-    - <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixpkgs-unstable/nixexprs.tar.xz
+<pre class="src src-yaml"><span class="org-variable-name">allow_failures</span>:
+  - <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixos-unstable/nixexprs.tar.xz
+  - <span class="org-variable-name">env</span>: NIXPKGS=nixos.org/channels/nixpkgs-unstable/nixexprs.tar.xz
 </pre>
 </div>
 
@@ -627,9 +788,9 @@ set this up yourself but alternatively you can look at <a href="https://travis-c
 </div>
 </div>
 
-<div id="outline-container-orgc4b5af6" class="outline-2">
-<h2 id="orgc4b5af6">Conclusion</h2>
-<div class="outline-text-2" id="text-orgc4b5af6">
+<div id="outline-container-org5ebd237" class="outline-2">
+<h2 id="org5ebd237"><span class="section-number-2">4</span> Conclusion</h2>
+<div class="outline-text-2" id="text-4">
 <p>
 More information on reproducible research is available at <a href="https://reproducibleresearch.net">Reproducible
 Research</a>. My hope is that eventually more things will become ‘reproducible’.

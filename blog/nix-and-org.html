@@ -1,23 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
-"https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <link rel="alternate"
       type="appliation/rss+xml"
-      href="./feed.xml"
-      title="RSS feed for ./">
-<title>Nix and Org</title><meta  name="author" content="Matthew Bauer" />
+      href="https://matthewbauer.us/blog/feed.xml"
+      title="RSS feed for https://matthewbauer.us/blog/">
+<title>Nix and Org</title>
+<meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
+<link rel=stylesheet href="../fonts.css" />
 <link rel=stylesheet href="../style.css" /></head>
 <body>
-<div id="preamble" class="status"><div class="header">
+<div id="preamble" class="status">
+<h1>
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</div></div>
+</h1></div>
 <div id="content">
-<div class="post-date">15 Oct 2017</div>
-<h1 class="post-title">Nix and Org</h1>
+<div class="post-date">15 Oct 2017</div><h1 class="post-title"><a href="nix-and-org.html">Nix and Org</a></h1>
 <p>
 This is a guide on getting Org to work with Nix. Specifically, I want to show
 how you can write Nix expressions within an Org document. This might not seem
@@ -84,7 +85,8 @@ Once Nix has been installed, we can go back to Emacs and start writing to
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org">This Org file builds the Nix expression for &#8216;Hello World&#8217;.
+<pre class="src src-org">
+This Org file builds the Nix expression for &#8216;Hello World&#8217;.
 </pre>
 </div>
 
@@ -96,7 +98,8 @@ will write (tangle) the code to.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org">#+begin_src nix :tangle hello.nix
+<pre class="src src-org">
+#+begin_src nix :tangle hello.nix
 <span class="org-italic">/* Nix code goes here */</span>
 </pre>
 </div>
@@ -134,7 +137,7 @@ Let’s give this derivation a name.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org">  name = "hello-2.10";
+<pre class="src src-org">name = "hello-2.10";
 </pre>
 </div>
 
@@ -165,12 +168,13 @@ package using the <code>stdenv</code> and <code>fetchurl</code> defined in <a hr
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span class="org-org-block-begin-line">#+begin_src nix :tangle bootstrap.nix</span>
-<span class="org-org-block">{ nixpkgs ? </span><span class="org-org-block"><span class="org-nix-constant">&lt;nixpkgs&gt;</span></span><span class="org-org-block"> }:</span>
+<pre class="src src-org">
+<span class="org-org-block-begin-line">#+begin_src nix :tangle bootstrap.nix</span>
+<span class="org-org-block">{ nixpkgs ?</span><span class="org-org-block"><span class="org-nix-constant"> &lt;nixpkgs</span></span><span class="org-org-block">&gt; }:</span>
 
-<span class="org-org-block"><span class="org-nix-keyword">with</span></span><span class="org-org-block"> </span><span class="org-org-block"><span class="org-nix-builtin">import</span></span><span class="org-org-block"> nixpkgs {};</span>
+<span class="org-org-block"><span class="org-nix-keyword">wit</span></span><span class="org-org-block">h</span><span class="org-org-block"><span class="org-nix-builtin"> impor</span></span><span class="org-org-block">t nixpkgs {};</span>
 
-<span class="org-org-block">callPackage </span><span class="org-org-block"><span class="org-nix-constant">./hello.nix</span></span><span class="org-org-block"> {}</span>
+<span class="org-org-block">callPackage</span><span class="org-org-block"><span class="org-nix-constant"> ./hello.ni</span></span><span class="org-org-block">x {}</span>
 <span class="org-org-block-end-line">#+end_src</span>
 </pre>
 </div>
@@ -211,7 +215,8 @@ Org’s tangler.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-org"><span class="org-org-block-begin-line">#+begin_src nix :tangle default.nix</span>
+<pre class="src src-org">
+<span class="org-org-block-begin-line">#+begin_src nix :tangle default.nix</span>
 <span class="org-org-block">{ nixpkgs ? </span><span class="org-org-block"><span class="org-nix-constant">&lt;nixpkgs&gt;</span></span><span class="org-org-block"> }:</span>
 
 <span class="org-org-block"><span class="org-nix-keyword">with</span></span><span class="org-org-block"> </span><span class="org-org-block"><span class="org-nix-builtin">import</span></span><span class="org-org-block"> nixpkgs {};</span>

@@ -14,9 +14,9 @@
 <link rel=stylesheet href="../style.css" /></head>
 <body>
 <div id="preamble" class="status">
-<div class="header">
+<h1>
 <a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</div></div>
+</h1></div>
 <div id="content">
 <div class="post-date">27 Mar 2018</div><h1 class="post-title"><a href="portable-packaging.html">Portable Packaging in Nix</a></h1>
 <p>
@@ -432,17 +432,17 @@ For instance, both Glibc and libSystem provides a number of built-in
 This presents a challenge to
 </p>
 
-<div id="outline-container-orgac96891" class="outline-2">
-<h2 id="orgac96891"><span class="section-number-2">1</span> FAQs</h2>
+<div id="outline-container-org42d9715" class="outline-2">
+<h2 id="org42d9715"><span class="section-number-2">1</span> FAQs</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org8702a39" class="outline-3">
-<h3 id="org8702a39"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
+<div id="outline-container-org3fad8ed" class="outline-3">
+<h3 id="org3fad8ed"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Not all packages are portable. In these cases we have a way to
 ensure that GCC is used as the compiler. For example, the tool
-"masscan" will only build with GCC.
+&ldquo;masscan&rdquo; will only build with GCC.
 </p>
 
 <div class="org-src-container">
@@ -468,8 +468,8 @@ do the same.
 </div>
 </div>
 
-<div id="outline-container-org59567a8" class="outline-3">
-<h3 id="org59567a8"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
+<div id="outline-container-org301d450" class="outline-3">
+<h3 id="org301d450"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
 </div>
