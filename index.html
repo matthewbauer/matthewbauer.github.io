@@ -8,7 +8,6 @@
         <meta name="keywords" content="Matthew,Bauer,Matthew Bauer,resume,portfolio,homepage,cv">
         <meta name="description" content="Matthew Bauer's personal website, including work history and past projects">
         <link rel="shortcut icon" href="favicon.ico">
-        <link rel="stylesheet" href="style.css">
         <script type="application/ld+json">
 {
   "@context": "http://schema.org",
@@ -18,6 +17,9 @@
   "description": "Matthew Bauer's personal website, including work history and past projects"
 }
         </script>
+        <!--[if IE]>
+        <link rel="stylesheet" href="style.css">
+        <![endif]-->
     </head>
     <body>
         <h1><a href="/resume.pdf">Matthew Bauer</a> ◌
@@ -115,5 +117,8 @@
                 <a class="name" href="https://www.togetherclinic.com">
                     Together+Clinic</a></li>
         </ul>
+        <!--[if !IE]> -->
+        <link rel="stylesheet" href="style.css" lazyload="1">
+        <!-- <![endif]-->
     </body>
 </html>
