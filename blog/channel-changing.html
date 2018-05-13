@@ -19,14 +19,14 @@
 <div id="content">
 <div class="post-date">12 May 2018</div><h1 class="post-title"><a href="channel-changing.html">Channel Changing with Nix</a></h1>
 
-<div id="outline-container-orgf37a8ab" class="outline-2">
-<h2 id="orgf37a8ab"><span class="section-number-2">1</span> Introduction to channels</h2>
+<div id="outline-container-orgb1d8910" class="outline-2">
+<h2 id="orgb1d8910"><span class="section-number-2">1</span> Introduction to channels</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 One of the many underappreciated feature of Nix is its ability to
 travel back in time. Functional dependencies mean that you can easily
-pull in old releases of NixOS and Nixpkgs without changing your
-environment at all! It’s surprisingly easy with Nix 2.0 and its
+pull in old releases of NixOS &amp; Nixpkgs without changing your
+environment at all! It’s surprisingly easy in Nix 2.0 with its
 support for Import From Derivation.
 </p>
 
@@ -41,8 +41,8 @@ history.
 </div>
 </div>
 
-<div id="outline-container-orgfeb0e48" class="outline-2">
-<h2 id="orgfeb0e48"><span class="section-number-2">2</span> Channel changing</h2>
+<div id="outline-container-org1322713" class="outline-2">
+<h2 id="org1322713"><span class="section-number-2">2</span> Channel changing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here is my script that I will refer to later on in the post
@@ -74,7 +74,7 @@ as “channels.nix” (be sure to try it out yourself!)
 <p>
 As you can see from the script there have been 9 releases in total. We
 use a different letter of the alphabet for each release, starting with
-A for Aardvark and we are not up to I for Impala<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. New releases
+A for Aardvark. We are now up to I for Impala<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. New releases
 happen every 6 months starting with Aardvark which was released in
 December 2013. The releases are versioned as <code>YY.MM</code> which is common
 practice for Linux distros.
@@ -82,8 +82,8 @@ practice for Linux distros.
 </div>
 </div>
 
-<div id="outline-container-orgd508459" class="outline-2">
-<h2 id="orgd508459"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
+<div id="outline-container-org616c72a" class="outline-2">
+<h2 id="org616c72a"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 In my Nix script, I have created an “attribute” for each version that
@@ -152,8 +152,8 @@ nix run -f channels.nix impala.fortune -c fortune
 </div>
 </div>
 
-<div id="outline-container-orga56a566" class="outline-2">
-<h2 id="orga56a566"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
+<div id="outline-container-orga0be898" class="outline-2">
+<h2 id="orga0be898"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The fact that Nix works so well on macOS is a miracle in its own
@@ -319,9 +319,10 @@ error: build of '/nix/store/s41jnb4kmxxbwj40c5l88k9ma0mwfy0b-hello-2.10.drv' fai
 Wow! Again we hit an issue. This is the infamouse <code>Illegal
 instruction: 4</code> bug that is frequently hit in Nixpkgs<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>. It occurs
 when an executable uses instructions that have been blocked by the XNU
-kernel. This is usually because they are considered insecure and will
-require a patche to fix. We no longer support Emu, so this is probably
-the end of the line. Let’s try Dingo out just to be sure though.
+kernel. This is usually because they are considered insecure so a
+patch is needed to fix it. We no longer support Emu, so this is
+probably the end of the line. Let’s try Dingo out just to be sure
+though.
 </p>
 
 <div class="org-src-container">
@@ -354,10 +355,10 @@ error: build of '/nix/store/lqjabx84kndk75y8m0lq7zh5190k6zzz-hello-2.10.drv' fai
 
 <p>
 This is a curious error because it is very different from the previous
-one. Back here we are still using Clang and it looks like
-bootstrapping is failing. I was not using Nix at this time (late
-2015), so I will have to defer to someone who remembers that time
-better. Let’s keep going.
+one. Back here we were still using Clang 3.3 &amp; it looks like
+bootstrapping is failing on our newer machines. I was not using Nix at
+this time (late 2015), so I will have to defer to someone who
+remembers that time better. Let’s keep going.
 </p>
 
 <div class="org-src-container">
@@ -400,8 +401,8 @@ packages to be packaged in the Nix language<sup><a id="fnr.7" class="footref" hr
 </div>
 </div>
 
-<div id="outline-container-orgdfeae96" class="outline-2">
-<h2 id="orgdfeae96"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-org2ded4dc" class="outline-2">
+<h2 id="org2ded4dc"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I wanted to also look at what happens on Linux when you go back
@@ -427,9 +428,9 @@ can be done in Nix.
 <div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
 The difference between NixOS &amp; Nixpkgs can sometimes cause
 confusion especially because they are hosted in the same repository.
-We usually refer to NixOS for the Linux-specific distro and to Nixpkgs
-for the cross-platform set of packages. Here I am referring to them
-collectively.
+We usually refer to NixOS for the Linux-specific distro while Nixpkgs
+refers to the cross-platform set of packages. Here I am referring to
+them collectively.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
