@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta charset="UTF-8">
 <link rel="alternate"
-      type="appliation/rss+xml"
+      type="application/rss+xml"
       href="https://matthewbauer.us/blog/feed.xml"
-      title="RSS feed for https://matthewbauer.us/blog/">
+      title="RSS feed for https://matthewbauer.us/blog/"/>
 <title>Reproducible résumés</title>
 <meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
@@ -44,8 +43,8 @@ At the end of this guide, you should have all of the information needed produce
 a PDF version of your résume.
 </p>
 
-<div id="outline-container-org6d9b3f5" class="outline-2">
-<h2 id="org6d9b3f5"><span class="section-number-2">1</span> The Résumé</h2>
+<div id="outline-container-org4af424f" class="outline-2">
+<h2 id="org4af424f"><span class="section-number-2">1</span> The Résumé</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 LaTeX makes it very easy to generate Résumés. It provides extremely powerful
@@ -62,8 +61,8 @@ these commands and do most of the work of typography automatically.
 </p>
 </div>
 
-<div id="outline-container-org9f7fdb5" class="outline-3">
-<h3 id="org9f7fdb5"><span class="section-number-3">1.1</span> Document class</h3>
+<div id="outline-container-org9235711" class="outline-3">
+<h3 id="org9235711"><span class="section-number-3">1.1</span> Document class</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Every LaTeX document has a document class. Think of it like the CSS to the
@@ -82,8 +81,8 @@ it in this blog post (but it’s still in the <a href="./README.html">./README.h
 </div>
 </div>
 
-<div id="outline-container-orgb49031d" class="outline-3">
-<h3 id="orgb49031d"><span class="section-number-3">1.2</span> Header</h3>
+<div id="outline-container-org90939bb" class="outline-3">
+<h3 id="org90939bb"><span class="section-number-3">1.2</span> Header</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 Every LaTeX document has a document class. For this document, I will use a
@@ -138,8 +137,8 @@ Everything that follows is my own résume, but the ideas should be fairly self-e
 </div>
 </div>
 
-<div id="outline-container-org9890005" class="outline-3">
-<h3 id="org9890005"><span class="section-number-3">1.3</span> Education</h3>
+<div id="outline-container-org10dbfe6" class="outline-3">
+<h3 id="org10dbfe6"><span class="section-number-3">1.3</span> Education</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 This LaTeX class defines <code>\cvsection</code> to separate sections of the résumé by a
@@ -192,13 +191,13 @@ purposes. It’s not necessary to do the same, but you should use a consistent
 style throughout your résumé.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -223,13 +222,13 @@ style throughout your résumé.
 For me, they correspond to,
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -262,8 +261,8 @@ the Education section.
 </div>
 </div>
 
-<div id="outline-container-org99a7d0b" class="outline-3">
-<h3 id="org99a7d0b"><span class="section-number-3">1.4</span> Work Experience</h3>
+<div id="outline-container-org77259be" class="outline-3">
+<h3 id="org77259be"><span class="section-number-3">1.4</span> Work Experience</h3>
 <div class="outline-text-3" id="text-1-4">
 <div class="org-src-container">
 <pre class="src src-latex"><span class="org-font-latex-sedate">\cvsection</span>{Work Experience}
@@ -341,8 +340,8 @@ Here we end <code>cventries</code>.
 </div>
 </div>
 
-<div id="outline-container-org22a90b0" class="outline-3">
-<h3 id="org22a90b0"><span class="section-number-3">1.5</span> Honors &amp; Awards</h3>
+<div id="outline-container-org61919ca" class="outline-3">
+<h3 id="org61919ca"><span class="section-number-3">1.5</span> Honors &amp; Awards</h3>
 <div class="outline-text-3" id="text-1-5">
 <p>
 Again we must define a new section, this time for honors and awards.
@@ -379,8 +378,8 @@ Again we must define a new section, this time for honors and awards.
 </div>
 </div>
 
-<div id="outline-container-orga076418" class="outline-3">
-<h3 id="orga076418"><span class="section-number-3">1.6</span> Footer</h3>
+<div id="outline-container-orgb4ee4a0" class="outline-3">
+<h3 id="orgb4ee4a0"><span class="section-number-3">1.6</span> Footer</h3>
 <div class="outline-text-3" id="text-1-6">
 <p>
 The <code>makecvfooter</code> command gives a nice footer that will be put at the bottom
@@ -405,8 +404,8 @@ we misplace a page while printing.
 </div>
 </div>
 
-<div id="outline-container-orgcc5a493" class="outline-2">
-<h2 id="orgcc5a493"><span class="section-number-2">2</span> Building it</h2>
+<div id="outline-container-orgfb2a85b" class="outline-2">
+<h2 id="orgfb2a85b"><span class="section-number-2">2</span> Building it</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Nix makes it possible to make this Résumé truly reproducible. Nix is a purely
@@ -426,13 +425,13 @@ simple steps to get Nix working,
 </div>
 
 <p>
-More information on Nix is available from the <a href="https://nixos.org/nix/">Nix homepage</a>. On <a href="#org27b7eb5">the next page</a>, I’ll explain
+More information on Nix is available from the <a href="https://nixos.org/nix/">Nix homepage</a>. On <a href="#org8eca2ce">the next page</a>, I’ll explain
 how build this résumé using Nix.
 </p>
 </div>
 
-<div id="outline-container-org27b7eb5" class="outline-3">
-<h3 id="org27b7eb5"><span class="section-number-3">2.1</span> <code>resume.nix</code></h3>
+<div id="outline-container-org8eca2ce" class="outline-3">
+<h3 id="org8eca2ce"><span class="section-number-3">2.1</span> <code>resume.nix</code></h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 To start, we’ll this need to pull in Nixpkgs. Nixpkgs provides a set of
@@ -545,8 +544,8 @@ Finally, we copy this résumé to <code>$out</code> where the derivation will li
 </div>
 </div>
 
-<div id="outline-container-org2f3b4f7" class="outline-3">
-<h3 id="org2f3b4f7"><span class="section-number-3">2.2</span> Running the build</h3>
+<div id="outline-container-org3e71561" class="outline-3">
+<h3 id="org3e71561"><span class="section-number-3">2.2</span> Running the build</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 This entire document is built with ~org-mode~’s Babel engine. This means that
@@ -585,8 +584,8 @@ with,
 </div>
 </div>
 
-<div id="outline-container-orge897349" class="outline-2">
-<h2 id="orge897349"><span class="section-number-2">3</span> Automating it</h2>
+<div id="outline-container-org97170d7" class="outline-2">
+<h2 id="org97170d7"><span class="section-number-2">3</span> Automating it</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Sadly, Nix does not understand raw Org mode (yet). We need a bootstrap to
@@ -673,8 +672,8 @@ Look at <code>./result</code> and it will be PDF file you can open.
 </p>
 </div>
 
-<div id="outline-container-orgbe6e3e8" class="outline-3">
-<h3 id="orgbe6e3e8"><span class="section-number-3">3.1</span> Continous Integration</h3>
+<div id="outline-container-orgf52d313" class="outline-3">
+<h3 id="orgf52d313"><span class="section-number-3">3.1</span> Continous Integration</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 Travis makes it easy to run continuous integration on our résumé.
@@ -788,8 +787,8 @@ set this up yourself but alternatively you can look at <a href="https://travis-c
 </div>
 </div>
 
-<div id="outline-container-org5ebd237" class="outline-2">
-<h2 id="org5ebd237"><span class="section-number-2">4</span> Conclusion</h2>
+<div id="outline-container-orgfd51c13" class="outline-2">
+<h2 id="orgfd51c13"><span class="section-number-2">4</span> Conclusion</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 More information on reproducible research is available at <a href="https://reproducibleresearch.net">Reproducible

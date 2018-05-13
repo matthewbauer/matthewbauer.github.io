@@ -1,12 +1,11 @@
-<?xml version="1.0" encoding="utf-8"?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
-<html xmlns="https://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
-<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta charset="UTF-8">
 <link rel="alternate"
-      type="appliation/rss+xml"
+      type="application/rss+xml"
       href="https://matthewbauer.us/blog/feed.xml"
-      title="RSS feed for https://matthewbauer.us/blog/">
+      title="RSS feed for https://matthewbauer.us/blog/"/>
 <title>Portable Packaging in Nix</title>
 <meta  name="author" content="Matthew Bauer" />
 <meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
@@ -45,21 +44,21 @@ completely, we can safely assume that they will always be available in
 Nixpkgs.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-right" />
+<col  class="org-right">
 </colgroup>
 <thead>
 <tr>
@@ -196,21 +195,21 @@ The tools in the standard environment have a long history dating back
 to the original version of Unix (1975)<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. While Nix
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -261,25 +260,25 @@ For instance, both Glibc and libSystem provides a number of built-in
 “bonus libraries” that are always available.
 </p>
 
-<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+<table>
 
 
 <colgroup>
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 
-<col  class="org-left" />
+<col  class="org-left">
 </colgroup>
 <thead>
 <tr>
@@ -432,12 +431,12 @@ For instance, both Glibc and libSystem provides a number of built-in
 This presents a challenge to
 </p>
 
-<div id="outline-container-org42d9715" class="outline-2">
-<h2 id="org42d9715"><span class="section-number-2">1</span> FAQs</h2>
+<div id="outline-container-orgd20b26c" class="outline-2">
+<h2 id="orgd20b26c"><span class="section-number-2">1</span> FAQs</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org3fad8ed" class="outline-3">
-<h3 id="org3fad8ed"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
+<div id="outline-container-org06b2906" class="outline-3">
+<h3 id="org06b2906"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Not all packages are portable. In these cases we have a way to
@@ -468,8 +467,8 @@ do the same.
 </div>
 </div>
 
-<div id="outline-container-org301d450" class="outline-3">
-<h3 id="org301d450"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
+<div id="outline-container-orga5711d1" class="outline-3">
+<h3 id="orga5711d1"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
 </div>
