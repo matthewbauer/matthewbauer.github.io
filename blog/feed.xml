@@ -4,13 +4,13 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Sun, 13 May 2018 15:49:00 -0500</lastBuildDate>
+<lastBuildDate>Sun, 13 May 2018 16:02:10 -0500</lastBuildDate>
 <item>
   <title>Channel Changing with Nix</title>
   <description><![CDATA[
 
-<div id="outline-container-org8744061" class="outline-2">
-<h2 id="org8744061"><span class="section-number-2">1</span> Introduction to channels</h2>
+<div id="outline-container-orgf37a8ab" class="outline-2">
+<h2 id="orgf37a8ab"><span class="section-number-2">1</span> Introduction to channels</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 One of the many underappreciated feature of Nix is its ability to
@@ -22,7 +22,7 @@ support for Import From Derivation.
 
 <p>
 First, I will provide some code to get us started. This Nix script is
-what I use as my “channel changes”. It bootstraps the use of old
+what I use as my “channel changer”. It bootstraps the use of old
 channels. In Nix-world, channels are just what we call the CI-tested
 branch of NixOS/Nixpkgs<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. The NixOS maintainers have been making
 releases consistently since 2013, so there is a lot of interesting
@@ -31,8 +31,8 @@ history.
 </div>
 </div>
 
-<div id="outline-container-orgea1bb0c" class="outline-2">
-<h2 id="orgea1bb0c"><span class="section-number-2">2</span> Channel changing</h2>
+<div id="outline-container-orgfeb0e48" class="outline-2">
+<h2 id="orgfeb0e48"><span class="section-number-2">2</span> Channel changing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here is my script that I will refer to later on in the post
@@ -64,13 +64,16 @@ as “channels.nix” (be sure to try it out yourself!)
 <p>
 As you can see from the script there have been 9 releases in total. We
 use a different letter of the alphabet for each release, starting with
-A for Aardvark and we are not up to I for Impala<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
+A for Aardvark and we are not up to I for Impala<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. New releases
+happen every 6 months starting with Aardvark which was released in
+December 2013. The releases are versioned as <code>YY.MM</code> which is common
+practice for Linux distros.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgbb4323d" class="outline-2">
-<h2 id="orgbb4323d"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
+<div id="outline-container-orgd508459" class="outline-2">
+<h2 id="orgd508459"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 In my Nix script, I have created an “attribute” for each version that
@@ -139,8 +142,8 @@ nix run -f channels.nix impala.fortune -c fortune
 </div>
 </div>
 
-<div id="outline-container-org42dde91" class="outline-2">
-<h2 id="org42dde91"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
+<div id="outline-container-orga56a566" class="outline-2">
+<h2 id="orga56a566"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The fact that Nix works so well on macOS is a miracle in its own
@@ -387,8 +390,8 @@ packages to be packaged in the Nix language<sup><a id="fnr.7" class="footref" hr
 </div>
 </div>
 
-<div id="outline-container-org6115402" class="outline-2">
-<h2 id="org6115402"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-orgdfeae96" class="outline-2">
+<h2 id="orgdfeae96"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I wanted to also look at what happens on Linux when you go back
