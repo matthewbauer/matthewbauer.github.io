@@ -109,8 +109,10 @@ h1 {
 
 h2, h3, h4, h5 {
     line-height: 1;
-    margin-top: 0.8rem;
-    margin-bottom: 0.4rem;
+    padding-top: 0.4rem;
+    margin-top: 0.4rem;
+    padding-bottom: 0.2rem;
+    margin-bottom: 0.2rem;
     text-transform: uppercase;
 }
 
@@ -326,8 +328,7 @@ td.left   { text-align: left;   }
 td.center { text-align: center; }
 dt { font-weight: bold; }
 
-.footpara:nth-child(2) { display: inline; }
-.footpara { display: block; }
+.footpara { display: inline; }
 .footdef  { margin-bottom: 1em; }
 .figure { padding: 1em; }
 .figure p { text-align: center; }
