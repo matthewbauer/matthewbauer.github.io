@@ -289,7 +289,6 @@ pre {
 }
 pre.src {
     position: relative;
-    overflow: visible;
 }
 pre.src:before {
     display: block;
