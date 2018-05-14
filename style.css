@@ -39,8 +39,9 @@ li {
     break-inside: avoid-column;
 }
 
-html {
-    /* height: 100%; */
+html, body {
+    max-width: 100%;
+    overflow-x: hidden;
 }
 
 body {
