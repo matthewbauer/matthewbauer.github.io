@@ -19,8 +19,8 @@
 
 <div class="post-date">12 May 2018</div><h1 class="post-title"><a href="channel-changing.html">Channel Changing with Nix</a></h1>
 
-<div id="outline-container-orgb1d8910" class="outline-2">
-<h2 id="orgb1d8910"><span class="section-number-2">1</span> Introduction to channels</h2>
+<div id="outline-container-org275a103" class="outline-2">
+<h2 id="org275a103"><span class="section-number-2">1</span> Introduction to channels</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 One of the many underappreciated feature of Nix is its ability to
@@ -41,12 +41,12 @@ history.
 </div>
 </div>
 
-<div id="outline-container-org1322713" class="outline-2">
-<h2 id="org1322713"><span class="section-number-2">2</span> Channel changing</h2>
+<div id="outline-container-org42d75ef" class="outline-2">
+<h2 id="org42d75ef"><span class="section-number-2">2</span> Channel changing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here is my script that I will refer to later on in the post
-as “channels.nix” (be sure to try it out yourself!)
+as “channels.nix” (be sure to try it out yourself!)<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>
 </p>
 
 <div class="org-src-container">
@@ -54,15 +54,15 @@ as “channels.nix” (be sure to try it out yourself!)
       <span class="org-nix-builtin">map</span> (attr: { <span class="org-nix-attribute">name</span> = attr; <span class="org-nix-attribute">value</span> = f set.${attr}; })
     (<span class="org-nix-builtin">builtins</span>.attrNames set));
     <span class="org-nix-attribute">channels</span> = {
-      <span class="org-nix-attribute">aardvark</span> = <span class="org-string">"13.10"</span>;
-      <span class="org-nix-attribute">baboon</span> = <span class="org-string">"14.04"</span>;
+      <span class="org-nix-attribute">aardvark</span>    = <span class="org-string">"13.10"</span>;
+      <span class="org-nix-attribute">baboon</span>      = <span class="org-string">"14.04"</span>;
       <span class="org-nix-attribute">caterpillar</span> = <span class="org-string">"14.12"</span>;
-      <span class="org-nix-attribute">dingo</span> = <span class="org-string">"15.09"</span>;
-      <span class="org-nix-attribute">emu</span> = <span class="org-string">"16.03"</span>;
-      <span class="org-nix-attribute">flounder</span> = <span class="org-string">"16.09"</span>;
-      <span class="org-nix-attribute">gorilla</span> = <span class="org-string">"17.03"</span>;
+      <span class="org-nix-attribute">dingo</span>       = <span class="org-string">"15.09"</span>;
+      <span class="org-nix-attribute">emu</span>         = <span class="org-string">"16.03"</span>;
+      <span class="org-nix-attribute">flounder</span>    = <span class="org-string">"16.09"</span>;
+      <span class="org-nix-attribute">gorilla</span>     = <span class="org-string">"17.03"</span>;
       <span class="org-nix-attribute">hummingbird</span> = <span class="org-string">"17.09"</span>;
-      <span class="org-nix-attribute">impala</span> = <span class="org-string">"18.03"</span>;
+      <span class="org-nix-attribute">impala</span>      = <span class="org-string">"18.03"</span>;
     };
 <span class="org-nix-keyword">in</span> mapAttrs (v:
      <span class="org-nix-builtin">import</span> (<span class="org-nix-builtin">builtins</span>.<span class="org-nix-builtin">fetchTarball</span>
@@ -74,16 +74,16 @@ as “channels.nix” (be sure to try it out yourself!)
 <p>
 As you can see from the script there have been 9 releases in total. We
 use a different letter of the alphabet for each release, starting with
-A for Aardvark. We are now up to I for Impala<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. New releases
-happen every 6 months starting with Aardvark which was released in
-December 2013. The releases are versioned as <code>YY.MM</code> which is common
-practice for Linux distros.
+A for Aardvark. We are now up to I for Impala<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. New releases
+happen every 6 months with Aardvark released in December 2013. The
+releases are versioned as <code>YY.MM</code> which is a common practice for Linux
+distros.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org616c72a" class="outline-2">
-<h2 id="org616c72a"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
+<div id="outline-container-org4e7d2e2" class="outline-2">
+<h2 id="org4e7d2e2"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 In my Nix script, I have created an “attribute” for each version that
@@ -102,12 +102,12 @@ Hello, world!
 </pre>
 
 <p>
-This has run the <code>hello</code> executable from the hummingbird release. Since
-you are most likely not running Hummingbird, it may take a while to
-run the first time. However, once Nix has downloaded the needed files
-future execution will be instantaneous. The package is complete
-self-contained! For now, we will just use Impala (18.03) so that
-things go a little faster.
+This has run the <code>hello</code> executable from the hummingbird release.
+Since you are most likely not running Hummingbird, it may take a while
+to the first time. However, once Nix has downloaded the needed files
+future execution will be instantaneous. The package is completely
+self-contained! To start, we will do examples in Impala (18.03) so
+that things go a little faster.
 </p>
 
 <p>
@@ -138,28 +138,40 @@ for you to try out on your own.
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh">nix run -f channels.nix impala.curl -c curl wttr.in/seville
+<pre class="src src-sh"><span class="org-comment-delimiter"># </span><span class="org-comment">Look up the weather</span>
+nix run -f channels.nix impala.curl -c curl wttr.in/seville
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Download music</span>
 nix run -f channels.nix impala.youtube-dl -c <span class="org-sh-escaped-newline">\</span>
     youtube-dl -t --extract-audio <span class="org-sh-escaped-newline">\</span>
-    --audio-format mp3 https://www.youtube.com/watch?<span class="org-variable-name">v</span>=dQw4w9WgXcQ
+    --audio-format mp3 <span class="org-sh-escaped-newline">\</span>
+    https://www.youtube.com/watch?<span class="org-variable-name">v</span>=dQw4w9WgXcQ
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Go see a Star War</span>
 nix run -f channels.nix impala.telnet -c telnet towel.blinkenlights.nl 666
 nix run -f channels.nix impala.sox -c bash -c <span class="org-sh-escaped-newline">\</span>
-    <span class="org-string">'for n in E2 A2 D3 G3 B3 E4; do play -n synth 4 pluck $n repeat 2; done'</span>
+    <span class="org-string">'for n in E2 A2 D3 G3 B3 E4;</span>
+<span class="org-string">     do play -n synth 4 pluck $n repeat 2;</span>
+<span class="org-string">     done'</span>
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Play Nethack</span>
 nix run -f channels.nix impala.nethack -c nethack
+
+<span class="org-comment-delimiter"># </span><span class="org-comment">Get your fortune</span>
 nix run -f channels.nix impala.fortune -c fortune
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orga0be898" class="outline-2">
-<h2 id="orga0be898"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
+<div id="outline-container-org14f49c3" class="outline-2">
+<h2 id="org14f49c3"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The fact that Nix works so well on macOS is a miracle in its own
 right. Apple has a proprietary ABI but Nix is intended to be used with
 free software. To get around this, many hacks are necessary including
-taking Apple’s standard C library<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. Anyway, I was interested in how
+taking Apple’s standard C library<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>. Anyway, I was interested in how
 well the binaries produced by Nixpkgs hold up on my MacBook. For
 reference, here are the versions of macOS available when each release
 happened. Those familiar with macOS internals will remember some
@@ -277,10 +289,10 @@ Oh no!
 </p>
 
 <p>
-We can see that libSystem 10.11 has been downloaded for us<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>.
+We can see that libSystem 10.11 has been downloaded for us<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.
 However, libSystem is referring to an image that isn’t on our machine.
 <code>libsystem_coretls.dylib</code> must have existed in 10.11 macOS but been
-removed since then<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.
+removed since then<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>.
 </p>
 
 <p>
@@ -317,7 +329,7 @@ error: build of '/nix/store/s41jnb4kmxxbwj40c5l88k9ma0mwfy0b-hello-2.10.drv' fai
 
 <p>
 Wow! Again we hit an issue. This is the infamouse <code>Illegal
-instruction: 4</code> bug that is frequently hit in Nixpkgs<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>. It occurs
+instruction: 4</code> bug that is frequently hit in Nixpkgs<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>. It occurs
 when an executable uses instructions that have been blocked by the XNU
 kernel. This is usually because they are considered insecure so a
 patch is needed to fix it. We no longer support Emu, so this is
@@ -396,13 +408,13 @@ I’ve grouped them together because they have the same output. It
 appears that <code>hello</code> was not available back then! I’m not sure what is
 going on. Again, I will defer to someone else to explain why this
 happens. But, I know for a fact that GNU Hello is one of the first
-packages to be packaged in the Nix language<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.
+packages to be packaged in the Nix language<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org2ded4dc" class="outline-2">
-<h2 id="org2ded4dc"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-orgd4c1a5a" class="outline-2">
+<h2 id="orgd4c1a5a"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I wanted to also look at what happens on Linux when you go back
@@ -434,32 +446,38 @@ them collectively.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+Note that the channel changing script is not necessary. You can
+always refer to the Nixpkgs version directly with the <code>-f</code> argument.
+The script is just an easy way to introduce people to the concept.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
 The in-development version of NixOS/Nixpkgs will be a J for
 Jackelope.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
 Apple’s C standard library is called libSystem. Note that
 unlike Glibc &amp; Musl it contains much, much more than what is needed to
 compile simple C programs.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
 Note that the same libSystem is used for all of Nixpkgs to
 peliminate having to do SDK detection. Eventually we will update this
 to 10.12 or 10.13 but we prefer to stay a couple releases behind.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
 This is not a complete explanation, but the best I can do for
 those not aware of the internals of Nixpkgs.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
 See GitHub issue <a href="https://github.com/NixOS/nixpkgs/issues/17372">#17372</a>.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">
 See release <a href="https://github.com/NixOS/nixpkgs/tree/0.5">0.5</a>.
 </p></div></div>
 
