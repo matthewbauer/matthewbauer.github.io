@@ -292,7 +292,7 @@ pre.src {
     overflow: visible;
     /* padding-top: 1em; */
 }
-pre.src:before {
+pre.src::before {
     display: none;
     position: absolute;
     background-color: white;
@@ -301,14 +301,15 @@ pre.src:before {
     padding: 3px;
     border: 1px solid black;
 }
-pre.src:hover:before { display: inline;}
-pre.src-sh:before    { content: 'sh'; }
-pre.src-bash:before  { content: 'sh'; }
-pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-pre.src-R:before     { content: 'R'; }
-pre.src-perl:before  { content: 'Perl'; }
-pre.src-java:before  { content: 'Java'; }
-pre.src-sql:before   { content: 'SQL'; }
+pre.src::hover::before { display: inline;}
+pre.src-sh::before    { content: 'sh'; }
+pre.src-bash::before  { content: 'sh'; }
+pre.src-emacs-lisp::before { content: 'Lisp'; }
+pre.src-R::before     { content: 'R'; }
+pre.src-perl::before  { content: 'Perl'; }
+pre.src-java::before  { content: 'Java'; }
+pre.src-sql::before   { content: 'SQL'; }
+pre.src-nix::before   { content: 'Nix'; }
 
 table {
     border-collapse:collapse;
