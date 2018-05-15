@@ -469,3 +469,12 @@ pre.src-sh {
 .post-date {
     margin-top: 2em;
 }
+
+thead {
+  border-bottom: solid;
+}
+
+th {
+  text-align: left;
+  padding-left: 1rem;
+}
