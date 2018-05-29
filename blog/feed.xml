@@ -4,13 +4,13 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Mon, 14 May 2018 14:49:34 -0500</lastBuildDate>
+<lastBuildDate>Mon, 28 May 2018 21:05:09 -0400</lastBuildDate>
 <item>
   <title>Channel Changing with Nix</title>
   <description><![CDATA[
 
-<div id="outline-container-org275a103" class="outline-2">
-<h2 id="org275a103"><span class="section-number-2">1</span> Introduction to channels</h2>
+<div id="outline-container-orge44ee24" class="outline-2">
+<h2 id="orge44ee24"><span class="section-number-2">1</span> Introduction to channels</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 One of the many underappreciated feature of Nix is its ability to
@@ -31,8 +31,8 @@ history.
 </div>
 </div>
 
-<div id="outline-container-org42d75ef" class="outline-2">
-<h2 id="org42d75ef"><span class="section-number-2">2</span> Channel changing</h2>
+<div id="outline-container-orgce32985" class="outline-2">
+<h2 id="orgce32985"><span class="section-number-2">2</span> Channel changing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here is my script that I will refer to later on in the post
@@ -72,8 +72,8 @@ distros.
 </div>
 </div>
 
-<div id="outline-container-org4e7d2e2" class="outline-2">
-<h2 id="org4e7d2e2"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
+<div id="outline-container-orgee2c402" class="outline-2">
+<h2 id="orgee2c402"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 In my Nix script, I have created an “attribute” for each version that
@@ -154,8 +154,8 @@ nix run -f channels.nix impala.fortune -c fortune
 </div>
 </div>
 
-<div id="outline-container-org14f49c3" class="outline-2">
-<h2 id="org14f49c3"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
+<div id="outline-container-orgc3f0240" class="outline-2">
+<h2 id="orgc3f0240"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The fact that Nix works so well on macOS is a miracle in its own
@@ -403,8 +403,8 @@ packages to be packaged in the Nix language<sup><a id="fnr.8" class="footref" hr
 </div>
 </div>
 
-<div id="outline-container-orgd4c1a5a" class="outline-2">
-<h2 id="orgd4c1a5a"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-orgbd5a3c1" class="outline-2">
+<h2 id="orgbd5a3c1"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I wanted to also look at what happens on Linux when you go back
@@ -443,7 +443,7 @@ The script is just an easy way to introduce people to the concept.
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
 The in-development version of NixOS/Nixpkgs will be a J for
-Jackelope.
+Jackrabbit.
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
@@ -475,7 +475,7 @@ See release <a href="https://github.com/NixOS/nixpkgs/tree/0.5">0.5</a>.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/channel-changing.html</link>
-  <pubDate>Sat, 12 May 2018 19:00:00 -0500</pubDate>
+  <pubDate>Sat, 12 May 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>2018 Summer</title>
@@ -487,7 +487,7 @@ world</a>. Very excited to be working with a team of really smart people.
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/2018-summer.html</link>
-  <pubDate>Fri, 30 Mar 2018 19:00:00 -0500</pubDate>
+  <pubDate>Fri, 30 Mar 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>66% of Nixpkgs are up-to-date</title>
@@ -549,7 +549,7 @@ please be sure to open an issue.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/nixpkgs-fresh.html</link>
-  <pubDate>Wed, 28 Mar 2018 19:00:00 -0500</pubDate>
+  <pubDate>Wed, 28 Mar 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>nix-buffer: nix-shell in Emacs</title>
@@ -590,7 +590,7 @@ dependencies you need based on your <code>default.nix</code> file.
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/nix-buffer.html</link>
-  <pubDate>Sat, 10 Feb 2018 18:00:00 -0600</pubDate>
+  <pubDate>Sat, 10 Feb 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Why Nix?</title>
@@ -680,7 +680,7 @@ For more features of Nix, you can checkout the <a href="https://nixos.org/nix/">
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/why-nix.html</link>
-  <pubDate>Mon, 20 Nov 2017 18:00:00 -0600</pubDate>
+  <pubDate>Mon, 20 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Reproducible résumés</title>
@@ -1484,7 +1484,7 @@ you can email me at <a href="mailto:mjbauer95@gmail.com">mjbauer95@gmail.com</a>
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/resume.html</link>
-  <pubDate>Sun, 12 Nov 2017 18:00:00 -0600</pubDate>
+  <pubDate>Sun, 12 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>bauer: an Emacs+Nix IDE</title>
@@ -6523,7 +6523,7 @@ your channel. Having this file available means you can place this repo in
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/bauer.html</link>
-  <pubDate>Sun, 05 Nov 2017 18:00:00 -0600</pubDate>
+  <pubDate>Sun, 05 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Nix and Org</title>
@@ -6779,7 +6779,7 @@ else up. I recommend reading through <a href="https://nixos.org/nixos/nix-pills/
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/nix-and-org.html</link>
-  <pubDate>Sun, 15 Oct 2017 23:26:00 -0500</pubDate>
+  <pubDate>Sun, 15 Oct 2017 23:26:00 -0400</pubDate>
 </item>
 </channel>
 </rss>
