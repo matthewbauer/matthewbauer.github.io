@@ -4,7 +4,327 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Mon, 28 May 2018 21:05:09 -0400</lastBuildDate>
+<lastBuildDate>Thu, 26 Jul 2018 00:39:00 -0400</lastBuildDate>
+<item>
+  <title>Beginner’s guide to cross compilation in Nixpkgs</title>
+  <description><![CDATA[
+
+<div id="outline-container-org36a69c7" class="outline-2">
+<h2 id="org36a69c7"><span class="section-number-2">1</span> What is cross compilation?</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+First, compilation refers to converting human-readable source code
+into computer-readable object code. Usually the computer you are
+building the code <i>for</i> is the same as the computer you are running
+<i>on</i><sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. In cross compilation, however, that is not the case. We can
+build code for any computer that our compiler supports!
+</p>
+
+<p>
+Cross-compilation is not a new idea at all. GCC and Autoconf are
+ancient tools that we use internally in Nixpkgs. But, getting those
+ideas to work well with Nix’s functional dependency model has taken
+years and years of work from the Nix community. We are finally to the
+point where an end user can easily start cross compiling things
+themselves.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org4f5e3e6" class="outline-2">
+<h2 id="org4f5e3e6"><span class="section-number-2">2</span> Unstable channel</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+/If you do not have Nix installed, you can install it available at
+<a href="https://nixos.org/nix/">NixOS.org</a>. The rest of the guide will assume that Nix is already
+installed./
+</p>
+
+<p>
+Much work has gone into bringing cross compilation support to Nixpkgs.
+While Nixpkgs has had some support for cross compiling for awhile,
+recent changes have made cross compilation much easier and more
+elegant. These changes will be required for this guide. We plan to
+have a stable version of this ready for 18.09. Before that though, you
+will need to use the unstable channel. Things can be built with the
+unstable channel fairly easily with Nix 2.0. For instance, to build
+the hello program,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">nix build -f channel:nixos-unstable hello
+</pre>
+</div>
+
+<p>
+The rest of the guide will use nixos-unstable as the channel. However,
+one 18.09 is released, you should be able to also use the stable
+channel.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org42b84aa" class="outline-2">
+<h2 id="org42b84aa"><span class="section-number-2">3</span> Building things</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+One of the important principles of cross compilation in Nixpkgs is
+handling native and cross compilation identically. This means that it
+should be possible to cross-compile any package in Nixpkgs with little
+to no modification at all. If your derivation specifies its
+dependencies correctly, Nix/Nixpkgs can figure out how to build it.
+</p>
+
+<p>
+So now it’s time to show what we can do with Nixpkgs cross compilation
+framework<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>. I’ve compiled a short list of cross package sets
+along with their corresponding attribute names.
+</p>
+
+<ul class="org-ul">
+<li>Raspberry Pi (pkgsCross.raspberryPi)</li>
+<li><code>x86_64</code> Musl (pkgsCross.musl64)</li>
+<li>Android (pkgsCross.aarch64-android-prebuilt)</li>
+<li>iPhone (pkgsCross.iphone64)</li>
+<li>Windows (pkgsCross.mingwW64)</li>
+</ul>
+
+<p>
+So, if you are familiar with Nixpkgs, you would know that if you
+wanted to build Emacs for your native computer you can just run,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable pkgs.emacs
+</pre>
+</div>
+
+<p>
+Likewise, if you wanted to build Emacs for a Raspberry Pi, you can
+just run,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable pkgsCross.raspberryPi.emacs
+</pre>
+</div>
+
+<p>
+The built package will be in the same ARM machine code used by the
+Raspbery Pi. The important thing to notice here is that we have the
+power to build in any package in Nixpkgs for any of the platforms
+listed above. Of course, many of these will have issues due to not
+being portable, but with time we can make both Nixpkgs &amp; the free
+software world better at handling cross compilatino. Any of the
+software listed in ‘nix search’ should be possible to cross compile
+through the pkgsCross attribute.
+</p>
+
+<p>
+Some more examples of things that I have worked on,
+</p>
+
+<ol class="org-ol">
+<li><p>
+Windows
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable pkgsCross.mingw32.hello
+$ nix run -f channel:nixos-unstable wine -c ./result/bin/hello.exe
+Hello, world!
+</pre>
+</div></li>
+
+<li><p>
+Android
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable <span class="org-sh-escaped-newline">\</span>
+      pkgsCross.aarch64-android-prebuilt.curl
+</pre>
+</div></li>
+
+<li><p>
+iPhone<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable <span class="org-sh-escaped-newline">\</span>
+      pkgsCross.aarch64-android-prebuilt.haskell.packages.jq
+</pre>
+</div></li>
+</ol>
+
+<p>
+Notice that the pkgsCross attribute is just sugar to a more powerful &amp;
+composable interface to Nixpkgs. This can be specified from the
+command line with,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable <span class="org-sh-escaped-newline">\</span>
+      --arg localSystem <span class="org-string">'{ config = "&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;"; }'</span>
+</pre>
+</div>
+
+<p>
+For instance you may want to cross-compile Firefox for ARM64 Linux.
+This is as easy as<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix build -f channel:nixos-unstable <span class="org-sh-escaped-newline">\</span>
+      --arg crossSystem <span class="org-string">'{ config = "arm64-unknown-linux-gnu"; }'</span>
+</pre>
+</div>
+
+<p>
+You can be much more specific with what you want through localSystem.
+Many more combinations are possible, but they all revolve around that
+four-part string config listed. It corresponds to
+<code>&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;</code> and is commonly called the
+LLVM triple<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>. The LLVM triple has become the standard way to
+specify systems accross many free software toolchains including GCC,
+Binutils, Clang, libffi, etc. There is more information that can be
+specified in <code>crossSystem</code> &amp; <code>localSystem</code> within Nixpkgs but this is
+not covered here as they are heavily dependent on the specific
+toolchain being used.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf0b36a8" class="outline-2">
+<h2 id="orgf0b36a8"><span class="section-number-2">4</span> When things break</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+While the fundamentals of cross compiling in Nixpkgs are very good,
+individual packages will sometimes be broken. This is sometime because
+the package definition in Nixpkgs is incorrect. There are some common
+mistakes that occur that I want to cover here. First, the difference
+between ‘build-time’ vs ‘runtime’ dependencies<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>.
+</p>
+
+<ul class="org-ul">
+<li>build-time dependencies: tools that will be run on the computer
+doing the cross compiling</li>
+<li>runtime dependencies: libraries and tools that will run on the
+computer we are targeting.</li>
+</ul>
+
+<p>
+In Nixpkgs, build-time dependencies should be put in
+<code>nativeBuildInputs</code>. Runtime dependencies should be put in
+<code>buildInputs</code>. Currently, this distinction has no effect on native
+compilation but it is crucial for correct cross-compilation. There are
+proposals to Nixpkgs to enforce the use of <code>buildInputs</code> as
+<code>nativeBuildInputs</code> even on native builds but this is yet to be agreed
+on<sup><a id="fnr.7" class="footref" href="#fn.7">7</a></sup>.
+</p>
+
+<p>
+Sometimes your package will pull in a dependency indirectly so that
+dependency is not listed in <code>buildInputs</code> or <code>nativeBuildInputs</code>. This
+breaks the package splicing that goes on behind the scenes to make
+pick up the package set to get each package. To fix it, you will have
+to splice the package yourself. This is fairly straightforward. For
+examples, let’s say that your package depends on the <code>pkgs.git</code> git
+executable to be available through the <code>GIT_CMD</code> variable, which means
+it is not listed in <code>nativeBuildInputs</code>. In this case, you should
+instead refer to <code>git</code> as <code>pkgs.buildPackages.git</code>. This will pick up
+the build package set instead of the target package set.
+</p>
+
+<p>
+There are a few more things that can go wrong within Nixpkgs. If you
+need to conditionally do something only when cross compiling (say a
+configure flag like <code>--enable-cross-compilation</code>), you should use
+<code>stdenv.hostPlatform != stdenv.buildPlatform</code>. If you want to check,
+for instance, that the platform you are building for is a Windows
+computer, just use <code>stdenv.hostPlatform.isWindows</code>, in the same way
+that you can also check for Linux with <code>stdenv.hostPlatform.isLinux</code>.
+These cases are often necessary, but remember they should only be used
+when absolutely needed. The more code we share between platforms, the
+more code is tested.
+</p>
+
+<p>
+Sometimes packages are just not written in a cross-friendly way. This
+will usually happen just because the software author has not thought
+of how to handle cross compilation<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>. We want to work with
+software authors to make this process easier &amp; contribute to the
+portability of free software. This takes time but we are definitely
+making progress.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org37b0c87" class="outline-2">
+<h2 id="org37b0c87"><span class="section-number-2">5</span> Further reading</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+The concepts introduced here are also available in the Nixpkgs manual.
+These are the relevant sections/chapters:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://nixos.org/nixpkgs/manual/#ssec-stdenv-dependencies">Nixpkgs Manual. Section 3.3, Specifying dependencies</a></li>
+<li><a href="https://nixos.org/nixpkgs/manual/#ssec-stdenv-dependencies">Nixpkgs Manual. Chapter 5, Cross compilation</a></li>
+</ul>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+This is referred to as <i>native</i> compilation.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+All examples are provided by the file <a href="https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples.nix">lib/systems/examples.nix</a>
+in Nixpkgs.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+Cross-compilation to iPhone, unfortunately, requires that you
+download the unfree XCode environment. This is a consequence of
+Apple’s choices regarding what toolchains they allow.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+In fact, each of these correspond to a value for crossSystem
+listed in <a href="https://github.com/NixOS/nixpkgs/blob/master/lib/systems/examples.nix">lib/systems/examples.nix</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+Of course there are 4 of them, so LLVM quadruple seems like a
+better name.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+Like a few other parts of this article, this is somewhat of a
+simplification. There are many other types of dependencies but they
+all revolve around the build-time vs runtime distinction.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.7" class="footnum" href="#fnr.7">7</a></sup> <div class="footpara"><p class="footpara">
+See <code>strictDeps</code> in <a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/stdenv/generic/setup.sh">pkgs/stdenv/generic/setup.sh</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">
+Or even worse, they have thought about cross-compilation, but
+embraced many antipatterns that break with Nixpkgs’ cross-compilation
+framework.
+</p></div></div>
+
+
+</div>
+</div>]]></description>
+  <link>https://matthewbauer.us/blog/beginners-guide-to-cross.html</link>
+  <pubDate>Tue, 24 Jul 2018 20:00:00 -0400</pubDate>
+</item>
 <item>
   <title>Channel Changing with Nix</title>
   <description><![CDATA[
