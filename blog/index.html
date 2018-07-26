@@ -12,13 +12,13 @@
 <link rel="stylesheet" href="../fonts.css">
 <link rel="stylesheet" href="../style.css"></head>
 <body>
-<div id="preamble" class="status"><a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a></div>
+<div id="preamble" class="status"><h1><a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a></h1></div>
 <div id="content">
 
 <div class="post-date">24 Jul 2018</div><h1 class="post-title"><a href="beginners-guide-to-cross.html">Beginner’s guide to cross compilation in Nixpkgs</a></h1>
 
-<div id="outline-container-org36a69c7" class="outline-2">
-<h2 id="org36a69c7"><span class="section-number-2">1</span> What is cross compilation?</h2>
+<div id="outline-container-org0497cac" class="outline-2">
+<h2 id="org0497cac"><span class="section-number-2">1</span> What is cross compilation?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 First, compilation refers to converting human-readable source code
@@ -39,8 +39,8 @@ themselves.
 </div>
 </div>
 
-<div id="outline-container-org4f5e3e6" class="outline-2">
-<h2 id="org4f5e3e6"><span class="section-number-2">2</span> Unstable channel</h2>
+<div id="outline-container-org0b542b5" class="outline-2">
+<h2 id="org0b542b5"><span class="section-number-2">2</span> Unstable channel</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 /If you do not have Nix installed, you can install it available at
@@ -72,8 +72,8 @@ channel.
 </div>
 </div>
 
-<div id="outline-container-org42b84aa" class="outline-2">
-<h2 id="org42b84aa"><span class="section-number-2">3</span> Building things</h2>
+<div id="outline-container-org64d0fd0" class="outline-2">
+<h2 id="org64d0fd0"><span class="section-number-2">3</span> Building things</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 One of the important principles of cross compilation in Nixpkgs is
@@ -173,7 +173,7 @@ command line with,
 
 <div class="org-src-container">
 <pre class="src src-sh">$ nix build -f channel:nixos-unstable <span class="org-sh-escaped-newline">\</span>
-      --arg localSystem <span class="org-string">'{ config = "&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;"; }'</span>
+      --arg crossSystem <span class="org-string">'{ config = "&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;"; }'</span>
 </pre>
 </div>
 
@@ -189,7 +189,7 @@ This is as easy as<sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup>:
 </div>
 
 <p>
-You can be much more specific with what you want through localSystem.
+You can be much more specific with what you want through crossSystem.
 Many more combinations are possible, but they all revolve around that
 four-part string config listed. It corresponds to
 <code>&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;</code> and is commonly called the
@@ -203,8 +203,8 @@ toolchain being used.
 </div>
 </div>
 
-<div id="outline-container-orgf0b36a8" class="outline-2">
-<h2 id="orgf0b36a8"><span class="section-number-2">4</span> When things break</h2>
+<div id="outline-container-orgec101c8" class="outline-2">
+<h2 id="orgec101c8"><span class="section-number-2">4</span> When things break</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 While the fundamentals of cross compiling in Nixpkgs are very good,
@@ -268,8 +268,8 @@ making progress.
 </div>
 </div>
 
-<div id="outline-container-org37b0c87" class="outline-2">
-<h2 id="org37b0c87"><span class="section-number-2">5</span> Further reading</h2>
+<div id="outline-container-org106ffef" class="outline-2">
+<h2 id="org106ffef"><span class="section-number-2">5</span> Further reading</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 The concepts introduced here are also available in the Nixpkgs manual.
@@ -278,7 +278,16 @@ These are the relevant sections/chapters:
 
 <ul class="org-ul">
 <li><a href="https://nixos.org/nixpkgs/manual/#ssec-stdenv-dependencies">Nixpkgs Manual. Section 3.3, Specifying dependencies</a></li>
-<li><a href="https://nixos.org/nixpkgs/manual/#ssec-stdenv-dependencies">Nixpkgs Manual. Chapter 5, Cross compilation</a></li>
+<li><a href="https://nixos.org/nixpkgs/manual/#chap-cross">Nixpkgs Manual. Chapter 5, Cross compilation</a></li>
+</ul>
+
+<p>
+GNU Automake also has a section on build vs. host vs. target. This
+will help clarify some of the naming conventions in Nixpkgs:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.gnu.org/software/automake/manual/html_node/Cross_002dCompilation.html">Automake Manual. Section 2.2.8, Cross-Compilation</a></li>
 </ul>
 </div>
 </div>
