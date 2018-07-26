@@ -17,8 +17,8 @@
 
 <div class="post-date">24 Jul 2018</div><h1 class="post-title"><a href="beginners-guide-to-cross.html">Beginner’s guide to cross compilation in Nixpkgs</a></h1>
 
-<div id="outline-container-org0497cac" class="outline-2">
-<h2 id="org0497cac"><span class="section-number-2">1</span> What is cross compilation?</h2>
+<div id="outline-container-orgf888eca" class="outline-2">
+<h2 id="orgf888eca"><span class="section-number-2">1</span> What is cross compilation?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 First, compilation refers to converting human-readable source code
@@ -39,8 +39,8 @@ themselves.
 </div>
 </div>
 
-<div id="outline-container-org0b542b5" class="outline-2">
-<h2 id="org0b542b5"><span class="section-number-2">2</span> Unstable channel</h2>
+<div id="outline-container-org3dec937" class="outline-2">
+<h2 id="org3dec937"><span class="section-number-2">2</span> Unstable channel</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 /If you do not have Nix installed, you can install it available at
@@ -66,14 +66,14 @@ the hello program,
 
 <p>
 The rest of the guide will use nixos-unstable as the channel. However,
-one 18.09 is released, you should be able to also use the stable
+once 18.09 is released, you should be able to also use the stable
 channel.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org64d0fd0" class="outline-2">
-<h2 id="org64d0fd0"><span class="section-number-2">3</span> Building things</h2>
+<div id="outline-container-org0e7fb57" class="outline-2">
+<h2 id="org0e7fb57"><span class="section-number-2">3</span> Building things</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 One of the important principles of cross compilation in Nixpkgs is
@@ -123,7 +123,7 @@ Raspbery Pi. The important thing to notice here is that we have the
 power to build in any package in Nixpkgs for any of the platforms
 listed above. Of course, many of these will have issues due to not
 being portable, but with time we can make both Nixpkgs &amp; the free
-software world better at handling cross compilatino. Any of the
+software world better at handling cross compilation. Any of the
 software listed in ‘nix search’ should be possible to cross compile
 through the pkgsCross attribute.
 </p>
@@ -160,7 +160,7 @@ iPhone<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>
 
 <div class="org-src-container">
 <pre class="src src-sh">$ nix build -f channel:nixos-unstable <span class="org-sh-escaped-newline">\</span>
-      pkgsCross.aarch64-android-prebuilt.haskell.packages.jq
+      pkgsCross.iphone64.haskell.packages.jq
 </pre>
 </div></li>
 </ol>
@@ -203,8 +203,8 @@ toolchain being used.
 </div>
 </div>
 
-<div id="outline-container-orgec101c8" class="outline-2">
-<h2 id="orgec101c8"><span class="section-number-2">4</span> When things break</h2>
+<div id="outline-container-org7407976" class="outline-2">
+<h2 id="org7407976"><span class="section-number-2">4</span> When things break</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 While the fundamentals of cross compiling in Nixpkgs are very good,
@@ -263,13 +263,14 @@ will usually happen just because the software author has not thought
 of how to handle cross compilation<sup><a id="fnr.8" class="footref" href="#fn.8">8</a></sup>. We want to work with
 software authors to make this process easier &amp; contribute to the
 portability of free software. This takes time but we are definitely
-making progress.
+making progress. Contributions are always encouraged to <a href="https://github.com/nixos/nixpkgs/">the Nixpkgs
+repo</a>.
 </p>
 </div>
 </div>
 
-<div id="outline-container-org106ffef" class="outline-2">
-<h2 id="org106ffef"><span class="section-number-2">5</span> Further reading</h2>
+<div id="outline-container-org3dad469" class="outline-2">
+<h2 id="org3dad469"><span class="section-number-2">5</span> Further reading</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 The concepts introduced here are also available in the Nixpkgs manual.
