@@ -17,8 +17,8 @@
 <div id="content">
 <div class="post-date">24 Jul 2018</div><h1 class="post-title"><a href="beginners-guide-to-cross.html">Beginner’s guide to cross compilation in Nixpkgs</a></h1>
 
-<div id="outline-container-orgf888eca" class="outline-2">
-<h2 id="orgf888eca"><span class="section-number-2">1</span> What is cross compilation?</h2>
+<div id="outline-container-org840b947" class="outline-2">
+<h2 id="org840b947"><span class="section-number-2">1</span> What is cross compilation?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 First, compilation refers to converting human-readable source code
@@ -39,13 +39,13 @@ themselves.
 </div>
 </div>
 
-<div id="outline-container-org3dec937" class="outline-2">
-<h2 id="org3dec937"><span class="section-number-2">2</span> Unstable channel</h2>
+<div id="outline-container-orgea0db89" class="outline-2">
+<h2 id="orgea0db89"><span class="section-number-2">2</span> Unstable channel</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-/If you do not have Nix installed, you can install it available at
+If you do not have Nix installed, you can install it available at
 <a href="https://nixos.org/nix/">NixOS.org</a>. The rest of the guide will assume that Nix is already
-installed./
+installed.
 </p>
 
 <p>
@@ -72,8 +72,8 @@ channel.
 </div>
 </div>
 
-<div id="outline-container-org0e7fb57" class="outline-2">
-<h2 id="org0e7fb57"><span class="section-number-2">3</span> Building things</h2>
+<div id="outline-container-org15751cf" class="outline-2">
+<h2 id="org15751cf"><span class="section-number-2">3</span> Building things</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 One of the important principles of cross compilation in Nixpkgs is
@@ -119,7 +119,7 @@ just run,
 
 <p>
 The built package will be in the same ARM machine code used by the
-Raspbery Pi. The important thing to notice here is that we have the
+Raspberry Pi. The important thing to notice here is that we have the
 power to build in any package in Nixpkgs for any of the platforms
 listed above. Of course, many of these will have issues due to not
 being portable, but with time we can make both Nixpkgs &amp; the free
@@ -194,7 +194,7 @@ Many more combinations are possible, but they all revolve around that
 four-part string config listed. It corresponds to
 <code>&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;</code> and is commonly called the
 LLVM triple<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>. The LLVM triple has become the standard way to
-specify systems accross many free software toolchains including GCC,
+specify systems across many free software toolchains including GCC,
 Binutils, Clang, libffi, etc. There is more information that can be
 specified in <code>crossSystem</code> &amp; <code>localSystem</code> within Nixpkgs but this is
 not covered here as they are heavily dependent on the specific
@@ -203,8 +203,8 @@ toolchain being used.
 </div>
 </div>
 
-<div id="outline-container-org7407976" class="outline-2">
-<h2 id="org7407976"><span class="section-number-2">4</span> When things break</h2>
+<div id="outline-container-orgfb1abb7" class="outline-2">
+<h2 id="orgfb1abb7"><span class="section-number-2">4</span> When things break</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 While the fundamentals of cross compiling in Nixpkgs are very good,
@@ -269,8 +269,8 @@ repo</a>.
 </div>
 </div>
 
-<div id="outline-container-org3dad469" class="outline-2">
-<h2 id="org3dad469"><span class="section-number-2">5</span> Further reading</h2>
+<div id="outline-container-orgcf93adb" class="outline-2">
+<h2 id="orgcf93adb"><span class="section-number-2">5</span> Further reading</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 The concepts introduced here are also available in the Nixpkgs manual.
@@ -333,13 +333,15 @@ See <code>strictDeps</code> in <a href="https://github.com/NixOS/nixpkgs/blob/ma
 
 <div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">
 Or even worse, they have thought about cross-compilation, but
-embraced many antipatterns that break with Nixpkgs’ cross-compilation
+embraced many anti-patterns that break with Nixpkgs’ cross-compilation
 framework.
 </p></div></div>
 
 
 </div>
 </div></div>
-<div id="postamble" class="status"></div>
+<div id="postamble" class="status"><div id="archive">
+  <a href="archive.html">Other posts</a>
+</div></div>
 </body>
 </html>

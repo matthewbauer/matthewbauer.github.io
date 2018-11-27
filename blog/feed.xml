@@ -4,13 +4,155 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Thu, 26 Jul 2018 13:05:43 -0400</lastBuildDate>
+<lastBuildDate>Mon, 26 Nov 2018 20:48:47 -0600</lastBuildDate>
+<item>
+  <title>Subjective ranking of build systems</title>
+  <description><![CDATA[
+
+<div id="outline-container-org6e664e2" class="outline-2">
+<h2 id="org6e664e2"><span class="section-number-2">1</span> My subjective ranking of build systems</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Very few of us are happy with our choices of build systems. There
+are a lot out there and none feel quite right to many people. I
+wanted to offer my personal opinions on build systems. Every build
+system is “bad” in its own way. But some are much worse than
+others.
+</p>
+
+<p>
+As a maintainer for Nixpkgs, we have to deal with . I’ve avoided
+build systems that are language-specific. Those build systems are
+usually the only choice for your language, so ranking them will
+inevitably include opinions on the language itself. So, I’ve
+included in this list only language neutral build systems. In
+addition, I’ve filtered out any build systems that are not included
+in Nixpkgs. This perspective is going to prioritize features that
+make your project easiest to package in cross-platform ways. It’s
+very subjective, so I only speak for myself here.
+</p>
+
+<p>
+I separate two kinds of software used for packages. One is the
+“meta” build system that provides an abstract interface to create
+build rules. The other is the build runner that will run the rules.
+Most meta build systems support targeting multiple backends.
+</p>
+</div>
+
+<div id="outline-container-orgc7cae77" class="outline-3">
+<h3 id="orgc7cae77"><span class="section-number-3">1.1</span> What makes a good build system?</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Some criteria I have for these build systems.
+</p>
+
+<ul class="org-ul">
+<li>Good defaults builtin. By default, packages should support
+specifying “prefix” and “destination directory”.</li>
+<li>Works with widely available software. Being able to generate
+Makefiles is a big bonus. Everyone has access to make - not
+everyone has Ninja. This is often needed for bootstrapping.</li>
+<li>Supports cross compilation concepts. A good separation between
+buildtime and runtime is a must have! In addition you should be
+able to set build, host, and target from the command line. This
+makes things much easier for packaging and bootstrapping.</li>
+<li>Detection of dependencies reuses existing solutions. Pkgconfig
+provides an easy way to detect absolute directories. No need to
+reinvent the wheel here.</li>
+<li>The less dependencies the better! Requiring a Java or Python
+runtime means it takes longer to rebuild the world. They
+introduce bottlenecks where every package needs to wait for these
+runtimes to be built before we can start running things in
+parallel.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org0908b83" class="outline-3">
+<h3 id="org0908b83"><span class="section-number-3">1.2</span> Ranking of meta build systems from bad to worse</h3>
+<div class="outline-text-3" id="text-1-2">
+<ol class="org-ol">
+<li>GNU Autotools (Automake &amp; autoconf)</li>
+<li>Meson</li>
+<li>CMake</li>
+<li>gyp</li>
+<li>qmake</li>
+<li>imake</li>
+<li>premake</li>
+</ol>
+
+<p>
+GNU Autotools comes in at the top. It has the best support for
+cross compilation of any meta build system. It has been around for
+a while and means that the classic “./configure &amp;&amp; make &amp;&amp; make
+install” work. Because the configure script is just a simple bash
+script, packages don’t have to depend directly on GNU Autotools at
+build time. This is a big plus in bootstrapping software. I think
+Meson has made a lot of progress in improving its cross
+compilation support. It’s not quite there in my opinion, as it
+requires you to create cross tool files instead of using command
+line arguments.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org67f64c2" class="outline-3">
+<h3 id="org67f64c2"><span class="section-number-3">1.3</span> Ranking of build runners from bad to worse</h3>
+<div class="outline-text-3" id="text-1-3">
+<ol class="org-ol">
+<li>GNU Make</li>
+<li>Ninja</li>
+<li>Bazel</li>
+<li>boost.build</li>
+<li>SCons</li>
+</ol>
+
+<p>
+GNU Make is still the top choice in my personal opinion. It has
+been around for a while, but Makefiles are widely understood and
+GNU Make is included everywhere. In addition, the Makefile build
+rule format is easy to parallelize. Ninja still requires Python to
+build itself. This adds to the Nixpkgs bottleneck because Python
+is not included in the bootstrap tools. While there are some
+speedups in Ninja, they don’t appear to be significant enough to
+be worth switching at this time. At the same time, Ninja is still
+a perfectly good choice if you value performance over legacy
+support.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org79b73bf" class="outline-3">
+<h3 id="org79b73bf"><span class="section-number-3">1.4</span> Conclusion</h3>
+<div class="outline-text-3" id="text-1-4">
+<p>
+In Nixpkgs, we have made an attempt to support whatever build
+system you are using. But, some are definitely better than others.
+</p>
+
+<p>
+My main goal here is to try to get software authors to think more
+critically about what build system they are using. In my opinion,
+it is better to use well known software over more obscure systems.
+These shouldn’t be taken as a universal truth. Everyone has their
+own wants and needs. But, if your build system comes in at the
+bottom of this list, you might want to consider switching to
+something else!
+</p>
+</div>
+</div>
+</div>
+]]></description>
+  <link>https://matthewbauer.us/blog/build-systems.html</link>
+  <pubDate>Sun, 25 Nov 2018 18:00:00 -0600</pubDate>
+</item>
 <item>
   <title>Beginner’s guide to cross compilation in Nixpkgs</title>
   <description><![CDATA[
 
-<div id="outline-container-orgf888eca" class="outline-2">
-<h2 id="orgf888eca"><span class="section-number-2">1</span> What is cross compilation?</h2>
+<div id="outline-container-org840b947" class="outline-2">
+<h2 id="org840b947"><span class="section-number-2">1</span> What is cross compilation?</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 First, compilation refers to converting human-readable source code
@@ -31,13 +173,13 @@ themselves.
 </div>
 </div>
 
-<div id="outline-container-org3dec937" class="outline-2">
-<h2 id="org3dec937"><span class="section-number-2">2</span> Unstable channel</h2>
+<div id="outline-container-orgea0db89" class="outline-2">
+<h2 id="orgea0db89"><span class="section-number-2">2</span> Unstable channel</h2>
 <div class="outline-text-2" id="text-2">
 <p>
-/If you do not have Nix installed, you can install it available at
+If you do not have Nix installed, you can install it available at
 <a href="https://nixos.org/nix/">NixOS.org</a>. The rest of the guide will assume that Nix is already
-installed./
+installed.
 </p>
 
 <p>
@@ -64,8 +206,8 @@ channel.
 </div>
 </div>
 
-<div id="outline-container-org0e7fb57" class="outline-2">
-<h2 id="org0e7fb57"><span class="section-number-2">3</span> Building things</h2>
+<div id="outline-container-org15751cf" class="outline-2">
+<h2 id="org15751cf"><span class="section-number-2">3</span> Building things</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 One of the important principles of cross compilation in Nixpkgs is
@@ -111,7 +253,7 @@ just run,
 
 <p>
 The built package will be in the same ARM machine code used by the
-Raspbery Pi. The important thing to notice here is that we have the
+Raspberry Pi. The important thing to notice here is that we have the
 power to build in any package in Nixpkgs for any of the platforms
 listed above. Of course, many of these will have issues due to not
 being portable, but with time we can make both Nixpkgs &amp; the free
@@ -186,7 +328,7 @@ Many more combinations are possible, but they all revolve around that
 four-part string config listed. It corresponds to
 <code>&lt;arch&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;environment&gt;</code> and is commonly called the
 LLVM triple<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>. The LLVM triple has become the standard way to
-specify systems accross many free software toolchains including GCC,
+specify systems across many free software toolchains including GCC,
 Binutils, Clang, libffi, etc. There is more information that can be
 specified in <code>crossSystem</code> &amp; <code>localSystem</code> within Nixpkgs but this is
 not covered here as they are heavily dependent on the specific
@@ -195,8 +337,8 @@ toolchain being used.
 </div>
 </div>
 
-<div id="outline-container-org7407976" class="outline-2">
-<h2 id="org7407976"><span class="section-number-2">4</span> When things break</h2>
+<div id="outline-container-orgfb1abb7" class="outline-2">
+<h2 id="orgfb1abb7"><span class="section-number-2">4</span> When things break</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 While the fundamentals of cross compiling in Nixpkgs are very good,
@@ -261,8 +403,8 @@ repo</a>.
 </div>
 </div>
 
-<div id="outline-container-org3dad469" class="outline-2">
-<h2 id="org3dad469"><span class="section-number-2">5</span> Further reading</h2>
+<div id="outline-container-orgcf93adb" class="outline-2">
+<h2 id="orgcf93adb"><span class="section-number-2">5</span> Further reading</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 The concepts introduced here are also available in the Nixpkgs manual.
@@ -325,7 +467,7 @@ See <code>strictDeps</code> in <a href="https://github.com/NixOS/nixpkgs/blob/ma
 
 <div class="footdef"><sup><a id="fn.8" class="footnum" href="#fnr.8">8</a></sup> <div class="footpara"><p class="footpara">
 Or even worse, they have thought about cross-compilation, but
-embraced many antipatterns that break with Nixpkgs’ cross-compilation
+embraced many anti-patterns that break with Nixpkgs’ cross-compilation
 framework.
 </p></div></div>
 
@@ -333,7 +475,7 @@ framework.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/beginners-guide-to-cross.html</link>
-  <pubDate>Tue, 24 Jul 2018 20:00:00 -0400</pubDate>
+  <pubDate>Tue, 24 Jul 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Channel Changing with Nix</title>
@@ -805,7 +947,7 @@ See release <a href="https://github.com/NixOS/nixpkgs/tree/0.5">0.5</a>.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/channel-changing.html</link>
-  <pubDate>Sat, 12 May 2018 20:00:00 -0400</pubDate>
+  <pubDate>Sat, 12 May 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>2018 Summer</title>
@@ -817,7 +959,7 @@ world</a>. Very excited to be working with a team of really smart people.
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/2018-summer.html</link>
-  <pubDate>Fri, 30 Mar 2018 20:00:00 -0400</pubDate>
+  <pubDate>Fri, 30 Mar 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>66% of Nixpkgs are up-to-date</title>
@@ -879,7 +1021,7 @@ please be sure to open an issue.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/nixpkgs-fresh.html</link>
-  <pubDate>Wed, 28 Mar 2018 20:00:00 -0400</pubDate>
+  <pubDate>Wed, 28 Mar 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>nix-buffer: nix-shell in Emacs</title>
@@ -920,7 +1062,7 @@ dependencies you need based on your <code>default.nix</code> file.
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/nix-buffer.html</link>
-  <pubDate>Sat, 10 Feb 2018 19:00:00 -0500</pubDate>
+  <pubDate>Sat, 10 Feb 2018 18:00:00 -0600</pubDate>
 </item>
 <item>
   <title>Why Nix?</title>
@@ -1010,7 +1152,7 @@ For more features of Nix, you can checkout the <a href="https://nixos.org/nix/">
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/why-nix.html</link>
-  <pubDate>Mon, 20 Nov 2017 19:00:00 -0500</pubDate>
+  <pubDate>Mon, 20 Nov 2017 18:00:00 -0600</pubDate>
 </item>
 <item>
   <title>Reproducible résumés</title>
@@ -1814,7 +1956,7 @@ you can email me at <a href="mailto:mjbauer95@gmail.com">mjbauer95@gmail.com</a>
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/resume.html</link>
-  <pubDate>Sun, 12 Nov 2017 19:00:00 -0500</pubDate>
+  <pubDate>Sun, 12 Nov 2017 18:00:00 -0600</pubDate>
 </item>
 <item>
   <title>bauer: an Emacs+Nix IDE</title>
@@ -6853,7 +6995,7 @@ your channel. Having this file available means you can place this repo in
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/bauer.html</link>
-  <pubDate>Sun, 05 Nov 2017 19:00:00 -0500</pubDate>
+  <pubDate>Sun, 05 Nov 2017 18:00:00 -0600</pubDate>
 </item>
 <item>
   <title>Nix and Org</title>
@@ -7109,7 +7251,7 @@ else up. I recommend reading through <a href="https://nixos.org/nixos/nix-pills/
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/nix-and-org.html</link>
-  <pubDate>Sun, 15 Oct 2017 23:26:00 -0400</pubDate>
+  <pubDate>Sun, 15 Oct 2017 23:26:00 -0500</pubDate>
 </item>
 </channel>
 </rss>
