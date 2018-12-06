@@ -6,45 +6,47 @@ I hereby claim:
 
   * I am an admin of https://matthewbauer.us
   * I am matthewbauer (https://keybase.io/matthewbauer) on keybase.
-  * I have a public key ASCq9nR3CY_UJ8Ei-PsH-mnG5OYue7zHuFDPKqCCOQHN5Qo
+  * I have a public key ASAuwlQTWZYGAtxMLBa6QOO2-qKWx5kSmKidgVeA7F49OQo
 
 To do so, I am signing this object:
 
 {
-    "body": {
-        "key": {
-            "eldest_kid": "01017174c56acf91df2aba39a58679f276c74b171cadfc6abd9101593c947e0b43bc0a",
-            "host": "keybase.io",
-            "kid": "0120aaf67477098fd427c122f8fb07fa69c6e4e62e7bbcc7b850cf2aa0823901cde50a",
-            "uid": "19e253b9026500f7631dc5c5a5531a00",
-            "username": "matthewbauer"
-        },
-        "service": {
-            "hostname": "matthewbauer.us",
-            "protocol": "https:"
-        },
-        "type": "web_service_binding",
-        "version": 1
+  "body": {
+    "key": {
+      "eldest_kid": "01202ec2541359960602dc4c2c16ba40e3b6faa296c7991298a89d815780ec5e3d390a",
+      "host": "keybase.io",
+      "kid": "01202ec2541359960602dc4c2c16ba40e3b6faa296c7991298a89d815780ec5e3d390a",
+      "uid": "19e253b9026500f7631dc5c5a5531a00",
+      "username": "matthewbauer"
     },
-    "client": {
-        "name": "keybase.io go client",
-        "version": "1.0.14"
-    },
-    "ctime": 1459954775,
-    "expire_in": 504576000,
     "merkle_root": {
-        "ctime": 1459954754,
-        "hash": "e7215b2ba025fbc6ecd90ca118ff33900cd6e070b63c8703df7fc8f210c08d1b9c0ab6b145270d50f1e4aba97a59f184073efd1832e67b6b63aa8cd5b1781963",
-        "seqno": 432025
+      "ctime": 1544129886,
+      "hash": "d84f94dae442c559f89b2d7d27a15480620bbbda0d2a269b15de89777ac1de8df08b1f3c2cf8c9927807f0aca1b1426fd12bf7673b7a3bdd892baa156ff51e04",
+      "hash_meta": "95a8c89fb9f6476a5b03942027d2d3ed9cb231d968903f7f97c40c5bfcf8f66c",
+      "seqno": 4066746
     },
-    "prev": "51418f239adb9e8268792be7384404cc25ffe1e95bd5fa0bae4f460f1a8dc611",
-    "seqno": 21,
-    "tag": "signature"
+    "service": {
+      "entropy": "mlIkRqFUiSEFw56AYVW5aMNn",
+      "hostname": "matthewbauer.us",
+      "protocol": "https:"
+    },
+    "type": "web_service_binding",
+    "version": 2
+  },
+  "client": {
+    "name": "keybase.io go client",
+    "version": "2.11.0"
+  },
+  "ctime": 1544129891,
+  "expire_in": 504576000,
+  "prev": "423e0f125a5afb79990c1b196883e7eaa4fe573d674e289eb35b88d8c1cb6a77",
+  "seqno": 39,
+  "tag": "signature"
 }
 
 which yields the signature:
 
-g6Rib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgqvZ0dwmP1CfBIvj7B/ppxuTmLnu8x7hQzyqggjkBzeUKp3BheWxvYWTFAvx7ImJvZHkiOnsia2V5Ijp7ImVsZGVzdF9raWQiOiIwMTAxNzE3NGM1NmFjZjkxZGYyYWJhMzlhNTg2NzlmMjc2Yzc0YjE3MWNhZGZjNmFiZDkxMDE1OTNjOTQ3ZTBiNDNiYzBhIiwiaG9zdCI6ImtleWJhc2UuaW8iLCJraWQiOiIwMTIwYWFmNjc0NzcwOThmZDQyN2MxMjJmOGZiMDdmYTY5YzZlNGU2MmU3YmJjYzdiODUwY2YyYWEwODIzOTAxY2RlNTBhIiwidWlkIjoiMTllMjUzYjkwMjY1MDBmNzYzMWRjNWM1YTU1MzFhMDAiLCJ1c2VybmFtZSI6Im1hdHRoZXdiYXVlciJ9LCJzZXJ2aWNlIjp7Imhvc3RuYW1lIjoibWF0dGhld2JhdWVyLnVzIiwicHJvdG9jb2wiOiJodHRwczoifSwidHlwZSI6IndlYl9zZXJ2aWNlX2JpbmRpbmciLCJ2ZXJzaW9uIjoxfSwiY2xpZW50Ijp7Im5hbWUiOiJrZXliYXNlLmlvIGdvIGNsaWVudCIsInZlcnNpb24iOiIxLjAuMTQifSwiY3RpbWUiOjE0NTk5NTQ3NzUsImV4cGlyZV9pbiI6NTA0NTc2MDAwLCJtZXJrbGVfcm9vdCI6eyJjdGltZSI6MTQ1OTk1NDc1NCwiaGFzaCI6ImU3MjE1YjJiYTAyNWZiYzZlY2Q5MGNhMTE4ZmYzMzkwMGNkNmUwNzBiNjNjODcwM2RmN2ZjOGYyMTBjMDhkMWI5YzBhYjZiMTQ1MjcwZDUwZjFlNGFiYTk3YTU5ZjE4NDA3M2VmZDE4MzJlNjdiNmI2M2FhOGNkNWIxNzgxOTYzIiwic2Vxbm8iOjQzMjAyNX0sInByZXYiOiI1MTQxOGYyMzlhZGI5ZTgyNjg3OTJiZTczODQ0MDRjYzI1ZmZlMWU5NWJkNWZhMGJhZTRmNDYwZjFhOGRjNjExIiwic2Vxbm8iOjIxLCJ0YWciOiJzaWduYXR1cmUifaNzaWfEQElwJXQRcTIw405NaajqmVxJrCruit2fIJMMt7ci7QyiBHC7JnBMvpsG9FWdodOMRRgVDJraTlMsqR4lpL4f0A2oc2lnX3R5cGUgo3RhZ80CAqd2ZXJzaW9uAQ==
+hKRib2R5hqhkZXRhY2hlZMOpaGFzaF90eXBlCqNrZXnEIwEgLsJUE1mWBgLcTCwWukDjtvqilseZEpionYFXgOxePTkKp3BheWxvYWTESpcCJ8QgQj4PElpa+3mZDBsZaIPn6qT+Vz1nTiies1uI2MHLanfEIICAomeqOZedVF9Cc1AnOrQ8hdn+pwI72vheNuiJABVwAgHCo3NpZ8RAGeZp1rqVGCyJoVH4uLJZROXPNnowzbmxUiOeGIe9dDjQRCD1l+h/rclbLc+u1miVupqA17G1mQQFAOrDRgoMDqhzaWdfdHlwZSCkaGFzaIKkdHlwZQildmFsdWXEIBBp+CkQKtP0CHUCwZusfz9QXzU0bYZUVkpuJphfof0/o3RhZ80CAqd2ZXJzaW9uAQ==
 
 And finally, I am proving ownership of this host by posting or
 appending to this document.
