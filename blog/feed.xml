@@ -4,9 +4,9 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Fri, 08 Feb 2019 23:05:04 -0500</lastBuildDate>
+<lastBuildDate>Sat, 09 Feb 2019 13:31:57 -0500</lastBuildDate>
 <item>
-  <title>Call for proofreaders and beta testers for 18.09</title>
+  <title>Call for proofreaders and beta testers for 19.03</title>
   <description><![CDATA[
 <p>
 This was originally published on <a href="https://discourse.nixos.org/t/call-for-proofreaders-and-beta-testers-for-19-03/">Discourse</a>. I am putting it here for
@@ -22,8 +22,8 @@ going to outline how you can easily contribute to the community and
 help make 19.03 the best NixOS release yet.
 </p>
 
-<div id="outline-container-orgea83b0e" class="outline-2">
-<h2 id="orgea83b0e"><span class="section-number-2">1</span> Proofreading</h2>
+<div id="outline-container-org355eacc" class="outline-2">
+<h2 id="org355eacc"><span class="section-number-2">1</span> Proofreading</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 We have two different manuals in the NixOS/nixpkgs repo. One is for
@@ -66,8 +66,8 @@ what is incorrect or otherwise confusing.
 </div>
 </div>
 
-<div id="outline-container-org662d329" class="outline-2">
-<h2 id="org662d329"><span class="section-number-2">2</span> Beta testing</h2>
+<div id="outline-container-org0744710" class="outline-2">
+<h2 id="org0744710"><span class="section-number-2">2</span> Beta testing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 An alternative to proofreading is beta testing. There are a number of
