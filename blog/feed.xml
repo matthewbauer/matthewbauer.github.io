@@ -4,7 +4,139 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Mon, 26 Nov 2018 20:48:47 -0600</lastBuildDate>
+<lastBuildDate>Fri, 08 Feb 2019 23:05:04 -0500</lastBuildDate>
+<item>
+  <title>Call for proofreaders and beta testers for 18.09</title>
+  <description><![CDATA[
+<p>
+This was originally published on <a href="https://discourse.nixos.org/t/call-for-proofreaders-and-beta-testers-for-19-03/">Discourse</a>. I am putting it here for
+posterity reasons.
+</p>
+
+<p>
+We get lots of contributors in Nixpkgs and NixOS who modify our source
+code. They are the most common type of contribution we receive. But,
+there is actually a great need for other types of contributions that
+don&rsquo;t involve programming at all! For the benefit of new users, I am
+going to outline how you can easily contribute to the community and
+help make 19.03 the best NixOS release yet.
+</p>
+
+<div id="outline-container-orgea83b0e" class="outline-2">
+<h2 id="orgea83b0e"><span class="section-number-2">1</span> Proofreading</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+We have two different manuals in the NixOS/nixpkgs repo. One is for
+Nixpkgs, the set of all software. And the other is for NixOS, our
+Linux distro. Proofreading these manuals is important in helping new
+users learn about how our software works.
+</p>
+
+<ul class="org-ul">
+<li><a href="https://hydra.nixos.org/job/nixos/trunk-combined/nixos.manual.x86_64-linux/latest/download-by-type/doc/manual">NixOS unstable manual</a></li>
+<li><a href="https://hydra.nixos.org/job/nixpkgs/trunk/manual/latest/download-by-type/doc/manual">Nixpkgs unstable manual</a></li>
+</ul>
+
+<p>
+When you find an issue, you can do one of two things. The first and
+most encouraged is to open a PR on GitHub fixing the documentation.
+Both manuals are written in docbook. You can see the source for each
+here:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://github.com/NixOS/nixpkgs/tree/master/nixos/doc/manual">NixOS manual source code</a></li>
+<li><a href="https://github.com/NixOS/nixpkgs/tree/master/doc">Nixpkgs manual source code</a></li>
+</ul>
+
+<p>
+GitHub allows you to edit these files directly on the web. You can
+also always use your own Git client. For reference on writing in
+DocBook, I recommend reading through <a href="https://docbook.rocks">docbook.rocks</a>.
+</p>
+
+<p>
+An alternative if you are unable to fix the documentation yourself is
+to open an issue. We use the same issue tracker includes any issues
+with Nixpkgs/NixOS and can be accessed through
+<a href="https://github.com/NixOS/nixpkgs/issues">GitHub Issues</a>. Please be
+sure to provide a link to where in the manual the issue is as well as
+what is incorrect or otherwise confusing.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org662d329" class="outline-2">
+<h2 id="org662d329"><span class="section-number-2">2</span> Beta testing</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+An alternative to proofreading is beta testing. There are a number of
+ways to do this, but I would suggest using VirtualBox. Some
+information on installing VirtualBox can be found online, but you
+should just need to set these NixOS options:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix"><span class="org-nix-attribute">virtualisation.virtualbox.host.enable</span> = <span class="org-nix-builtin">true</span>;
+</pre>
+</div>
+
+<p>
+and add your user to the vboxusers group:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">users.users.<span class="org-nix-constant">&lt;user&gt;</span>.<span class="org-nix-attribute">extraGroups</span> = [ <span class="org-string">"vboxusers"</span> ];
+</pre>
+</div>
+
+<p>
+then rebuild your NixOS machine (<code>sudo nixos-rebuild switch</code>), and run
+this command to start virtualbox:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">VirtualBox
+</pre>
+</div>
+
+<p>
+Other distros have their own ways of installing VirtualBox, see
+<a href="https://www.virtualbox.org/wiki/Downloads">Download VirtualBox</a> for more info.
+</p>
+
+<p>
+You can download an unstable NixOS .ova file directly here.
+(<b><b>WARNING</b></b>: this will be a large file, a little below 1GB).
+</p>
+
+<ul class="org-ul">
+<li><a href="https://hydra.nixos.org/job/nixos/trunk-combined/nixos.ova.x86_64-linux/latest/download-by-type/file/ova">nixos-19.03pre-x86<sub>64</sub>-linux.ova</a></li>
+</ul>
+
+<p>
+Once downloaded, you can import this .ova file directly into
+VirtualBox using &ldquo;File&rdquo; -&gt; &ldquo;Import Appliance&#x2026;&rdquo;. Select the .ova file
+downloaded from above and click through a series of Next dialogs,
+using the provided defaults. After this, you can boot your NixOS
+machine by selecting it from the list on the left and clicking
+&ldquo;Start&rdquo;.
+</p>
+
+<p>
+The next step is to just play around with the NixOS machine and try to
+break it! You can report any issues you find on <a href="https://github.com/NixOS/nixpkgs/issues">the GitHub Issues
+tracker</a>. We use the same issue tracker for both NixOS and Nixpkgs.
+Just try to make your issues as easy to reproduce as possible. Be
+specific on where the problem is and how someone else could recreate
+the problem for themselves.
+</p>
+</div>
+</div>
+]]></description>
+  <link>https://matthewbauer.us/blog/proofreaders.html</link>
+  <pubDate>Thu, 07 Feb 2019 19:00:00 -0500</pubDate>
+</item>
 <item>
   <title>Subjective ranking of build systems</title>
   <description><![CDATA[
@@ -145,7 +277,7 @@ something else!
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/build-systems.html</link>
-  <pubDate>Sun, 25 Nov 2018 18:00:00 -0600</pubDate>
+  <pubDate>Sun, 25 Nov 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Beginner’s guide to cross compilation in Nixpkgs</title>
@@ -475,7 +607,7 @@ framework.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/beginners-guide-to-cross.html</link>
-  <pubDate>Tue, 24 Jul 2018 19:00:00 -0500</pubDate>
+  <pubDate>Tue, 24 Jul 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>Channel Changing with Nix</title>
@@ -947,7 +1079,7 @@ See release <a href="https://github.com/NixOS/nixpkgs/tree/0.5">0.5</a>.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/channel-changing.html</link>
-  <pubDate>Sat, 12 May 2018 19:00:00 -0500</pubDate>
+  <pubDate>Sat, 12 May 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>2018 Summer</title>
@@ -959,7 +1091,7 @@ world</a>. Very excited to be working with a team of really smart people.
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/2018-summer.html</link>
-  <pubDate>Fri, 30 Mar 2018 19:00:00 -0500</pubDate>
+  <pubDate>Fri, 30 Mar 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>66% of Nixpkgs are up-to-date</title>
@@ -1021,7 +1153,7 @@ please be sure to open an issue.
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/nixpkgs-fresh.html</link>
-  <pubDate>Wed, 28 Mar 2018 19:00:00 -0500</pubDate>
+  <pubDate>Wed, 28 Mar 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
   <title>nix-buffer: nix-shell in Emacs</title>
@@ -1062,7 +1194,7 @@ dependencies you need based on your <code>default.nix</code> file.
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/nix-buffer.html</link>
-  <pubDate>Sat, 10 Feb 2018 18:00:00 -0600</pubDate>
+  <pubDate>Sat, 10 Feb 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Why Nix?</title>
@@ -1152,7 +1284,7 @@ For more features of Nix, you can checkout the <a href="https://nixos.org/nix/">
 </div>
 </div>]]></description>
   <link>https://matthewbauer.us/blog/why-nix.html</link>
-  <pubDate>Mon, 20 Nov 2017 18:00:00 -0600</pubDate>
+  <pubDate>Mon, 20 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Reproducible résumés</title>
@@ -1956,7 +2088,7 @@ you can email me at <a href="mailto:mjbauer95@gmail.com">mjbauer95@gmail.com</a>
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/resume.html</link>
-  <pubDate>Sun, 12 Nov 2017 18:00:00 -0600</pubDate>
+  <pubDate>Sun, 12 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>bauer: an Emacs+Nix IDE</title>
@@ -6995,7 +7127,7 @@ your channel. Having this file available means you can place this repo in
 </div>
 ]]></description>
   <link>https://matthewbauer.us/blog/bauer.html</link>
-  <pubDate>Sun, 05 Nov 2017 18:00:00 -0600</pubDate>
+  <pubDate>Sun, 05 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
   <title>Nix and Org</title>
@@ -7251,7 +7383,7 @@ else up. I recommend reading through <a href="https://nixos.org/nixos/nix-pills/
 </p>
 ]]></description>
   <link>https://matthewbauer.us/blog/nix-and-org.html</link>
-  <pubDate>Sun, 15 Oct 2017 23:26:00 -0500</pubDate>
+  <pubDate>Sun, 15 Oct 2017 23:26:00 -0400</pubDate>
 </item>
 </channel>
 </rss>
