@@ -4,7 +4,240 @@
 <title>Matthew's Blog</title>
 <description>Matthew's Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Sat, 09 Feb 2019 13:31:57 -0500</lastBuildDate>
+<lastBuildDate>Sun, 24 Feb 2019 05:08:45 -0500</lastBuildDate>
+<item>
+  <title>Static Nix: a command-line swiss army knife</title>
+  <description><![CDATA[
+
+<div id="outline-container-org9a7a870" class="outline-2">
+<h2 id="org9a7a870"><span class="section-number-2">1</span> Static Nix: a command-line swiss army knife</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Nix is an extremely useful package manager. But, not all systems have
+it installed. Without root priveleges, you cannot create the
+<code>/nix</code> directory required for it to work.
+</p>
+
+<p>
+With static linking, and some new features added in Nix 2.0, you can
+fairly easily use the Nix package manager in these unpriveleged
+context<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. To make this even easier, I am publishing prebuilt
+<code>x86_64</code> binaries on my personal website.
+</p>
+</div>
+
+<div id="outline-container-org248a748" class="outline-3">
+<h3 id="org248a748"><span class="section-number-3">1.1</span> Trying it out</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+You can use it like this,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-whitespace-line">$ curl https://matthewbauer.us/nix | sh -s run --store $</span><span class="org-variable-name"><span class="org-whitespace-line">HOME</span></span><span class="org-whitespace-line">/.cache/nix/store -f channel:nixpkgs-unstable hello -c hello</span>
+Hello World!
+</pre>
+</div>
+
+<p>
+You can use any package provided by <a href="https://nixos.org/nixos/packages.html">Nixpkgs</a> (using the attribute
+name). This gives you a swiss army knife of command line tools. I have
+compiled some cool commands to try out. There examples of various
+tools, games and demos that you can use through Nix, without
+installing anything! Everything is put into temporary
+directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
+</p>
+</div>
+
+<div id="outline-container-org883e97e" class="outline-4">
+<h4 id="org883e97e"><span class="section-number-4">1.1.1</span> Dev tools</h4>
+<div class="outline-text-4" id="text-1-1-1">
+<div class="org-src-container">
+<pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
+  curl https://matthewbauer.us/nix &gt; $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  chmod +x $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  $<span class="org-variable-name">nix</span> run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  bashInteractive curl git htop imagemagick file findutils jq nix openssh pandoc
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9581b6e" class="outline-4">
+<h4 id="org9581b6e"><span class="section-number-4">1.1.2</span> Emacs</h4>
+<div class="outline-text-4" id="text-1-1-2">
+<div class="org-src-container">
+<pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
+  curl https://matthewbauer.us/nix &gt; $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  chmod +x $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  $<span class="org-variable-name">nix</span> run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  emacs -c emacs
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org2e2af83" class="outline-4">
+<h4 id="org2e2af83"><span class="section-number-4">1.1.3</span> File manager</h4>
+<div class="outline-text-4" id="text-1-1-3">
+<div class="org-src-container">
+<pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
+  curl https://matthewbauer.us/nix &gt; $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  chmod +x $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  $<span class="org-variable-name">nix</span> run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  ranger -c ranger
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9830852" class="outline-4">
+<h4 id="org9830852"><span class="section-number-4">1.1.4</span> Fire</h4>
+<div class="outline-text-4" id="text-1-1-4">
+<div class="org-src-container">
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
+  sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  aalib -c aafire
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orga22321f" class="outline-4">
+<h4 id="orga22321f"><span class="section-number-4">1.1.5</span> Fortune</h4>
+<div class="outline-text-4" id="text-1-1-5">
+<div class="org-src-container">
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
+  sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  bash cowsay fortune -c sh -c <span class="org-string">'cowsay $(fortune)'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb0c0398" class="outline-4">
+<h4 id="orgb0c0398"><span class="section-number-4">1.1.6</span> Nethack</h4>
+<div class="outline-text-4" id="text-1-1-6">
+<div class="org-src-container">
+<pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
+  curl https://matthewbauer.us/nix &gt; $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  chmod +x $<span class="org-variable-name">nix</span> &amp;&amp; <span class="org-sh-escaped-newline">\</span>
+  $<span class="org-variable-name">nix</span> run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  nethack -c nethack
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org90fa494" class="outline-4">
+<h4 id="org90fa494"><span class="section-number-4">1.1.7</span> Weather</h4>
+<div class="outline-text-4" id="text-1-1-7">
+<div class="org-src-container">
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
+  sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  bash curl cowsay -c sh -c <span class="org-string">'cowsay $(curl wttr.in/?format=3)'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgb524920" class="outline-4">
+<h4 id="orgb524920"><span class="section-number-4">1.1.8</span> World map</h4>
+<div class="outline-text-4" id="text-1-1-8">
+<div class="org-src-container">
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
+  sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  bash coreutils curl libcaca ncurses -c bash -c <span class="org-sh-escaped-newline">\</span>
+  <span class="org-string">'img=$(mktemp ${TMPDIR:-/tmp}/XXX.jpg); \</span>
+<span class="org-string"><span class="org-whitespace-line">  curl -k https://www.cia.gov/library/publications/the-world-factbook/attachments/images/large/world-physical.jpg &gt; $img \</span></span>
+<span class="org-string">  &amp;&amp; img2txt -W $(tput cols) -f utf8 $img'</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgbf49ea3" class="outline-4">
+<h4 id="orgbf49ea3"><span class="section-number-4">1.1.9</span> Youtube</h4>
+<div class="outline-text-4" id="text-1-1-9">
+<div class="org-src-container">
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
+  sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix2/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
+  bash youtube-dl mplayer -c sh -c <span class="org-sh-escaped-newline">\</span>
+<span class="org-whitespace-line">  </span><span class="org-string"><span class="org-whitespace-line">'mplayer $(youtube-dl --no-check-certificate -g https://www.youtube.com/watch?v=dQw4w9WgXcQ)'</span></span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org40e52f5" class="outline-4">
+<h4 id="org40e52f5"><span class="section-number-4">1.1.10</span> And more&#x2026;</h4>
+<div class="outline-text-4" id="text-1-1-10">
+<p>
+Lots more cool things are possible. Look through <a href="https://nixos.org/nixos/packages.html#">the packages provided
+by Nixpkgs</a> if you need inspiration.
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org466b780" class="outline-3">
+<h3 id="org466b780"><span class="section-number-3">1.2</span> Build it yourself</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+This is certainly a security vulnerability so you may want to build
+static Nix for youself from <a href="https://github.com/NixOS/nixpkgs/pull/56281">my pull request</a>. Of course you can’t build
+static Nix without without Nix, so this would need to be done from a
+system that has Nix installed. You can build it yourself, provided you
+have git and nix installed, like this,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ git clone https://github.com/matthewbauer/nixpkgs.git
+$ cd nixpkgs
+$ git checkout static-nix
+$ nix-build -A pkgsStatic.nix
+</pre>
+</div>
+
+<p>
+Then, copy it to your machine without Nix installed (provided you have
+ssh installed), like this,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ scp ./result/bin/nix your-machine:
+$ ssh your-machine
+$ ./nix ...
+</pre>
+</div>
+</div>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+Note that you will need to be able to set up a private
+namespace. This is enabled by default on Linux, but some distros have
+specifically disabled it. See <a href="https://github.com/NixOS/nix/issues/2404">this issue</a> for more discussion.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+While ideally we would not need temporary directories at all,
+some of these commands require it. This is because they check whether
+they are in a pipe and refuse to run if so. Your temporary directory
+should be cleaned each time your reboot anyway. The Nix packages will
+be installed in <code>$HOME/.cache/nix/store</code> but they can be removed at
+any time.
+</p></div></div>
+
+
+</div>
+</div>]]></description>
+  <link>https://matthewbauer.us/blog/static-nix.html</link>
+  <pubDate>Sat, 23 Feb 2019 19:00:00 -0500</pubDate>
+</item>
 <item>
   <title>Call for proofreaders and beta testers for 19.03</title>
   <description><![CDATA[
