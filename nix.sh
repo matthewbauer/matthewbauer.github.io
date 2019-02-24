@@ -5,9 +5,7 @@
 # Extract in temporary directory.
 t=$(mktemp -d)
 curl https://matthewbauer.us/nix > $t/nix.sh
-pushd $t
-sh nix.sh --extract
-popd
+(cd $t && sh nix.sh --extract)
 
 # Install Nix binary and data files.
 mkdir -p $HOME/bin/ $HOME/share/nix/corepkgs/
