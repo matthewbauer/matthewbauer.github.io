@@ -2,7 +2,7 @@
 
 {
 
-# Extract  in temporary directory.
+# Extract in temporary directory.
 t=$(mktemp -d)
 curl https://matthewbauer.us/nix > $t/nix.sh
 pushd $t
