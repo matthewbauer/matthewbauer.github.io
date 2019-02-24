@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
 <channel>
-<title>Matthew's Blog</title>
-<description>Matthew's Blog</description>
+<title>Matthew’s Blog</title>
+<description>Matthew’s Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Sun, 24 Feb 2019 05:17:34 -0500</lastBuildDate>
+<lastBuildDate>Sun, 24 Feb 2019 05:36:17 -0500</lastBuildDate>
 <item>
   <title>Static Nix: a command-line swiss army knife</title>
   <description><![CDATA[
