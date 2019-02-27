@@ -1,18 +1,20 @@
 let mapAttrs = f: set: builtins.listToAttrs (
       map (attr: { name = attr; value = f attr set.${attr}; })
           (builtins.attrNames set));
-    channels = {
-      aardvark = "13.10";    # ?
-      baboon = "14.04";      # ?
-      caterpillar = "14.12"; # ?
-      dingo = "15.09";       # ?
-      emu = "16.03";         # ?
-      flounder = "16.09";    # works on macOS High Sierra
-      gorilla = "17.03";     # "library not loaded"
-      hummingbird = "17.09"; # works on macOS High Sierra
-      impala = "18.03";      # works on macOS High Sierra
-    };
 in mapAttrs (n: v:
-     import (builtins.fetchTarball
-             "https://nixos.org/channels/nixos-${v}/nixexprs.tar.xz") {})
-   channels
+     (import (builtins.fetchTarball
+             "https://nixos.org/channels/nixos-${v}/nixexprs.tar.xz") {}).pkgs)
+    {
+      aardvark = "13.10";
+      baboon = "14.04";
+      caterpillar = "14.12";
+      dingo = "15.09";
+      emu = "16.03";
+      flounder = "16.09";
+      gorilla = "17.03";
+      hummingbird = "17.09";
+      impala = "18.03";
+      jellyfish = "18.09";
+      koi = "19.03";
+      loris = "19.09";
+    }
