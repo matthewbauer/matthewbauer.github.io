@@ -2,6 +2,26 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
    <url>
       <loc>https://matthewbauer.us</loc>
-      <priority>1</priority>
+      <changefreq>monthly</changefreq>
+   </url>
+   <url>
+      <loc>https://matthewbauer.us/gametime-player/</loc>
+      <changefreq>monthly</changefreq>
+   </url>
+   <url>
+      <loc>https://matthewbauer.us/blog/</loc>
+      <changefreq>weekly</changefreq>
+   </url>
+   <url>
+      <loc>https://matthewbauer.us/resume.pdf</loc>
+      <changefreq>monthly</changefreq>
+   </url>
+   <url>
+      <loc>https://matthewbauer.us/eu4-parser/</loc>
+      <changefreq>monthly</changefreq>
+   </url>
+   <url>
+      <loc>https://matthewbauer.us/hangman/</loc>
+      <changefreq>monthly</changefreq>
    </url>
 </urlset>
