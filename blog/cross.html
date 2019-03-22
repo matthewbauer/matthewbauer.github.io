@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://matthewbauer.us/blog/feed.xml"
+      title="RSS feed for https://matthewbauer.us/blog/"/>
+<title>Cross Compilation Draft Blog</title>
+  <meta name="author" content="Matthew Bauer">
+<meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1">
+<link rel="stylesheet" href="../style.css"></head>
+<body>
+<div id="preamble" class="status">
+<h1><a class="name" href>Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
+<div id="content">
+<div class="post-date">21 Mar 2019</div><h1 class="post-title"><a href="cross.html">Cross Compilation Draft Blog</a></h1>
+<p>
+When cross compiling, there are three types of machines that need to
+be known. <code>--build</code> is the machine that will build everything.
+<code>--host</code> is the machine that will run what has been built. <code>--target</code>
+is the machine that the <code>--host</code> machine can build for. Some common
+cases are provided,
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<tbody>
+<tr>
+<td class="org-left">Native Compilation</td>
+<td class="org-left"><code>--build</code> = <code>--host</code> = <code>--target</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Cross Compilation</td>
+<td class="org-left"><code>--build</code> ≠ <code>--host</code> = <code>--target</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Compiler Cross Compilation</td>
+<td class="org-left"><code>--build</code> = <code>--host</code> ≠ <code>--target</code></td>
+</tr>
+
+<tr>
+<td class="org-left">Canadian Cross</td>
+<td class="org-left"><code>--build</code> ≠ <code>--host</code> ≠ <code>--target</code></td>
+</tr>
+</tbody>
+</table>
+
+<p>
+Each dependency must know about BOTH which machine it is built on and
+which machine it is built for.
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-left"><code>--build</code></th>
+<th scope="col" class="org-left"><code>--host</code></th>
+<th scope="col" class="org-left"><code>--target</code></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left"><code>--build</code></td>
+<td class="org-left">depsBuildBuild</td>
+<td class="org-left">nativeBuildInputs</td>
+<td class="org-left">depsBuildTarget</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>--host</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">depsHostHost</td>
+<td class="org-left">depsHostTarget</td>
+</tr>
+
+<tr>
+<td class="org-left"><code>--target</code></td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">&#xa0;</td>
+<td class="org-left">depsTargetTarget</td>
+</tr>
+</tbody>
+</table>
+
+
+<figure>
+<img src="dot.png" alt="dot.png">
+
+</figure>
+</div>
+<div id="postamble" class="status"></div>
+</body>
+</html>
