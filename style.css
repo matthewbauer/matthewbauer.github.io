@@ -22,7 +22,6 @@
 body, li p { font-family: "Charter"; }
 
 li {
-    column-break-inside: avoid;
     break-inside: avoid-column;
 }
 
@@ -239,7 +238,6 @@ pre.src:before {
     border-bottom-left-radius: 8px;
     border: 0;
     color: white;
-    font-size: $code-size;
 }
 pre.src-sh:before    { content: 'sh'; }
 pre.src-bash:before  { content: 'sh'; }
