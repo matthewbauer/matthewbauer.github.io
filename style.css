@@ -1,27 +1,41 @@
-@viewport { width: device-width; }
-@media all { html { font-size: 24px; } }
-@media all and (max-width:1000px) { html { font-size: 24px; } }
-@media all and (max-width:960px) { html {font-size: 23px; } }
-@media all and (max-width:920px) { html {font-size: 22px; } }
-@media all and (max-width:880px) { html {font-size: 21px; } }
-@media all and (max-width:840px) { html {font-size: 20px; } }
-@media all and (max-width:800px) { html {font-size: 19px; } }
-@media all and (max-width:760px) { html {font-size: 18px; } }
-@media all and (max-width:720px) { html {font-size: 17px; } }
-@media all and (max-width:680px) { html {font-size: 16px; } }
-@media all and (max-width:640px) { html {font-size: 15px; } }
-@media all and (max-width:600px) { html {font-size: 14px; } }
-@media all and (max-width:560px) { html {font-size: 13px; } }
-@media all and (max-width:520px) { html {font-size: 18px; } }
+@import "fonts.css";
+
+@viewport {
+  width: device-width;
+}
+
+@media all {html {font-size: 24px;}}
+@media all and (max-width:1000px){html {font-size: 24px;}}
+@media all and (max-width:960px){html {font-size: 23px;}}
+@media all and (max-width:920px){html {font-size: 22px;}}
+@media all and (max-width:880px){html {font-size: 21px;}}
+@media all and (max-width:840px){html {font-size: 20px;}}
+@media all and (max-width:800px){html {font-size: 19px;}}
+@media all and (max-width:760px){html {font-size: 18px;}}
+@media all and (max-width:720px){html {font-size: 17px;}}
+@media all and (max-width:680px){html {font-size: 16px;}}
+@media all and (max-width:640px){html {font-size: 15px;}}
+@media all and (max-width:600px){html {font-size: 14px;}}
+@media all and (max-width:560px){html {font-size: 13px;}}
+@media all and (max-width:520px){html {font-size: 12px;}}
+
+@media all and (max-width:520px) {
+    html {
+        font-size: 18px;
+    }
+}
 
 * {
     margin: 0;
     padding: 0;
 }
 
-body, li p { font-family: "Charter"; }
+body, li p {
+    font-family: "Charter";
+}
 
 li {
+    column-break-inside: avoid;
     break-inside: avoid-column;
 }
 
@@ -68,12 +82,16 @@ body {
     padding: 3rem 0 1rem 0;
 }
 
-@media all and (max-width:520px) { body { padding: 0; } }
+@media all and (max-width:520px) {
+    body { padding: 0; }
+}
 
 hr {
     border: none;
     background-color: #8c8b8b;
     height: 1px;
+    /* margin-left: -15px; */
+    /* margin-right: -1em; */
 }
 
 h1, h2, h3, h4, h5 {
@@ -98,18 +116,57 @@ h2, h3, h4, h5 {
     text-transform: uppercase;
 }
 
-h2 { font-size: 100%; }
-h3 { font-size: 90%; }
-h4 { font-size: 80%; }
-h5 { font-size: 70%; }
+h2 {
+    font-size: 100%;
+}
 
-pre { font-size: 50%; }
-pre, code { font-family: "Source Code Pro"; }
+h3 {
+    font-size: 90%;
+}
 
-code {
+h4 {
+    font-size: 80%;
+}
+
+h5 {
     font-size: 70%;
+}
+
+pre, code {
+    font-family: "Source Code Pro";
     word-break: keep-all;
 }
+
+pre {
+    font-size: 80%;
+    margin-left: 3em;
+    margin-right: -4em;
+    overflow: auto;
+}
+
+code {
+    font-size: 80%;
+    word-break: keep-all;
+}
+
+
+thead {
+  border-bottom: solid;
+}
+
+th {
+  text-align: left;
+  padding-left: 1rem;
+}
+
+table {
+    border-collapse:collapse;
+    width: 100%;
+    margin-bottom: 1em;
+}
+
+td, th { vertical-align:top;  }
+dt { font-weight: bold; }
 
 p {
     margin-bottom: 1em;
@@ -126,6 +183,7 @@ a:active { color: #777; }
 
 a:after {
     position: relative;
+    /* content: "\FEFF"; */
     margin-left: 0.10em;
     font-size: 90%;
     top: -0.10em;
@@ -138,6 +196,11 @@ a:hover {
     transition-duration: 0.2s;
 
     border-radius: 8px;
+}
+
+ul li {
+    /* line-height: 1.35; */
+    /* list-style: none; */
 }
 
 ul.cv-list li {
@@ -170,29 +233,48 @@ ul.children li {
     padding-bottom: 1em;
 }
 
-ul { margin-bottom: 1em; }
+ul {
+    margin-bottom: 1em;
+}
 
-li p { display: inline; }
+li p {
+    display: inline;
+}
 
 li .date {
+    /* display: inline-block; */
+    /* width: 10em; */
     float: right;
     padding-left: 1em;
     padding-bottom: 1em;
 }
 
-li .link:after { content: "»"; }
+li .link {
+}
 
-li .link:before { content: "«"; }
+li .link:after {
+    content: "»";
+}
 
-a.name { font-weight: 500; }
+li .link:before {
+    content: "«";
+}
 
-.title { text-align: center; }
+a.name {
+    font-weight: 500;
+}
+
+.title {
+    text-align: center;
+}
 
 .todo {
     font-family: monospace;
     color: red;
 }
-.done { color: green; }
+.done {
+    color: green;
+}
 .tag {
     background-color: #eee;
     font-family: monospace;
@@ -200,9 +282,12 @@ a.name { font-weight: 500; }
     font-size: 80%;
     font-weight: normal;
 }
-.timestamp { color: #bebebe; }
-.timestamp-kwd { color: #5f9ea0; }
-
+.timestamp {
+    color: #bebebe;
+}
+.timestamp-kwd {
+    color: #5f9ea0;
+}
 .right  {
     margin-left: auto;
     margin-right: 0px;
@@ -214,63 +299,24 @@ a.name { font-weight: 500; }
     text-align: left;
 }
 .center { margin-left: auto; margin-right: auto; text-align: center; }
-
 .underline { text-decoration: underline; }
 #postamble p, #preamble p { font-size: 90%; margin: .2em; }
 p.verse { margin-left: 3%; }
 
-pre {
-    border: 1px solid #ccc;
-    box-shadow: 3px 3px 3px #eee;
-    padding: 8pt;
-    font-family: monospace;
-    overflow: scroll;
-    margin: 1em;
+pre.src {
+    position: relative;
 }
-pre.src { position: relative; }
 pre.src:before {
-    display: block;
-    position: absolute;
-    background-color: #b3b3b3;
-    top: 0;
-    right: 0;
-    padding: 0 0.5em;
-    border-bottom-left-radius: 8px;
-    border: 0;
-    color: white;
+    display: none;
+    font-weight: bolder;
 }
-pre.src-sh:before    { content: 'sh'; }
-pre.src-bash:before  { content: 'sh'; }
-pre.src-emacs-lisp:before { content: 'Lisp'; }
-pre.src-R:before     { content: 'R'; }
-pre.src-perl:before  { content: 'Perl'; }
-pre.src-java:before  { content: 'Java'; }
-pre.src-sql:before   { content: 'SQL'; }
-pre.src-nix:before   { content: 'Nix'; }
-
-table {
-    border-collapse:collapse;
-    width: 100%;
-    margin-bottom: 1em;
-}
-
-caption.t-above { caption-side: top; }
-caption.t-bottom { caption-side: bottom; }
-
-td, th { vertical-align:top;  }
-th.right  { text-align: center;  }
-th.left   { text-align: center;   }
-th.center { text-align: center; }
-td.right  { text-align: right;  }
-td.left   { text-align: left;   }
-td.center { text-align: center; }
-dt { font-weight: bold; }
+pre.src-sh:before    { content: '$'; }
+pre.src-bash:before  { content: '$'; }
 
 .footpara { display: inline; }
 .footdef  { margin-bottom: 1em; }
 .figure { padding: 1em; }
 .figure p { text-align: center; }
-
 .inlinetask {
     padding: 10px;
     border: 2px solid gray;
@@ -284,9 +330,17 @@ dt { font-weight: bold; }
     white-space: nowrap;
 }
 
-textarea { overflow-x: auto; }
-.linenr { font-size: smaller; }
-.code-highlighted { background-color: #ffff00; }
+textarea {
+    overflow-x: auto;
+}
+
+.linenr {
+    font-size: smaller
+}
+
+.code-highlighted {
+    background-color: #ffff00;
+}
 
 .org-info-js_info-navigation {
     border-style: none;
@@ -304,26 +358,40 @@ textarea { overflow-x: auto; }
     font-weight: bold;
 }
 
-#text-table-of-contents ul { margin-bottom: 1em; }
-#text-table-of-contents ul li { text-transform: uppercase; }
-#text-table-of-contents ul li ul { margin-left: 1em; }
-#text-table-of-contents ul li ul li { text-transform: lowercase; }
-
-pre {
-    margin-left: -1em;
-    margin-right: -1em;
+.org-src-container {
+    /* margin-left: .5em; */
 }
 
-pre.src.src-sh span { background-color: inherit; }
+#text-table-of-contents ul {
+    margin-bottom: 1em;
+}
+
+#text-table-of-contents ul li {
+    text-transform: uppercase;
+}
+
+#text-table-of-contents ul li ul {
+    margin-left: 1em;
+}
+
+#text-table-of-contents ul li ul li {
+    text-transform: lowercase;
+}
+
+pre.src.src-sh span {
+    background-color: inherit;
+}
 
 .header {
     margin-bottom: 1em;
     font-weight: bolder;
 }
 
-#archive { margin-top: 2em; }
+#archive {
+    margin-top: 2em;
+    /* text-align: center; */
+}
 
-pre                                      {background-color:#FFFFFF;}
 pre span.org-builtin                     {color:#006FE0;font-weight:bold;}
 pre span.org-string                      {color:#008000;}
 pre span.org-keyword                     {color:#0000FF;}
@@ -371,291 +439,15 @@ pre span.org-nix-constant                {color:#D0372D;}
 pre span.org-nix-comment-delimiter       {color:#8D8D84;}
 pre span.org-nix-comment                 {color:#8D8D84;font-style:italic}
 
-pre.src-sh {
-    background-color: black;
-    color: white;
+.post-date {
+    margin-top: 2em;
 }
 
-.post-date { margin-top: 2em; }
-
-thead { border-bottom: solid; }
-
-th {
-  text-align: left;
-  padding-left: 1rem;
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 200;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-ExtraLight.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-ExtraLight.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-ExtraLight.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-ExtraLight.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-ExtraLight.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 200;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-ExtraLightIt.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-ExtraLightIt.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-ExtraLightIt.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-ExtraLightIt.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-ExtraLightIt.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 300;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-Light.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-Light.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-Light.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-Light.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-Light.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 300;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-LightIt.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-LightIt.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-LightIt.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-LightIt.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-LightIt.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 400;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-Regular.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-Regular.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-Regular.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-Regular.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-Regular.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 400;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-It.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-It.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-It.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-It.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-It.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 500;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-Medium.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-Medium.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-Medium.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-Medium.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-Medium.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 500;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-MediumIt.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-MediumIt.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-MediumIt.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-MediumIt.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-MediumIt.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 600;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-Semibold.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-Semibold.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-Semibold.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-Semibold.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-Semibold.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 600;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-SemiboldIt.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-SemiboldIt.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-SemiboldIt.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-SemiboldIt.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-SemiboldIt.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 700;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-Bold.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-Bold.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-Bold.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-Bold.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-Bold.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 700;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-BoldIt.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-BoldIt.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-BoldIt.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-BoldIt.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-BoldIt.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 900;
-    font-style: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-Black.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-Black.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-Black.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-Black.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-Black.ttf') format('truetype');
-}
-
-@font-face{
-    font-family: 'Source Code Pro';
-    font-weight: 900;
-    font-style: italic;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/SourceCodePro-BlackIt.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/TTF/SourceCodePro-BlackIt.ttf.woff2') format('woff2'),
-         url('fonts/WOFF/OTF/SourceCodePro-BlackIt.otf.woff') format('woff'),
-         url('fonts/OTF/SourceCodePro-BlackIt.otf') format('opentype'),
-         url('fonts/TTF/SourceCodePro-BlackIt.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: Charter;
-    font-style: normal;
-    font-weight: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/charter_regular-webfont.eot') format('embedded-opentype'),
-         url('fonts/WOFF/charter_regular-webfont.woff') format('woff');
-}
-
-@font-face {
-    font-family: Charter;
-    font-style: italic;
-    font-weight: normal;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/charter_italic-webfont.eot') format('embedded-opentype'),
-         url('fonts/WOFF/charter_italic-webfont.woff') format('woff');
-}
-
-@font-face {
-    font-family: Charter;
-    font-style: normal;
-    font-weight: bold;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/charter_bold-webfont.eot') format('embedded-opentype'),
-         url('fonts/WOFF/charter_bold-webfont.woff') format('woff');
-}
-
-
-@font-face {
-    font-family: Charter;
-    font-style: italic;
-    font-weight: bold;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/charter_bold_italic-webfont.eot') format('embedded-opentype'),
-         url('fonts/WOFF/charter_bold_italic-webfont.woff') format('woff');
-}
-
-@font-face {
-    font-family: Fira;
-    font-style: normal;
-    font-weight: 300;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/FiraSans-Light.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/FiraSans-Light.woff2') format('woff2'),
-         url('fonts/WOFF/FiraSans-Light.woff') format('woff'),
-         url('fonts/OTF/FiraSans-Light.otf') format('opentype'),
-         url('fonts/TTF/FiraSans-Light.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: Fira;
-    font-style: italic;
-    font-weight: 300;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/FiraSans-LightItalic.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/FiraSans-LightItalic.woff2') format('woff2'),
-         url('fonts/WOFF/FiraSans-LightItalic.woff') format('woff'),
-         url('fonts/OTF/FiraSans-LightItalic.otf') format('opentype'),
-         url('fonts/TTF/FiraSans-LightItalic.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: Fira;
-    font-style: normal;
-    font-weight: 400;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/FiraSans-Regular.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/FiraSans-Regular.woff2') format('woff2'),
-         url('fonts/WOFF/FiraSans-Regular.woff') format('woff'),
-         url('fonts/OTF/FiraSans-Regular.otf') format('opentype'),
-         url('fonts/TTF/FiraSans-Regular.ttf') format('truetype');
-}
-
-@font-face {
-    font-family: Fira;
-    font-style: normal;
-    font-weight: 600;
-    font-stretch: normal;
-    font-display: optional;
-    src: url('fonts/EOT/FiraSans-Medium.eot') format('embedded-opentype'),
-         url('fonts/WOFF2/FiraSans-Medium.woff2') format('woff2'),
-         url('fonts/WOFF/FiraSans-Medium.woff') format('woff'),
-         url('fonts/OTF/FiraSans-Medium.otf') format('opentype'),
-         url('fonts/TTF/FiraSans-Medium.ttf') format('truetype');
-}
+caption.t-above { caption-side: top; }
+caption.t-bottom { caption-side: bottom; }
+th.right  { text-align: center;  }
+th.left   { text-align: center;   }
+th.center { text-align: center; }
+td.right  { text-align: right;  }
+td.left   { text-align: left;   }
+td.center { text-align: center; }
