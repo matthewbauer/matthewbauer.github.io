@@ -294,7 +294,7 @@ p.verse { margin-left: 3%; }
 
 pre.src {
 	position: relative;
-	overflow: visible;
+	overflow: auto;
 }
 pre.src:before {
 	display: none;
