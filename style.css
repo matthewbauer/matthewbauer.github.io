@@ -94,6 +94,7 @@ h5 {
 pre, code {
 	font-family: "Source Code Pro";
 	word-break: keep-all;
+	font-weight: 600;
 }
 
 pre {
