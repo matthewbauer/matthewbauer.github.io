@@ -103,6 +103,8 @@ pre {
 	border-radius: 8px;
 	padding: 1em;
 	margin: 1em 0;
+	box-shadow: 3px 3px 3px #eee;
+	border: 1px solid #ccc;
 }
 
 code {
@@ -292,6 +294,7 @@ p.verse { margin-left: 3%; }
 
 pre.src {
 	position: relative;
+	overflow: visible;
 }
 pre.src:before {
 	display: none;
