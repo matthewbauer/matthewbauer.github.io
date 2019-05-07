@@ -4,7 +4,367 @@
 <title>Matthew Bauer’s Blog</title>
 <description>Matthew Bauer’s Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Sun, 14 Apr 2019 17:00:33 -0400</lastBuildDate>
+<lastBuildDate>Tue, 07 May 2019 02:22:55 -0400</lastBuildDate>
+<item>
+  <title>Nixpkgs macOS Stdenv Updates</title>
+  <description><![CDATA[
+<p>
+Over the past couple of months, I have been working on updating the
+macOS stdenv in Nixpkgs. This has significant impact on users of
+Nix/Nixpkgs on macOS. So, I want to explain what’s being updated, what
+the benefits are, and how we can minimize breakages.
+</p>
+
+<div id="outline-container-orga945576" class="outline-2">
+<h2 id="orga945576"><span class="section-number-2">1</span> macOS/Darwin stdenv changes</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+First, to summarize the changes that impact stdenv and the Darwin
+infrastructure. The PR is available at <a href="https://github.com/NixOS/nixpkgs/pull/56744">NixOS/nixpkgs PR #56744</a>. This
+update has been in the works for the last few months, and is currently
+in the staging-next branch, waiting to be merged in <a href="https://github.com/NixOS/nixpkgs/pull/60491">NixOS/nixpkgs PR
+#60491</a>. It should land on master and nixpkgs-unstable in the next few
+days. The main highlights are —
+</p>
+
+<ul class="org-ul">
+<li>Change default LLVM toolchain from 5 to 7. LLVM 5 stdenv is still
+available through <code>llvmPackages_5.stdenv</code> attribute path.</li>
+<li>Upgrade Apple SDK from 10.10 to 10.12.</li>
+<li>Update libSystem symbols from 10.10 (XNU 3789.1.32) to 10.12 (XNU
+3789.1.32).</li>
+<li>Removed old patches to support old stdenv in Qt 5 and elsewhere.</li>
+</ul>
+
+<p>
+These macOS SDK upgrades are equivalent to setting
+<code>-mmacosx-version-min</code> to 10.12 in XCode. As a result, we will break
+compatibility with macOS before 10.12.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8fa4e66" class="outline-2">
+<h2 id="org8fa4e66"><span class="section-number-2">2</span> Why do we need to set a minimum macOS version?</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Without knowing internals of Nixpkgs, it might not be clear why we
+need to set a minimum macOS version. For instance with Linux, we are
+able to support any Linux kernel in Nixpkgs without any problem. The
+answer to this requires some understanding of how the kernel and
+userspace function.
+</p>
+
+<p>
+Nixpkgs is able to support multiple Linux kernels because we can use
+multiple Libc’s at one time. For any executable, a Nix closure will
+include both its own Libc and the dynamic linker in its closure. This
+works in Linux where multiple Libc’s can be used, but not on macOS
+where only one Libc is available.
+</p>
+
+<p>
+In short, Linux and macOS deal with compatibility between built
+binaries in different ways. They represent two opposite ends in how
+Unix-like kernels maintain compatibility with their userspace binaries.
+</p>
+</div>
+
+<div id="outline-container-org97271c0" class="outline-3">
+<h3 id="org97271c0"><span class="section-number-3">2.1</span> Linux syscall compatibility</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+The kernel is responsible for managing core operating system functions
+such as start-up, memory management, device abstractions, and process
+isolation. For it to function, the kernel needs to interact with the
+rest of the operating system which is collectively referred to as
+“userspace”. Executables in userspace use “syscalls” to tell the
+kernel what to do. These syscalls are very low-level and usually not
+called directly by a process. Instead, an abstraction layer is
+provided by the standard C library, or Libc.
+</p>
+
+<p>
+Linux is unique among operating systems due to the fact that the
+Kernel and Libc are developed independently. Linux is maintained by
+creator Linus Torvalds and a community of contributors. Glibc, the
+most popular Libc for Linux, is maintained by the GNU project. As a
+result, Linux has a strong separation between Syscalls and Libc.
+</p>
+
+<p>
+Linux does not tie itself to any specific Libc. Even though Glibc is
+used in almost all distros, many alternatives are available. For
+instance, Musl provides a more lightweight version of Glibc, while
+Bionic is the Libc used in the Android operating system. In addition,
+multiple versions of each of these Libc’s can be used on any one
+kernel, even at the same time. This can become very common when using
+multiple Nixpkgs versions at one time.
+</p>
+
+<p>
+To accomplish this, Linux provides a stable list of syscalls that it
+has maintained across many versions. This is specified for i386 at
+<a href="https://github.com/torvalds/linux/blob/master/arch/x86/entry/syscalls/syscall_32.tbl">arch/x86/entry/syscalls/syscall_32.tbl</a> in the kernel tree. The
+syscalls specified here are the interface through which the Libc
+communicates with the kernel. As a result, applications built in 1992
+can run on a modern kernel, provided it comes with copies of all its
+libraries<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgdb21355" class="outline-3">
+<h3 id="orgdb21355"><span class="section-number-3">2.2</span> macOS Libc compatibility</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+The macOS Libc is called libSystem. It is available on all macOS
+systems at <code>/usr/lib/libSystem.B.dylib</code>. This library is the main
+interface that binary compatibility is maintained in macOS. Unlike
+Linux, macOS maintains a stable interface in libSystem that all
+executables are expected to link to. This interface is guaranteed by
+Apple to be stable between versions.
+</p>
+
+<p>
+In Nixpkgs, we maintain this compatibility through a list of symbols
+that are exported by libSystem. This is a simple text list and is
+available for viewing at
+<a href="https://github.com/NixOS/nixpkgs/blob/master/pkgs/os-specific/darwin/apple-source-releases/Libsystem/system_c_symbols">NixOS/nixpkgs/pkgs/os-specific/darwin/apple-source-releases/Libsystem/system_c_symbols</a>.
+The symbol list is created by listing symbols (<code>nm</code>) on the minimum
+macOS version that we support (for my PR, 10.12). We do some linking
+tricks to ensure that everything that we build in Nixpkgs only
+contains those symbols. This means that we can reproducibly build on
+newer versions of macOS, while maintaining compatibility with older
+macOS versions. Unfortunately, newer symbols introduced in later
+versions cannot be used even on systems that have those symbols.
+</p>
+
+<p>
+A side effect of macOS design, is that fully static executables are
+not supported in macOS as they are on Linux. Without a stable syscall
+interface, there is nothing to provide compatibility between versions.
+As a result, Apple does not support this type of linking<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
+</p>
+
+<p>
+There is no mandated reason why we need to use libSystem directly. In
+fact, some languages like Go have attempted to instead use the syscall
+interface directly. There is no reason why this couldn’t work,
+however, upgrades between versions will almost certainly break
+binaries. Go eventually <a href="https://github.com/golang/go/issues/17490">abandoned this scheme in time for Go 1.12</a>
+(proposed by Nixpkgs macOS contributor copumpkin!)
+</p>
+</div>
+</div>
+
+<div id="outline-container-org8a04bff" class="outline-3">
+<h3 id="org8a04bff"><span class="section-number-3">2.3</span> Others</h3>
+<div class="outline-text-3" id="text-2-3">
+<p>
+Some other examples may be useful. They mostly fall on one side or the
+other of the Syscall / Libc divide —
+</p>
+
+<ul class="org-ul">
+<li>FreeBSD - breaks syscall compatibility between major releases,
+should use Libc for longterm binary compatibility.</li>
+<li>OpenBSD - similarly, changes syscall interface, perhaps even more
+often than FreeBSD<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>.</li>
+<li>NetBSD - apparently has maintained syscall compatibility
+since 1992. <sup><a id="fnr.4" class="footref" href="#fn.4">4</a></sup></li>
+<li>Windows, Solaris, Fuchsia - I cannot find any information on these
+and how they handle binary compatibility.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org137f925" class="outline-3">
+<h3 id="org137f925"><span class="section-number-3">2.4</span> LLVM triple</h3>
+<div class="outline-text-3" id="text-2-4">
+<p>
+As a side note, this difference can be clearly seen in how we specify
+target systems. The LLVM triple is a 3 or 4-part string specifying
+what we want to build for. The parts of the triple correspond to:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">&lt;cpu&gt;-&lt;vendor&gt;-&lt;kernel&gt;-&lt;abi&gt;
+</pre>
+</div>
+
+<ul class="org-ul">
+<li><code>&lt;cpu&gt;</code> — the CPU architecture that we are building for. Examples
+include <code>x86_64</code>, <code>aarch64</code>, <code>armv7l</code>, etc.</li>
+<li><code>&lt;vendor&gt;</code> — an arbitrary string specifying the vendor for the
+toolchain. In Nixpkgs, this should always be <code>unknown</code>.</li>
+<li><code>&lt;kernel&gt;</code> — the kernel to build for (<code>linux</code>).</li>
+<li><code>&lt;abi&gt;</code> — the kernel ABI to use. On Linux, this corresponds to the
+Libc we are using (<code>gnu</code> for Glibc, <code>musl</code> for Musl, <code>android</code> for
+Bionic).</li>
+</ul>
+
+<p>
+When building for Linux, we can build for any version of Linux at one
+time. No version information is required. In addition, we must specify
+what “ABI” we want to use. In Nix, this is not very important because
+the Libc is provided by the closure. In fact, Nix has its own version
+of the LLVM triple called a Nix system tuple that omits the <code>&lt;abi&gt;</code>
+portion altogether! It corresponds to <code>&lt;cpu&gt;-&lt;kernel&gt;</code> from the LLVM
+triple.
+</p>
+
+<p>
+In comparison, when building for BSDs, we must specify which
+version of the kernel we are building for. In addition, we leave off
+the <code>&lt;abi&gt;</code> portion, because there is only one Libc available for
+these platforms. They are even included in the same tree as the
+kernel. Examples of BSD triples include,
+</p>
+
+<ul class="org-ul">
+<li><code>aarch64-apple-darwin16.0.0</code></li>
+<li><code>x86_64-unknown-freebsd12.0</code></li>
+<li><code>i386-unknown-openbsd5.8</code></li>
+<li><code>armv7l-unknown-netbsd7.99</code></li>
+</ul>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org7ec308c" class="outline-2">
+<h2 id="org7ec308c"><span class="section-number-2">3</span> Compatibility table</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Looking through the old versions, I’ve compiled a list of what I think
+are the corresponding macOS versions for each Nixpkgs release. As you
+can see, we try to support at least 3 previous macOS releases. This
+also happens to be about what Apple supports through security
+updates<sup><a id="fnr.5" class="footref" href="#fn.5">5</a></sup>.
+</p>
+
+<table>
+
+
+<colgroup>
+<col  class="org-right">
+
+<col  class="org-left">
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-right">Nixpkgs release</th>
+<th scope="col" class="org-left">macOS version</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-right">19.09</td>
+<td class="org-left">10.12, 10.13, 10.14, 10.15?</td>
+</tr>
+
+<tr>
+<td class="org-right">19.03</td>
+<td class="org-left">10.11<sup><a id="fnr.6" class="footref" href="#fn.6">6</a></sup>, 10.12, 10.13, 10.14</td>
+</tr>
+
+<tr>
+<td class="org-right">18.09</td>
+<td class="org-left">10.11, 10.12, 10.13, 10.14</td>
+</tr>
+
+<tr>
+<td class="org-right">18.03</td>
+<td class="org-left">10.11, 10.12, 10.13, 10.14</td>
+</tr>
+
+<tr>
+<td class="org-right">17.09</td>
+<td class="org-left">10.10, 10.11, 10.12, 10.13</td>
+</tr>
+
+<tr>
+<td class="org-right">17.03</td>
+<td class="org-left">10.10, 10.11, 10.12</td>
+</tr>
+
+<tr>
+<td class="org-right">16.09</td>
+<td class="org-left">10.10, 10.11, 10.12</td>
+</tr>
+
+<tr>
+<td class="org-right">16.03</td>
+<td class="org-left">10.9?, 10.10, 10.11, 10.12</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+We know that some users are stuck on older versions of macOS due to
+reasons outside of their control. As a result, we will try to support
+the 19.03 branch for a little bit longer than is usually done. If your
+organization uses 10.11, it might be a good idea to update to a newer
+version along with your update to Nixpkgs 19.09.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org41e26b8" class="outline-2">
+<h2 id="org41e26b8"><span class="section-number-2">4</span> Conclusion</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+My main goal has been to show better how Nixpkgs and macOS system
+interact. I got a little bit sidetracked exploring differences in
+binary compatibility between different operating systems. But, this
+should help users to better understand the differences in how macOS
+and Linux works in relation to Nixpkgs.
+</p>
+</div>
+</div>
+<div id="footnotes">
+<h2 class="footnotes">Footnotes: </h2>
+<div id="text-footnotes">
+
+<div class="footdef"><sup><a id="fn.1" class="footnum" href="#fnr.1">1</a></sup> <div class="footpara"><p class="footpara">
+It would be interesting to test this in practice. Finding a
+Libc that would work might be the hardest part. Even better if we
+could use Nix’s closures!
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
+StackOverflow question at
+<a href="https://stackoverflow.com/questions/844819/how-to-static-link-on-os-x">https://stackoverflow.com/questions/844819/how-to-static-link-on-os-x</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
+According to the_why_of_y on Hacker News,
+<a href="https://news.ycombinator.com/item?id=14011662">https://news.ycombinator.com/item?id=14011662</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.4" class="footnum" href="#fnr.4">4</a></sup> <div class="footpara"><p class="footpara">
+Some more details on NetBSD’s ABI are available at
+<a href="http://www.jp.netbsd.org/gallery/presentations/joerg/asiabsdcon2016/asiabsdcon2016.pdf">http://www.jp.netbsd.org/gallery/presentations/joerg/asiabsdcon2016/asiabsdcon2016.pdf</a>
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.5" class="footnum" href="#fnr.5">5</a></sup> <div class="footpara"><p class="footpara">
+macOS updates come out about every year and Apple offers about
+3 months support. More information is available at
+<a href="https://apple.stackexchange.com/questions/47664/what-is-apples-policy-for-supporting-security-updates-on-older-versions-of-os-x">https://apple.stackexchange.com/questions/47664/what-is-apples-policy-for-supporting-security-updates-on-older-versions-of-os-x</a>.
+</p></div></div>
+
+<div class="footdef"><sup><a id="fn.6" class="footnum" href="#fnr.6">6</a></sup> <div class="footpara"><p class="footpara">
+There is an issue with building on 10.11 with the new
+swift-corelibs derivation. As a result, you need to use prebuilt
+version to avoid this issue.
+</p></div></div>
+
+
+</div>
+</div>]]></description>
+  <link>https://matthewbauer.us/blog/darwin-stdenv-update.html</link>
+  <pubDate>Sun, 05 May 2019 20:00:00 -0400</pubDate>
+</item>
 <item>
   <title>Static Nix: a command-line swiss army knife</title>
   <description><![CDATA[
@@ -1516,8 +1876,8 @@ manager. There are many others<sup><a id="fnr.3" class="footref" href="#fn.3">3<
 most convincing.
 </p>
 
-<div id="outline-container-orgefe2f10" class="outline-2">
-<h2 id="orgefe2f10"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Building</h2>
+<div id="outline-container-orgcbe8553" class="outline-2">
+<h2 id="orgcbe8553"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Building</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Package managers like RPM or Homebrew think of packages as tables.
@@ -1525,8 +1885,8 @@ Package managers like RPM or Homebrew think of packages as tables.
 </div>
 </div>
 
-<div id="outline-container-orgd7c2a87" class="outline-2">
-<h2 id="orgd7c2a87"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> Using packages without installing</h2>
+<div id="outline-container-orge1885c9" class="outline-2">
+<h2 id="orge1885c9"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> Using packages without installing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We are so used to installing software to use it. The Nix model gives you
@@ -1534,12 +1894,12 @@ We are so used to installing software to use it. The Nix model gives you
 </div>
 </div>
 
-<div id="outline-container-orgd370dc4" class="outline-2">
-<h2 id="orgd370dc4"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> Rollbacks</h2>
+<div id="outline-container-orgb22fbc8" class="outline-2">
+<h2 id="orgb22fbc8"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> Rollbacks</h2>
 </div>
 
-<div id="outline-container-orgb2780d1" class="outline-2">
-<h2 id="orgb2780d1"><span class="section-number-2">4</span> Comments</h2>
+<div id="outline-container-org3fdb0cc" class="outline-2">
+<h2 id="org3fdb0cc"><span class="section-number-2">4</span> Comments</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Thanks for reading! I’ve been trying to improve my writing skills. This blog
@@ -1556,7 +1916,7 @@ post is part of that effort. Feedback on this is welcome. My email is
 Not all, but we’re improving every day. Usability is still a major issue.
 </p></div></div>
 
-<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"></div></div>
+<div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara"></p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
 For more features of Nix, you can checkout the <a href="https://nixos.org/nix/">Nix website</a>.
