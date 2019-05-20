@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link rel="alternate"
+      type="application/rss+xml"
+      href="https://matthewbauer.us/blog/rss.xml"
+      title="RSS feed for https://matthewbauer.us/blog/"/>
+<title>How to bisect issues in NixOS and Nixpkgs</title>
+</head>
+<body>
+<div id="preamble" class="status">
+</div>
+<div id="content">
+<div class="post-date">13 May 2019</div><h1 class="post-title"><a href="nix-bisect.html">How to bisect issues in NixOS and Nixpkgs</a></h1>
+<p>
+When running updates on any system, it’s fairly common for issues to
+arise. It’s inevitable that any changes to your system are going to
+break things. But, with NixOS, we have two good features that help
+deal with these breakages:
+</p>
+
+<ul class="org-ul">
+<li>Rollbacks. When you run <code>sudo nixos-rebuild switch --upgrade</code>, you
+can rollback to the previous NixOS version with <code>sudo nixos-rebuild
+  switch --rollback</code>. This is nice if you quickly need to restore to
+the last good version. But, make sure to always file an issue when
+you have to do this, otherwise you could get stuck with out of date
+sotware! The NixOS/Nixpkgs issue tracker is at
+<a href="https://github.com/NixOS/nixpkgs/issues">https://github.com/NixOS/nixpkgs/issues</a>.</li>
+
+<li>Reproducible failures. Nix provides fixed versions of all software
+on the system. As a result, we can easily reproduce the failure
+given a Git hash and the command that is failing</li>
+</ul>
+
+<p>
+In this post, I will focus on the second one. Specificially, I will
+show how you can combine <code>git bisect</code> with the <code>nix</code> command to easily
+track down which commit broke your system. I want to help users get
+better at tracking down what commit caused there issues. First, we
+need to go over how
+</p>
+
+<div id="outline-container-org88ad10d" class="outline-2">
+<h2 id="org88ad10d"><span class="section-number-2">1</span> Git bisect commands</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+Git bisect is an extremely powerful tool. It’s also not as well known
+as many other Git commands, and that should definitely change. <code>git
+bisect</code> takes a range of Git commits and runs jumps between intervals
+of those commits. The start of the range is the “good” commit while
+the end of the range is the “bad” commit. Git then jumps to the middle
+commit between good and bad and determines if that is “good” or “bad”.
+If it’s “good”, Git jumps to the middle of this good commit and the
+old bad commit. Otherwise, it’s “bad”, and Git jumps to the middle of
+this bad commit and the old good commit. You can run bisect
+interactively to go through the intervals yourself.
+</p>
+
+<p>
+With Nix, it’s often useful to write a script to do this for you. This
+is because building software can take a lot of time to complete. You
+are not guaranteed to hit the binary cache when you are running
+between commits.
+</p>
+
+<p>
+There are five commands you need to know to use <code>git bisect</code>.
+</p>
+</div>
+
+<div id="outline-container-orgff05ba5" class="outline-3">
+<h3 id="orgff05ba5"><span class="section-number-3">1.1</span> <code>git bisect start</code></h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+This tells Git to enter bisect mode.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgf579c9e" class="outline-3">
+<h3 id="orgf579c9e"><span class="section-number-3">1.2</span> <code>git bisect good</code></h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+This tells Git t
+</p>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9f5f503" class="outline-2">
+<h2 id="org9f5f503"><span class="section-number-2">2</span> Example</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+To better understrand how Nix and Git work together, I have an active
+example. The issue is available at <a href="https://github.com/NixOS/nixpkgs/issues/61501">https://github.com/NixOS/nixpkgs/issues/61501</a>.
+</p>
+</div>
+
+
+<div id="outline-container-org9a721df" class="outline-3">
+<h3 id="org9a721df"><span class="section-number-3">2.1</span> Finding last good commit</h3>
+<div class="outline-text-3" id="text-2-1">
+<p>
+Each NixOS generation has a Git commit associated with it. You can
+find it at
+<code>/nix/var/nix/profiles/per-user/root/channels/nixos/.git-revision</code>. To
+determine previous generations is a little bit harder. This command
+gives you all of your past channels (that haven’t been garbage
+collected):
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">sudo nix-env --list-generations --profile
+/nix/var/nix/profiles/per-user/root/channels
+</pre>
+</div>
+
+<p>
+The output looks like this:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-text">33   2019-05-06 12:57:00
+34   2019-05-12 16:31:21
+35   2019-05-12 16:44:43
+36   2019-05-13 11:12:12   (current)
+</pre>
+</div>
+
+<p>
+You can then find the commit of generation 34 with:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">cat /nix/var/nix/profiles/per-user/root/channels-35-link/nixos/.git-revision
+</pre>
+</div>
+
+<p>
+Combining these into a shell script:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh"><span class="org-whitespace-line">cat /nix/var/nix/profiles/per-user/root/channels-$(sudo nix-env --list-generations --profile /nix/var/nix/profiles/per-user/root/channels | tail -n2 | head -n1 | awk </span><span class="org-string"><span class="org-whitespace-line">'{print $1}'</span></span><span class="org-whitespace-line">)-link/nixos/.git-revision</span>
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-orgd915baf" class="outline-3">
+<h3 id="orgd915baf"><span class="section-number-3">2.2</span> Final script</h3>
+<div class="outline-text-3" id="text-2-2">
+<p>
+This is the script I used to find this:
+</p>
+
+<pre class="example">
+git bisect start
+git bisect bad 190727db4ea
+git bisect good acbdaa5
+git bisect run sh -c '
+  touch a.s
+  nix run -f. llvmPackages_8.clang-unwrapped -c clang -cc1as -triple x86_64-unknown-linux-gnu a.s
+'
+</pre>
+
+<p>
+It takes a little while to run but ends up finding the correct commit
+that broke this!
+</p>
+</div>
+</div>
+</div>
+</div>
+<div id="postamble" class="status"></div>
+</body>
+</html>
