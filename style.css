@@ -329,6 +329,8 @@ body > * {
 
 li {
 	break-inside: avoid-column;
+	hypens: auto;
+	text-align: justify;
 }
 
 ul {
@@ -393,6 +395,8 @@ code {
 	font-size: 80%;
 	word-break: keep-all;
 	font-weight: 500;
+	hypens: none;
+	white-space: nowrap;
 }
 
 textarea { overflow-x: auto; }
@@ -424,6 +428,7 @@ a {
 	text-decoration: none;
 	transition-property: background;
 	transition-duration: 0.2s;
+	hypens: none;
 }
 
 a:active { color: #777; }
