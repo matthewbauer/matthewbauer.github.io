@@ -382,7 +382,7 @@ pre {
 	overflow: auto;
 	background-color: #f9f9f9;
 	border-radius: 8px;
-	padding: 2em 1em 1.5em 1em;
+	padding: 1em 1em 1.5em 1em;
 	margin: 1em 0;
 	box-shadow: 3px 3px 3px #eee;
 	border: 1px solid #ccc;
@@ -416,6 +416,8 @@ dt { font-weight: bold; }
 p {
 	margin-bottom: 1em;
 	line-height: 1.35;
+	hyphens: auto;
+	text-align: justify;
 }
 
 a {
@@ -454,7 +456,7 @@ a:hover {
 @media all and (min-width: 520px) {
 	pre {
 		margin-left: 2em;
-		margin-right: -4em;
+		margin-right: 2em;
 	}
 }
 
