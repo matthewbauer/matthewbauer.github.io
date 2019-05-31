@@ -330,7 +330,6 @@ body > * {
 li {
 	break-inside: avoid-column;
 	hypens: auto;
-	text-align: justify;
 }
 
 ul {
