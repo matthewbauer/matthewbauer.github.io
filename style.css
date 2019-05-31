@@ -397,7 +397,7 @@ code {
 	word-break: keep-all;
 	font-weight: 500;
 	hypens: none;
-	white-space: nowrap;
+	/* white-space: nowrap; */
 }
 
 textarea { overflow-x: auto; }
