@@ -335,6 +335,7 @@ li {
 
 ul {
 	margin-bottom: 1em;
+	list-style-type: square;
 }
 
 li p {
