@@ -424,6 +424,7 @@ p {
 	line-height: 1.35;
 	hyphens: auto;
 	text-align: justify;
+	word-break: break-all;
 }
 
 a {
