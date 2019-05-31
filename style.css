@@ -330,6 +330,7 @@ body > * {
 li {
 	break-inside: avoid-column;
 	hypens: auto;
+	margin: 1em;
 }
 
 ul {
@@ -405,6 +406,7 @@ thead { border-bottom: solid; }
 th {
 	text-align: left;
 	padding-left: 1rem;
+	padding-bottom: .5em;
 }
 
 table {
@@ -471,6 +473,9 @@ a:hover {
 ul.cv-list li {
 	list-style: none;
 	margin-bottom: 1em;
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
 	line-height: 1.35;
 }
 
