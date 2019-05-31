@@ -330,7 +330,7 @@ body > * {
 li {
 	break-inside: avoid-column;
 	hypens: auto;
-	margin: 1em;
+	margin: 1em 0;
 }
 
 ul {
