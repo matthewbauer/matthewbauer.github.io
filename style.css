@@ -377,7 +377,6 @@ h5 { font-size: 70%; }
 
 pre, code {
 	font-family: "Source Code Pro";
-	/* word-break: keep-all; */
 }
 
 pre {
@@ -394,10 +393,10 @@ pre {
 
 code {
 	font-size: 80%;
-	/* word-break: keep-all; */
+	word-break: keep-all;
 	font-weight: 500;
 	hypens: none;
-	/* white-space: nowrap; */
+	white-space: nowrap;
 }
 
 textarea { overflow-x: auto; }
@@ -423,7 +422,7 @@ p {
 	margin-bottom: 1em;
 	line-height: 1.35;
 	hyphens: auto;
-	text-align: justify;
+	/* text-align: justify; */
 }
 
 a {
