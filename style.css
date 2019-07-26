@@ -1,183 +1,183 @@
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 200;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-ExtraLight.eot') format('embedded-opentype'),
-	     url('fonts/WOFF2/TTF/SourceCodePro-ExtraLight.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-ExtraLight.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-ExtraLight.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-ExtraLight.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-ExtraLight.eot") format("embedded-opentype"),
+	     url("fonts/WOFF2/TTF/SourceCodePro-ExtraLight.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-ExtraLight.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-ExtraLight.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-ExtraLight.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 200;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-ExtraLightIt.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-ExtraLightIt.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-ExtraLightIt.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-ExtraLightIt.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-ExtraLightIt.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-ExtraLightIt.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-ExtraLightIt.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-ExtraLightIt.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-ExtraLightIt.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-ExtraLightIt.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 300;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-Light.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-Light.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-Light.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-Light.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-Light.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-Light.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-Light.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-Light.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-Light.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-Light.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 300;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-LightIt.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-LightIt.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-LightIt.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-LightIt.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-LightIt.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-LightIt.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-LightIt.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-LightIt.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-LightIt.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-LightIt.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 400;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-Regular.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-Regular.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-Regular.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-Regular.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-Regular.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-Regular.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-Regular.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-Regular.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-Regular.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-Regular.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 400;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-It.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-It.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-It.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-It.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-It.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-It.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-It.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-It.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-It.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-It.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 500;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-Medium.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-Medium.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-Medium.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-Medium.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-Medium.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-Medium.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-Medium.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-Medium.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-Medium.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-Medium.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 500;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-MediumIt.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-MediumIt.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-MediumIt.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-MediumIt.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-MediumIt.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-MediumIt.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-MediumIt.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-MediumIt.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-MediumIt.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-MediumIt.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 600;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-Semibold.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-Semibold.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-Semibold.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-Semibold.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-Semibold.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-Semibold.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-Semibold.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-Semibold.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-Semibold.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-Semibold.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 600;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-SemiboldIt.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-SemiboldIt.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-SemiboldIt.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-SemiboldIt.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-SemiboldIt.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-SemiboldIt.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-SemiboldIt.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-SemiboldIt.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-SemiboldIt.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-SemiboldIt.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 700;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-Bold.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-Bold.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-Bold.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-Bold.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-Bold.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-Bold.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-Bold.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-Bold.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-Bold.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-Bold.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 700;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-BoldIt.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-BoldIt.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-BoldIt.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-BoldIt.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-BoldIt.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-BoldIt.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-BoldIt.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-BoldIt.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-BoldIt.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-BoldIt.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 900;
 	font-style: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-Black.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-Black.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-Black.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-Black.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-Black.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-Black.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-Black.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-Black.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-Black.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-Black.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Source Code Pro';
+	font-family: "Source Code Pro";
 	font-weight: 900;
 	font-style: italic;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/SourceCodePro-BlackIt.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/TTF/SourceCodePro-BlackIt.ttf.woff2') format('woff2'),
-             url('fonts/WOFF/OTF/SourceCodePro-BlackIt.otf.woff') format('woff'),
-             url('fonts/OTF/SourceCodePro-BlackIt.otf') format('opentype'),
-             url('fonts/TTF/SourceCodePro-BlackIt.ttf') format('truetype');
+	src: url("fonts/EOT/SourceCodePro-BlackIt.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/TTF/SourceCodePro-BlackIt.ttf.woff2") format("woff2"),
+             url("fonts/WOFF/OTF/SourceCodePro-BlackIt.otf.woff") format("woff"),
+             url("fonts/OTF/SourceCodePro-BlackIt.otf") format("opentype"),
+             url("fonts/TTF/SourceCodePro-BlackIt.ttf") format("truetype");
 }
 
 @font-face {
@@ -186,8 +186,8 @@
 	font-weight: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/charter_regular-webfont.eot') format('embedded-opentype'),
-             url('fonts/WOFF/charter_regular-webfont.woff') format('woff');
+	src: url("fonts/EOT/charter_regular-webfont.eot") format("embedded-opentype"),
+             url("fonts/WOFF/charter_regular-webfont.woff") format("woff");
 }
 
 @font-face {
@@ -196,8 +196,8 @@
 	font-weight: normal;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/charter_italic-webfont.eot') format('embedded-opentype'),
-             url('fonts/WOFF/charter_italic-webfont.woff') format('woff');
+	src: url("fonts/EOT/charter_italic-webfont.eot") format("embedded-opentype"),
+             url("fonts/WOFF/charter_italic-webfont.woff") format("woff");
 }
 
 @font-face {
@@ -206,8 +206,8 @@
 	font-weight: bold;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/charter_bold-webfont.eot') format('embedded-opentype'),
-             url('fonts/WOFF/charter_bold-webfont.woff') format('woff');
+	src: url("fonts/EOT/charter_bold-webfont.eot") format("embedded-opentype"),
+             url("fonts/WOFF/charter_bold-webfont.woff") format("woff");
 }
 
 @font-face {
@@ -216,8 +216,8 @@
 	font-weight: bold;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/charter_bold_italic-webfont.eot') format('embedded-opentype'),
-             url('fonts/WOFF/charter_bold_italic-webfont.woff') format('woff');
+	src: url("fonts/EOT/charter_bold_italic-webfont.eot") format("embedded-opentype"),
+             url("fonts/WOFF/charter_bold_italic-webfont.woff") format("woff");
 }
 
 @font-face {
@@ -226,11 +226,11 @@
 	font-weight: 300;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/FiraSans-Light.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/FiraSans-Light.woff2') format('woff2'),
-             url('fonts/WOFF/FiraSans-Light.woff') format('woff'),
-             url('fonts/OTF/FiraSans-Light.otf') format('opentype'),
-             url('fonts/TTF/FiraSans-Light.ttf') format('truetype');
+	src: url("fonts/EOT/FiraSans-Light.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/FiraSans-Light.woff2") format("woff2"),
+             url("fonts/WOFF/FiraSans-Light.woff") format("woff"),
+             url("fonts/OTF/FiraSans-Light.otf") format("opentype"),
+             url("fonts/TTF/FiraSans-Light.ttf") format("truetype");
 }
 
 @font-face {
@@ -239,11 +239,11 @@
 	font-weight: 300;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/FiraSans-LightItalic.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/FiraSans-LightItalic.woff2') format('woff2'),
-             url('fonts/WOFF/FiraSans-LightItalic.woff') format('woff'),
-             url('fonts/OTF/FiraSans-LightItalic.otf') format('opentype'),
-             url('fonts/TTF/FiraSans-LightItalic.ttf') format('truetype');
+	src: url("fonts/EOT/FiraSans-LightItalic.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/FiraSans-LightItalic.woff2") format("woff2"),
+             url("fonts/WOFF/FiraSans-LightItalic.woff") format("woff"),
+             url("fonts/OTF/FiraSans-LightItalic.otf") format("opentype"),
+             url("fonts/TTF/FiraSans-LightItalic.ttf") format("truetype");
 }
 
 @font-face {
@@ -252,11 +252,11 @@
 	font-weight: 400;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/FiraSans-Regular.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/FiraSans-Regular.woff2') format('woff2'),
-             url('fonts/WOFF/FiraSans-Regular.woff') format('woff'),
-             url('fonts/OTF/FiraSans-Regular.otf') format('opentype'),
-             url('fonts/TTF/FiraSans-Regular.ttf') format('truetype');
+	src: url("fonts/EOT/FiraSans-Regular.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/FiraSans-Regular.woff2") format("woff2"),
+             url("fonts/WOFF/FiraSans-Regular.woff") format("woff"),
+             url("fonts/OTF/FiraSans-Regular.otf") format("opentype"),
+             url("fonts/TTF/FiraSans-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -265,15 +265,15 @@
 	font-weight: 600;
 	font-stretch: normal;
 	font-display: optional;
-	src: url('fonts/EOT/FiraSans-Medium.eot') format('embedded-opentype'),
-             url('fonts/WOFF2/FiraSans-Medium.woff2') format('woff2'),
-             url('fonts/WOFF/FiraSans-Medium.woff') format('woff'),
-             url('fonts/OTF/FiraSans-Medium.otf') format('opentype'),
-             url('fonts/TTF/FiraSans-Medium.ttf') format('truetype');
+	src: url("fonts/EOT/FiraSans-Medium.eot") format("embedded-opentype"),
+             url("fonts/WOFF2/FiraSans-Medium.woff2") format("woff2"),
+             url("fonts/WOFF/FiraSans-Medium.woff") format("woff"),
+             url("fonts/OTF/FiraSans-Medium.otf") format("opentype"),
+             url("fonts/TTF/FiraSans-Medium.ttf") format("truetype");
 }
 
 @font-face {
-	font-family: 'Font Awesome 5 Brands';
+	font-family: "Font Awesome 5 Brands";
 	font-style: normal;
 	font-weight: normal;
 	font-display: block;
@@ -284,7 +284,7 @@
 }
 
 @font-face {
-	font-family: 'Font Awesome 5 Free';
+	font-family: "Font Awesome 5 Free";
 	font-style: normal;
 	font-weight: 400;
 	font-display: block;
@@ -295,7 +295,7 @@
 }
 
 @font-face {
-	font-family: 'Font Awesome 5 Free';
+	font-family: "Font Awesome 5 Free";
 	font-style: normal;
 	font-weight: 900;
 	font-display: block;
@@ -305,9 +305,9 @@
 	     url("fonts/TTF/fa-solid-900.ttf") format("truetype");
 }
 
-.fas { font-family: 'Font Awesome 5 Free'; font-weight: 900; }
-.far { font-family: 'Font Awesome 5 Free'; font-weight: 400; }
-.fab { font-family: 'Font Awesome 5 Brands'; }
+.fas { font-family: "Font Awesome 5 Free"; font-weight: 900; }
+.far { font-family: "Font Awesome 5 Free"; font-weight: 400; }
+.fab { font-family: "Font Awesome 5 Brands"; }
 
 .fas.projects::before { content: "\f0ad"; }
 .fab.github::before { content: "\f09b"; }
@@ -323,7 +323,7 @@
 }
 
 body, li p {
-	font-family: Charter, Garamond, "Times New Roman", Serif;
+	font-family: Charter, Garamond, "Times New Roman", serif;
 }
 
 html, body {
@@ -355,7 +355,7 @@ body {
 	max-width: 1000px;
 	min-height: 100%;
 	text-rendering: optimizeLegibility;
-	font-feature-settings: 'kern' 1, 'liga' 1;
+	font-feature-settings: "kern" 1, "liga" 1;
 	border-top: 0px solid black;
 	border-bottom: 0px solid black;
 	position: relative;
@@ -393,7 +393,7 @@ hr {
 }
 
 h1, h2, h3, h4, h5 {
-	font-family: Fira, Helvetica, Arial, Sans-serif;
+	font-family: Fira, Helvetica, Arial, sans-serif;
 	border-top: 0;
 	padding-top: 0;
 	font-weight: bolder;
@@ -420,7 +420,7 @@ h4 { font-size: 80%; }
 h5 { font-size: 70%; }
 
 pre, code {
-	font-family: "Source Code Pro", Courier, Monospace;
+	font-family: "Source Code Pro", Courier, monospace;
 }
 
 pre {
@@ -657,88 +657,88 @@ pre.src:before {
 	border: 1px solid black;
 }
 pre.src:hover:before { display: inline; }
-pre.src-nix:before  { content: 'Nix';   }
-pre.src-asymptote:before { content: 'Asymptote'; }
-pre.src-awk:before { content: 'Awk'; }
-pre.src-C:before { content: 'C'; }
-pre.src-clojure:before { content: 'Clojure'; }
-pre.src-css:before { content: 'CSS'; }
-pre.src-D:before { content: 'D'; }
-pre.src-ditaa:before { content: 'ditaa'; }
-pre.src-dot:before { content: 'Graphviz'; }
-pre.src-calc:before { content: 'Emacs Calc'; }
-pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
-pre.src-fortran:before { content: 'Fortran'; }
-pre.src-gnuplot:before { content: 'gnuplot'; }
-pre.src-haskell:before { content: 'Haskell'; }
-pre.src-hledger:before { content: 'hledger'; }
-pre.src-java:before { content: 'Java'; }
-pre.src-js:before { content: 'Javascript'; }
-pre.src-latex:before { content: 'LaTeX'; }
-pre.src-ledger:before { content: 'Ledger'; }
-pre.src-lisp:before { content: 'Lisp'; }
-pre.src-lilypond:before { content: 'Lilypond'; }
-pre.src-lua:before { content: 'Lua'; }
-pre.src-matlab:before { content: 'MATLAB'; }
-pre.src-mscgen:before { content: 'Mscgen'; }
-pre.src-ocaml:before { content: 'Objective Caml'; }
-pre.src-octave:before { content: 'Octave'; }
-pre.src-org:before { content: 'Org mode'; }
-pre.src-oz:before { content: 'OZ'; }
-pre.src-plantuml:before { content: 'Plantuml'; }
-pre.src-processing:before { content: 'Processing.js'; }
-pre.src-python:before { content: 'Python'; }
-pre.src-R:before { content: 'R'; }
-pre.src-ruby:before { content: 'Ruby'; }
-pre.src-sass:before { content: 'Sass'; }
-pre.src-scheme:before { content: 'Scheme'; }
-pre.src-screen:before { content: 'Gnu Screen'; }
-pre.src-sed:before { content: 'Sed'; }
-pre.src-sh:before { content: 'shell'; }
-pre.src-sql:before { content: 'SQL'; }
-pre.src-sqlite:before { content: 'SQLite'; }
-pre.src-forth:before { content: 'Forth'; }
-pre.src-io:before { content: 'IO'; }
-pre.src-J:before { content: 'J'; }
-pre.src-makefile:before { content: 'Makefile'; }
-pre.src-maxima:before { content: 'Maxima'; }
-pre.src-perl:before { content: 'Perl'; }
-pre.src-picolisp:before { content: 'Pico Lisp'; }
-pre.src-scala:before { content: 'Scala'; }
-pre.src-shell:before { content: 'Shell Script'; }
-pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
-pre.src-cpp:before  { content: 'C++'; }
-pre.src-abc:before  { content: 'ABC'; }
-pre.src-coq:before  { content: 'Coq'; }
-pre.src-groovy:before  { content: 'Groovy'; }
-pre.src-bash:before  { content: 'bash'; }
-pre.src-csh:before  { content: 'csh'; }
-pre.src-ash:before  { content: 'ash'; }
-pre.src-dash:before  { content: 'dash'; }
-pre.src-ksh:before  { content: 'ksh'; }
-pre.src-mksh:before  { content: 'mksh'; }
-pre.src-posh:before  { content: 'posh'; }
-pre.src-ada:before { content: 'Ada'; }
-pre.src-asm:before { content: 'Assembler'; }
-pre.src-caml:before { content: 'Caml'; }
-pre.src-delphi:before { content: 'Delphi'; }
-pre.src-html:before { content: 'HTML'; }
-pre.src-idl:before { content: 'IDL'; }
-pre.src-mercury:before { content: 'Mercury'; }
-pre.src-metapost:before { content: 'MetaPost'; }
-pre.src-modula-2:before { content: 'Modula-2'; }
-pre.src-pascal:before { content: 'Pascal'; }
-pre.src-ps:before { content: 'PostScript'; }
-pre.src-prolog:before { content: 'Prolog'; }
-pre.src-simula:before { content: 'Simula'; }
-pre.src-tcl:before { content: 'tcl'; }
-pre.src-tex:before { content: 'TeX'; }
-pre.src-plain-tex:before { content: 'Plain TeX'; }
-pre.src-verilog:before { content: 'Verilog'; }
-pre.src-vhdl:before { content: 'VHDL'; }
-pre.src-xml:before { content: 'XML'; }
-pre.src-nxml:before { content: 'XML'; }
-pre.src-conf:before { content: 'Configuration File'; }
+pre.src-nix:before  { content: "Nix";   }
+pre.src-asymptote:before { content: "Asymptote"; }
+pre.src-awk:before { content: "Awk"; }
+pre.src-C:before { content: "C"; }
+pre.src-clojure:before { content: "Clojure"; }
+pre.src-css:before { content: "CSS"; }
+pre.src-D:before { content: "D"; }
+pre.src-ditaa:before { content: "ditaa"; }
+pre.src-dot:before { content: "Graphviz"; }
+pre.src-calc:before { content: "Emacs Calc"; }
+pre.src-emacs-lisp:before { content: "Emacs Lisp"; }
+pre.src-fortran:before { content: "Fortran"; }
+pre.src-gnuplot:before { content: "gnuplot"; }
+pre.src-haskell:before { content: "Haskell"; }
+pre.src-hledger:before { content: "hledger"; }
+pre.src-java:before { content: "Java"; }
+pre.src-js:before { content: "Javascript"; }
+pre.src-latex:before { content: "LaTeX"; }
+pre.src-ledger:before { content: "Ledger"; }
+pre.src-lisp:before { content: "Lisp"; }
+pre.src-lilypond:before { content: "Lilypond"; }
+pre.src-lua:before { content: "Lua"; }
+pre.src-matlab:before { content: "MATLAB"; }
+pre.src-mscgen:before { content: "Mscgen"; }
+pre.src-ocaml:before { content: "Objective Caml"; }
+pre.src-octave:before { content: "Octave"; }
+pre.src-org:before { content: "Org mode"; }
+pre.src-oz:before { content: "OZ"; }
+pre.src-plantuml:before { content: "Plantuml"; }
+pre.src-processing:before { content: "Processing.js"; }
+pre.src-python:before { content: "Python"; }
+pre.src-R:before { content: "R"; }
+pre.src-ruby:before { content: "Ruby"; }
+pre.src-sass:before { content: "Sass"; }
+pre.src-scheme:before { content: "Scheme"; }
+pre.src-screen:before { content: "Gnu Screen"; }
+pre.src-sed:before { content: "Sed"; }
+pre.src-sh:before { content: "shell"; }
+pre.src-sql:before { content: "SQL"; }
+pre.src-sqlite:before { content: "SQLite"; }
+pre.src-forth:before { content: "Forth"; }
+pre.src-io:before { content: "IO"; }
+pre.src-J:before { content: "J"; }
+pre.src-makefile:before { content: "Makefile"; }
+pre.src-maxima:before { content: "Maxima"; }
+pre.src-perl:before { content: "Perl"; }
+pre.src-picolisp:before { content: "Pico Lisp"; }
+pre.src-scala:before { content: "Scala"; }
+pre.src-shell:before { content: "Shell Script"; }
+pre.src-ebnf2ps:before { content: "ebfn2ps"; }
+pre.src-cpp:before  { content: "C++"; }
+pre.src-abc:before  { content: "ABC"; }
+pre.src-coq:before  { content: "Coq"; }
+pre.src-groovy:before  { content: "Groovy"; }
+pre.src-bash:before  { content: "bash"; }
+pre.src-csh:before  { content: "csh"; }
+pre.src-ash:before  { content: "ash"; }
+pre.src-dash:before  { content: "dash"; }
+pre.src-ksh:before  { content: "ksh"; }
+pre.src-mksh:before  { content: "mksh"; }
+pre.src-posh:before  { content: "posh"; }
+pre.src-ada:before { content: "Ada"; }
+pre.src-asm:before { content: "Assembler"; }
+pre.src-caml:before { content: "Caml"; }
+pre.src-delphi:before { content: "Delphi"; }
+pre.src-html:before { content: "HTML"; }
+pre.src-idl:before { content: "IDL"; }
+pre.src-mercury:before { content: "Mercury"; }
+pre.src-metapost:before { content: "MetaPost"; }
+pre.src-modula-2:before { content: "Modula-2"; }
+pre.src-pascal:before { content: "Pascal"; }
+pre.src-ps:before { content: "PostScript"; }
+pre.src-prolog:before { content: "Prolog"; }
+pre.src-simula:before { content: "Simula"; }
+pre.src-tcl:before { content: "tcl"; }
+pre.src-tex:before { content: "TeX"; }
+pre.src-plain-tex:before { content: "Plain TeX"; }
+pre.src-verilog:before { content: "Verilog"; }
+pre.src-vhdl:before { content: "VHDL"; }
+pre.src-xml:before { content: "XML"; }
+pre.src-nxml:before { content: "XML"; }
+pre.src-conf:before { content: "Configuration File"; }
 pre.src.src-sh span { background-color: inherit; }
 pre span.org-builtin {color:#006FE0;font-weight:bold;}
 pre span.org-string {color:#008000;}
