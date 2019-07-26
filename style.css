@@ -323,7 +323,7 @@
 }
 
 body, li p {
-	font-family: "Charter";
+	font-family: Charter, Garamond, "Times New Roman", Serif;
 }
 
 html, body {
@@ -393,7 +393,7 @@ hr {
 }
 
 h1, h2, h3, h4, h5 {
-	font-family: "Fira";
+	font-family: Fira, Helvetica, Arial, Sans-serif;
 	border-top: 0;
 	padding-top: 0;
 	font-weight: bolder;
@@ -420,7 +420,7 @@ h4 { font-size: 80%; }
 h5 { font-size: 70%; }
 
 pre, code {
-	font-family: "Source Code Pro";
+	font-family: "Source Code Pro", Courier, Monospace;
 }
 
 pre {
