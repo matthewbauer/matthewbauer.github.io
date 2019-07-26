@@ -305,6 +305,18 @@
 	     url("fonts/TTF/fa-solid-900.ttf") format("truetype");
 }
 
+.fas { font-family: 'Font Awesome 5 Free'; font-weight: 900; }
+.far { font-family: 'Font Awesome 5 Free'; font-weight: 400; }
+.fab { font-family: 'Font Awesome 5 Brands'; }
+
+.fas.projects::before { content: "\f0ad"; }
+.fab.github::before { content: "\f09b"; }
+.fas.work::before { content: "\f0b1"; }
+.fas.resume::before { content: "\f15b"; }
+.fab.linkedin::before { content: "\f08c"; }
+.fas.university::before { content: "\f19c"; }
+.fas.code::before { content: "\f121"; }
+
 * {
 	margin: 0;
 	padding: 0;
