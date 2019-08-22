@@ -16,8 +16,8 @@
 
 <div class="post-date">20 Aug 2019</div><h1 class="post-title"><a href="all-the-versions.html">All the versions with Nix</a></h1>
 
-<div id="outline-container-org6b17ebe" class="outline-2">
-<h2 id="org6b17ebe"><span class="section-number-2">1</span> Background</h2>
+<div id="outline-container-orge7b545e" class="outline-2">
+<h2 id="orge7b545e"><span class="section-number-2">1</span> Background</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In <a href="channel-changing.html">Channel Changing with Nix</a>, I described how to move between channels
@@ -37,8 +37,8 @@ it will come with a Nix snippet that
 </div>
 </div>
 
-<div id="outline-container-org59ada5d" class="outline-2">
-<h2 id="org59ada5d"><span class="section-number-2">2</span> Code</h2>
+<div id="outline-container-org619bd1c" class="outline-2">
+<h2 id="org619bd1c"><span class="section-number-2">2</span> Code</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 So, what follows is some code that I wrote up that lets you find
@@ -92,8 +92,8 @@ requires no special library function.
 </div>
 </div>
 
-<div id="outline-container-org537b167" class="outline-2">
-<h2 id="org537b167"><span class="section-number-2">3</span> Usage</h2>
+<div id="outline-container-org2b1df56" class="outline-2">
+<h2 id="org2b1df56"><span class="section-number-2">3</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Working with this Nix expression is extremely interesting, and I’ve
@@ -102,8 +102,8 @@ usable on a Linux machine (or maybe macOS) with <a href="https://nixos.org/nix/"
 </p>
 </div>
 
-<div id="outline-container-orgc1c33b4" class="outline-3">
-<h3 id="orgc1c33b4"><span class="section-number-3">3.1</span> Query package versions</h3>
+<div id="outline-container-org7967d4a" class="outline-3">
+<h3 id="org7967d4a"><span class="section-number-3">3.1</span> Query package versions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 You can query what package versions are available through Nix’s
@@ -128,8 +128,8 @@ releases.
 </div>
 </div>
 
-<div id="outline-container-org6e94a98" class="outline-3">
-<h3 id="org6e94a98"><span class="section-number-3">3.2</span> Running an old version</h3>
+<div id="outline-container-org46f99c0" class="outline-3">
+<h3 id="org46f99c0"><span class="section-number-3">3.2</span> Running an old version</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A shown above, there are 5 versions of Emacs available to us. We can
@@ -137,8 +137,7 @@ run Emacs 24.3 with a fairly short command:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">$ <span class="org-variable-name">LC_ALL</span>=C nix run <span class="org-string">"(import (builtins.fetchurl</span>
-<span class="org-string">https://matthewbauer.us/generate-versions.nix) {}).emacs.\"24.3\""</span> -c emacs
+<pre class="src src-shell"><span class="org-whitespace-line">$ </span><span class="org-variable-name"><span class="org-whitespace-line">LC_ALL</span></span><span class="org-whitespace-line">=C nix run </span><span class="org-string"><span class="org-whitespace-line">"(import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).emacs.\"24.3\""</span></span><span class="org-whitespace-line"> -c emacs</span>
 </pre>
 </div>
 
@@ -165,8 +164,8 @@ very similar to the above:
 </div>
 </div>
 
-<div id="outline-container-org78537b7" class="outline-3">
-<h3 id="org78537b7"><span class="section-number-3">3.3</span> Firefox</h3>
+<div id="outline-container-org006cfd6" class="outline-3">
+<h3 id="org006cfd6"><span class="section-number-3">3.3</span> Firefox</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Another example using Firefox is pretty neat. The code is very similar
@@ -198,8 +197,8 @@ Amazing how notably Firefox has changed since then!
 </div>
 </div>
 
-<div id="outline-container-org30dd47d" class="outline-3">
-<h3 id="org30dd47d"><span class="section-number-3">3.4</span> Blender</h3>
+<div id="outline-container-org9ea0fde" class="outline-3">
+<h3 id="org9ea0fde"><span class="section-number-3">3.4</span> Blender</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Another example using Blender. The code is very similar to the two above:
@@ -223,8 +222,8 @@ You can run Blender 2.67 using this command:
 </div>
 </div>
 
-<div id="outline-container-org35d1673" class="outline-2">
-<h2 id="org35d1673"><span class="section-number-2">4</span> Rationale</h2>
+<div id="outline-container-org4c1bdf4" class="outline-2">
+<h2 id="org4c1bdf4"><span class="section-number-2">4</span> Rationale</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The reason that channels work better than commits is because every
@@ -251,8 +250,8 @@ quite ready for that yet.
 </div>
 </div>
 
-<div id="outline-container-orgb06938c" class="outline-2">
-<h2 id="orgb06938c"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-orgdd0fa4c" class="outline-2">
+<h2 id="orgdd0fa4c"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 This has hopefully shown how Nix’s functional dependency model makes
