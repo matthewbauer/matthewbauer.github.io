@@ -449,11 +449,11 @@ pre, code {
 }
 
 pre {
-	font-size: 80%;
+	font-size: 65%;
 	overflow: auto;
 	background-color: #f9f9f9;
 	border-radius: 8px;
-	padding: 1em 1em 1.5em 1em;
+	padding: 1em;
 	margin: 1em 0;
 	box-shadow: 3px 3px 3px #eee;
 	border: 1px solid #ccc;
@@ -530,8 +530,8 @@ a:hover {
 
 @media all and (min-width: 520px) {
 	pre {
-		margin-left: 2em;
-		margin-right: 2em;
+		margin-left: -2em;
+		margin-right: -2em;
 	}
 }
 
