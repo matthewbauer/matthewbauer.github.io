@@ -4,7 +4,262 @@
 <title>Matthew Bauer’s Blog</title>
 <description>Matthew Bauer’s Blog</description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Tue, 07 May 2019 02:22:55 -0400</lastBuildDate>
+<lastBuildDate>Wed, 21 Aug 2019 21:20:50 -0400</lastBuildDate>
+<item>
+  <title>All the versions with Nix</title>
+  <description><![CDATA[
+
+<div id="outline-container-org6b17ebe" class="outline-2">
+<h2 id="org6b17ebe"><span class="section-number-2">1</span> Background</h2>
+<div class="outline-text-2" id="text-1">
+<p>
+In <a href="channel-changing.html">Channel Changing with Nix</a>, I described how to move between channels
+in Nix expressions. This provides an easy way to work with multiple
+versions of Nixpkgs. I was reminded of this post after seeing <a href="https://news.ycombinator.com/item?id=20753066">a
+comment</a> by jolmg on Hacker News. The comment suggested we should have
+a way to use multiple versions of packages seamlessly together. It
+suggested that we should use commits to differentiate versions, but I
+suggested that stable <i>channels</i> would work much better.
+</p>
+
+<p>
+So, as a follow up to my Channel Changing post, I want to show how you
+can use a quick Nix mockup to accomplish this. Like the previous post,
+it will come with a Nix snippet that
+</p>
+</div>
+</div>
+
+<div id="outline-container-org59ada5d" class="outline-2">
+<h2 id="org59ada5d"><span class="section-number-2">2</span> Code</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+So, what follows is some code that I wrote up that lets you find
+package versions in an easier way. It is also available for download
+at <a href="https://matthewbauer.us/generate-versions.nix">https://matthewbauer.us/generate-versions.nix</a>.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-nix">{ channels ? [ <span class="org-string">"19.03"</span> <span class="org-string">"18.09"</span> <span class="org-string">"18.03"</span> <span class="org-string">"17.09"</span> <span class="org-string">"17.03"</span>
+         <span class="org-string">"16.09"</span> <span class="org-string">"16.03"</span> <span class="org-string">"15.09"</span> <span class="org-string">"14.12"</span> <span class="org-string">"14.04"</span> <span class="org-string">"13.10"</span> ]
+, attrs ? <span class="org-nix-builtin">builtins</span>.attrNames (<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {})
+, system ? <span class="org-nix-builtin">builtins</span>.currentSystem
+, args ? { <span class="org-nix-keyword">inherit</span> system; }
+}: <span class="org-nix-keyword">let</span>
+
+  <span class="org-nix-attribute">getSet</span> = channel:
+    (<span class="org-nix-builtin">import</span> (<span class="org-nix-builtin">builtins</span>.<span class="org-nix-builtin">fetchTarball</span> <span class="org-string">"channel:nixos-</span><span class="org-nix-antiquote">${</span>channel<span class="org-nix-antiquote">}</span>") args).pkgs;
+
+  <span class="org-nix-attribute">getPkg</span> = name: channel: <span class="org-nix-keyword">let</span>
+    <span class="org-nix-attribute">pkgs</span> = getSet channel;
+    <span class="org-nix-attribute">pkg</span> = pkgs.${name};
+    <span class="org-nix-attribute">version</span> = (<span class="org-nix-builtin">builtins</span>.parseDrvName pkg.name).version;
+  <span class="org-nix-keyword">in</span> <span class="org-nix-keyword">if</span> <span class="org-nix-builtin">builtins</span>.hasAttr name pkgs &amp;&amp; pkg ? name <span class="org-nix-keyword">then</span> {
+    <span class="org-nix-attribute">name</span> = version;
+    <span class="org-nix-attribute">value</span> = pkg;
+  } <span class="org-nix-keyword">else</span> <span class="org-nix-builtin">null</span>;
+
+<span class="org-nix-keyword">in</span> <span class="org-nix-builtin">builtins</span>.listToAttrs (<span class="org-nix-builtin">map</span> (name: {
+  <span class="org-nix-keyword">inherit</span> name;
+  <span class="org-nix-attribute">value</span> = <span class="org-nix-builtin">builtins</span>.listToAttrs
+    (<span class="org-nix-builtin">builtins</span>.filter (x: x != <span class="org-nix-builtin">null</span>)
+      (<span class="org-nix-builtin">map</span> (getPkg name) channels));
+}) attrs)
+</pre>
+</div>
+
+<p>
+This Nix expression generates an index of each package from all 11
+releases of Nixpkgs that have occurred since October 2010. For every
+package, each version that came with a release is included and put
+into a map. The map uses the version as a key and the package as its
+value, preferring the newer release when versions conflict.
+</p>
+
+<p>
+This is all done lazily, because that’s how Nix works. Still, it will
+take a little while at first to evaluate because we need to parse all
+11 releases! Remarkably, this expression uses only Nix builtins, and
+requires no special library function.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org537b167" class="outline-2">
+<h2 id="org537b167"><span class="section-number-2">3</span> Usage</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+Working with this Nix expression is extremely interesting, and I’ve
+included some examples of how to work with it. They should all be
+usable on a Linux machine (or maybe macOS) with <a href="https://nixos.org/nix/">Nix installed</a>.
+</p>
+</div>
+
+<div id="outline-container-orgc1c33b4" class="outline-3">
+<h3 id="orgc1c33b4"><span class="section-number-3">3.1</span> Query package versions</h3>
+<div class="outline-text-3" id="text-3-1">
+<p>
+You can query what package versions are available through Nix’s
+<code>builtins.attrNames</code> function. For example,
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ nix eval <span class="org-string">"(builtins.attrNames (import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).emacs)"</span>
+[ <span class="org-string">"24.3"</span> <span class="org-string">"24.4"</span> <span class="org-string">"24.5"</span> <span class="org-string">"25.3"</span> <span class="org-string">"26.1"</span> ]
+</pre>
+</div>
+
+<p>
+This shows us that there are 5 versions of Emacs. This is kind of
+interesting because it means that there were at least 6 duplicate
+versions of Emacs between our release channels. Unfortunately, a few
+versions of Emacs are notably missing including Emacs 25.1 and Emacs
+25.2. Emacs 24.2 was released almost a year before the first stable
+Nixpkgs release! As time goes on, we should collect more of these
+releases.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org6e94a98" class="outline-3">
+<h3 id="org6e94a98"><span class="section-number-3">3.2</span> Running an old version</h3>
+<div class="outline-text-3" id="text-3-2">
+<p>
+A shown above, there are 5 versions of Emacs available to us. We can
+run Emacs 24.3 with a fairly short command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ <span class="org-variable-name">LC_ALL</span>=C nix run <span class="org-string">"(import (builtins.fetchurl</span>
+<span class="org-string">https://matthewbauer.us/generate-versions.nix) {}).emacs.\"24.3\""</span> -c emacs
+</pre>
+</div>
+
+<p>
+<code>LC_ALL=C</code> is needed on Linux to avoid the old Glibc trying to load
+the newer, incompatible locales that may be included with your system.
+This is an unfortunate problem with Glibc including breaking changes
+between releases. It also makes me want use to switch to Musl some
+time soon! I’ve also noticed some incompatibilities with GTK icons
+that appear to come from the gdk-pixbuf module. More investigation is
+needed on why this is the case.
+</p>
+
+<p>
+This will not work on macOS because we did not have Emacs
+working on macOS back then! macOS users can try Emacs 25.3. This looks
+very similar to the above:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ nix run <span class="org-string">"(import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).emacs.\"25.3\""</span> -c emacs
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org78537b7" class="outline-3">
+<h3 id="org78537b7"><span class="section-number-3">3.3</span> Firefox</h3>
+<div class="outline-text-3" id="text-3-3">
+<p>
+Another example using Firefox is pretty neat. The code is very similar
+to Emacs:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ nix eval <span class="org-string">"(builtins.attrNames (import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).firefox)"</span>
+[ <span class="org-string">"25.0.1"</span> <span class="org-string">"34.0.5"</span> <span class="org-string">"39.0.3"</span> <span class="org-string">"45.0"</span> <span class="org-string">"48.0.2"</span> <span class="org-string">"51.0.1"</span> <span class="org-string">"55.0.3"</span> <span class="org-string">"59.0.2"</span> <span class="org-string">"63.0.3"</span> <span class="org-string">"66.0.3"</span> <span class="org-string">"68.0.2"</span> ]
+</pre>
+</div>
+
+<p>
+We get all 11 releases with unique Firefox versions this time.
+</p>
+
+<p>
+You can run Firefox 25.0.1 using this command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-whitespace-line">$ </span><span class="org-variable-name"><span class="org-whitespace-line">LC_ALL</span></span><span class="org-whitespace-line">=C nix run </span><span class="org-string"><span class="org-whitespace-line">"(import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).firefox.\"25.0.1\""</span></span><span class="org-whitespace-line"> -c firefox</span>
+</pre>
+</div>
+
+<p>
+Amazing how notably Firefox has changed since then!
+</p>
+</div>
+</div>
+
+<div id="outline-container-org30dd47d" class="outline-3">
+<h3 id="org30dd47d"><span class="section-number-3">3.4</span> Blender</h3>
+<div class="outline-text-3" id="text-3-4">
+<p>
+Another example using Blender. The code is very similar to the two above:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">$ nix eval <span class="org-string">"(builtins.attrNames (import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).blender)"</span>
+[ <span class="org-string">"2.67"</span> <span class="org-string">"2.70"</span> <span class="org-string">"2.72b"</span> <span class="org-string">"2.75a"</span> <span class="org-string">"2.77a"</span> <span class="org-string">"2.78c"</span> <span class="org-string">"2.79"</span> <span class="org-string">"2.79a"</span> <span class="org-string">"2.79b"</span> ]
+</pre>
+</div>
+
+<p>
+You can run Blender 2.67 using this command:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell"><span class="org-whitespace-line">$ </span><span class="org-variable-name"><span class="org-whitespace-line">LC_ALL</span></span><span class="org-whitespace-line">=C nix run </span><span class="org-string"><span class="org-whitespace-line">"(import (builtins.fetchurl https://matthewbauer.us/generate-versions.nix) {}).blender.\"26.7\""</span></span><span class="org-whitespace-line"> -c blender</span>
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org35d1673" class="outline-2">
+<h2 id="org35d1673"><span class="section-number-2">4</span> Rationale</h2>
+<div class="outline-text-2" id="text-4">
+<p>
+The reason that channels work better than commits is because every
+commit in Nixpkgs is not guaranteed to work on its own. Some may be
+missing security patches, configuration changes, or worse may just not
+work with other versions of packages. In addition, there are just too
+many commits to work with effectively. On the other hand, Nixpkgs
+release stable channels every 6 months, and we have a long vetting
+process of ensuring the stabilized channel works well.
+</p>
+
+<p>
+The main drawback the 6-month channels have is that we don’t have
+every version released of package. If the version you want is missing
+in a release, you are out of luck. But, the 6-month window tends to
+pick up a lot of packages and we end up with almost every major
+version of popular software. My philosophy is not all releases are
+worth keeping. Some contain critical security flaws, contain major
+bugs, and might not work well with other software. The 6-month window
+is good enough for me. Perhaps in the future we can increase Nixpkgs
+release cadence to 3-month or 1-month, but the maintainers are not
+quite ready for that yet.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgb06938c" class="outline-2">
+<h2 id="orgb06938c"><span class="section-number-2">5</span> Conclusion</h2>
+<div class="outline-text-2" id="text-5">
+<p>
+This has hopefully shown how Nix’s functional dependency model makes
+it very easy to switch between versions of packages. This is builtin
+to Nix, but you need some scripts to really use this well. Our 6-month
+release window is an arbitrary choice, but tends to pick up a lot of
+useful versions in the mean time.
+</p>
+</div>
+</div>
+]]></description>
+  <link>https://matthewbauer.us/blog/all-the-versions.html</link>
+  <pubDate>Tue, 20 Aug 2019 20:00:00 -0400</pubDate>
+</item>
 <item>
   <title>Nixpkgs macOS Stdenv Updates</title>
   <description><![CDATA[
@@ -1876,8 +2131,8 @@ manager. There are many others<sup><a id="fnr.3" class="footref" href="#fn.3">3<
 most convincing.
 </p>
 
-<div id="outline-container-orgcbe8553" class="outline-2">
-<h2 id="orgcbe8553"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Building</h2>
+<div id="outline-container-orgab10178" class="outline-2">
+<h2 id="orgab10178"><span class="section-number-2">1</span> <span class="todo TODO">TODO</span> Building</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Package managers like RPM or Homebrew think of packages as tables.
@@ -1885,8 +2140,8 @@ Package managers like RPM or Homebrew think of packages as tables.
 </div>
 </div>
 
-<div id="outline-container-orge1885c9" class="outline-2">
-<h2 id="orge1885c9"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> Using packages without installing</h2>
+<div id="outline-container-org56ec690" class="outline-2">
+<h2 id="org56ec690"><span class="section-number-2">2</span> <span class="todo TODO">TODO</span> Using packages without installing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 We are so used to installing software to use it. The Nix model gives you
@@ -1894,12 +2149,12 @@ We are so used to installing software to use it. The Nix model gives you
 </div>
 </div>
 
-<div id="outline-container-orgb22fbc8" class="outline-2">
-<h2 id="orgb22fbc8"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> Rollbacks</h2>
+<div id="outline-container-org461e23d" class="outline-2">
+<h2 id="org461e23d"><span class="section-number-2">3</span> <span class="todo TODO">TODO</span> Rollbacks</h2>
 </div>
 
-<div id="outline-container-org3fdb0cc" class="outline-2">
-<h2 id="org3fdb0cc"><span class="section-number-2">4</span> Comments</h2>
+<div id="outline-container-org6b56b8e" class="outline-2">
+<h2 id="org6b56b8e"><span class="section-number-2">4</span> Comments</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 Thanks for reading! I’ve been trying to improve my writing skills. This blog
