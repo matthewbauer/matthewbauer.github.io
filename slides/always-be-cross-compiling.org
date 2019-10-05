@@ -198,9 +198,13 @@ disallowedReferences =
    Ericson]] <[[mailto:john.ericson@obsidian.systems][john.ericson@obsidian.systems]]>
  - Employer: [[https://obsidian.systems][Obsidian Systems LLC]] <[[mailto:info@obsidian.systems][info@obsidian.systems]]>
    - Available for Nix and Haskell consulting
-** Source code
+** Source code and other versions
  - Slide source is available at
    https://matthewbauer.us/slides/always-be-cross-compiling.org
+ - HTML version is available at
+   https://matthewbauer.us/slides/always-be-cross-compiling.html
+ - PDF/Beamer version is available at
+   https://matthewbauer.us/slides/always-be-cross-compiling.pdf
 ** Further reading
  - Adapted from
    http://matthewbauer.us/blog/beginners-guide-to-cross.html
