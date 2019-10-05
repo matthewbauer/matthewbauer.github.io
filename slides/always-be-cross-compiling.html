@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<title>Always be Cross-compiling</title>
+<meta name="author" content="((link (:type https :path //matthewbauer.us :format bracket :raw-link https://matthewbauer.us :application nil :search-option nil :begin 1 :end 43 :contents-begin 28 :contents-end 41 :post-blank 0 :parent #0) Matthew Bauer) ,  (link (:type https :path //github.com/Ericson2314 :format bracket :raw-link https://github.com/Ericson2314 :application nil :search-option nil :begin 45 :end 93 :contents-begin 79 :contents-end 91 :post-blank 0 :parent #0) John Ericson))"/>
+<style type="text/css">
+.underline { text-decoration: underline; }
+</style>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/reveal.css"/>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/reveal.js/css/theme/moon.css" id="theme"/>
+
+
+<!-- If the query includes 'print-pdf', include the PDF print sheet -->
+<script>
+    if( window.location.search.match( /print-pdf/gi ) ) {
+        var link = document.createElement( 'link' );
+        link.rel = 'stylesheet';
+        link.type = 'text/css';
+        link.href = 'https://cdn.jsdelivr.net/npm/reveal.js/css/print/pdf.css';
+        document.getElementsByTagName( 'head' )[0].appendChild( link );
+    }
+</script>
+</head>
+<body>
+<div class="reveal">
+<div class="slides">
+<section id="sec-title-slide"><h1 class="title">Always be Cross-compiling</h1><h2 class="author"><a href="https://matthewbauer.us">Matthew Bauer</a>, <a href="https://github.com/Ericson2314">John Ericson</a></h2><p class="date">Created: 2019-10-05 Sat 16:47</p>
+</section>
+<section>
+<section id="slide-orgcfdaf4a">
+<h2 id="orgcfdaf4a"><span class="section-number-2">1</span> Overview</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+</section>
+<section id="slide-org04cd790">
+<h3 id="org04cd790"><span class="section-number-3">1.1</span> Who needs cross-compilation?</h3>
+<ul>
+<li>Used to create executables for a system different than we are
+currently on</li>
+<li>While native compilation is usually easier and better supported, we
+need cross-compilation for:
+<ul>
+<li>embedded systems, no Nix</li>
+<li>windows, no Nix (yet)</li>
+<li>new operating systems</li>
+<li>architectures where we haven’t made bootstrap tools</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org25e4197">
+<h3 id="org25e4197"><span class="section-number-3">1.2</span> History</h3>
+<ul>
+<li>Nixpkgs has had cross-compilation support for a while.</li>
+<li>But, it was considered separate from native compilation, requiring
+special <code>crossAttrs</code> args.</li>
+<li>Recent efforts make cross-compilation less <i>exceptional</i>, allowing
+us to reuse native infrastructure. This reduces duplication between
+package expressions.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgf187568">
+<h2 id="orgf187568"><span class="section-number-2">2</span> Specifying systems</h2>
+<div class="outline-text-2" id="text-2">
+</div>
+</section>
+<section id="slide-org2196d21">
+<h3 id="org2196d21"><span class="section-number-3">2.1</span> What is a system string?</h3>
+<ul>
+<li>Two ways to specify target systems exist. Both are supported in
+Nixpkgs through <code>crossSystem</code> and <code>localSystem</code> mechanisms.</li>
+<li>A system string is meant to specify some group of computers by
+architecture, operating system, or ABI.</li>
+
+</ul>
+</section>
+<section id="slide-org4b6f2f9">
+<h3 id="org4b6f2f9"><span class="section-number-3">2.2</span> Nix system tuple (<code>system</code>)</h3>
+<ul>
+<li>Format: <code>&lt;arch&gt;-&lt;os&gt;</code></li>
+<li>Examples:
+<ul>
+<li><code>x86_64-linux</code></li>
+<li><code>x86_64-darwin</code></li>
+<li><code>aarch64-linux</code></li>
+<li><code>i686-windows</code></li>
+<li><code>arm-none</code></li>
+
+</ul></li>
+<li>Nix internally doesn’t care about libc or vendor.</li>
+
+</ul>
+</section>
+<section id="slide-orga4d6ae6">
+<h3 id="orga4d6ae6"><span class="section-number-3">2.3</span> LLVM triple, also know as GNU config (<code>config</code>)</h3>
+<ul>
+<li>Format: <code>&lt;arch&gt;-&lt;vendor&gt;-&lt;os&gt;-&lt;libc&gt;</code></li>
+<li>Examples:
+<ul>
+<li><code>x86_64-unknown-linux-gnu</code></li>
+<li><code>x86_64-apple-darwin</code></li>
+<li><code>aarch64-unknown-linux-musl</code></li>
+<li><code>i686-pc-mingw32</code></li>
+<li><code>arm-none-eabi</code></li>
+
+</ul></li>
+<li>Actually has up to 4 parts, making it a quadruple not a triple.
+<code>libc</code> is optional on systems where there is only one standard
+Libc.</li>
+
+</ul>
+</section>
+<section id="slide-org4bd9c96">
+<h3 id="org4bd9c96"><span class="section-number-3">2.4</span> History</h3>
+<ul>
+<li>Original GNU config just had 3 parts. <code>linux-gnu</code> was used by
+GNU people to emphasize GNU/Linux. The <code>gnu</code> part was retconned
+later on to mean GNU Libc. We now have two other Libcs that work
+on Linux: Bionic (<code>linux-android</code>) and Musl (<code>linux-musl</code>).</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org54c86df">
+<h2 id="org54c86df"><span class="section-number-2">3</span> Toolchains</h2>
+<div class="outline-text-2" id="text-3">
+</div>
+</section>
+<section id="slide-org9218fb9">
+<h3 id="org9218fb9"><span class="section-number-3">3.1</span> Building a toolchain</h3>
+<ul>
+<li>Nixpkgs needs to support many different use cases of
+cross-compilation.</li>
+<li>By far the most complex is bootstrapping a toolchain. In this case,
+we have 3 systems we need to identify.</li>
+
+</ul>
+</section>
+<section id="slide-org341b3d8">
+<h3 id="org341b3d8"><span class="section-number-3">3.2</span> Autoconf arguments</h3>
+<ul>
+<li>We borrow naming from Autoconf for this:
+<ul>
+<li><code>--build</code> (<code>stdenv.buildPlatform</code>)
+<ul>
+<li>The system on which the package is being configured and
+compiled.</li>
+
+</ul></li>
+<li><code>--host</code> (<code>stdenv.hostPlatform</code>)
+<ul>
+<li>The system on which the package will run.</li>
+
+</ul></li>
+<li><code>--target</code> (<code>stdenv.targetPlatform</code>)
+<ul>
+<li>The system on which any compiler will produce code for.</li>
+
+</ul></li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orgb6d9689">
+<h3 id="orgb6d9689"><span class="section-number-3">3.3</span> How they work</h3>
+<ul>
+<li>Most users only need to care about the first 2, but <code>--target</code> is
+still needed to prevent adding a special case for building toolchain
+compilation.</li>
+<li>Toolchain package like compilers and linkers usually need to pay
+attention to all three. GCC and GNU Binutils need to know where they
+are going to run as well as what they should produce output for.</li>
+<li>Other toolchains like LLVM are target-independent and don’t need to
+know where they will run. They just need to know about <code>--build</code> and
+<code>--target</code>.</li>
+
+</ul>
+</section>
+<section id="slide-org9188097">
+<h3 id="org9188097"><span class="section-number-3">3.4</span> Compilation terminology</h3>
+<ul>
+<li><code>--build == --host == --target</code>
+<ul>
+<li>Native compilation</li>
+
+</ul></li>
+<li><code>--build /= --host == --target</code>
+<ul>
+<li>Cross compilation</li>
+
+</ul></li>
+<li><code>--build /= --host /= --target</code>
+<ul>
+<li>Canadian cross compilation</li>
+
+</ul></li>
+<li><code>--build == --host /= --target</code>
+<ul>
+<li>?</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org5d5391c">
+<h3 id="org5d5391c"><span class="section-number-3">3.5</span> Cross toolchains</h3>
+<ul>
+<li>Cross toolchains are provided in Nixpkgs as separate <b>package sets</b>.</li>
+<li>These package sets will produce packages that will run on a machine
+different than your own.</li>
+
+</ul>
+</section>
+<section id="slide-org764b9ce">
+<h3 id="org764b9ce"><span class="section-number-3">3.6</span> Cross toolchains examples</h3>
+<ul>
+<li>Some examples are necessary.
+<ul>
+<li>A C compiler for your native machine:</li>
+
+</ul></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-nix"><code trim>(<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {
+  <span class="org-nix-attribute">crossSystem</span> = <span class="org-string">"aarch64-unknown-linux-musl"</span>;
+}).buildPackages.buildPackages.gcc
+</code></pre>
+</div>
+<ul>
+<li>A C compiler for 64-bit ARM:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-nix"><code trim>(<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {
+  <span class="org-nix-attribute">crossSystem</span> = <span class="org-string">"aarch64-unknown-linux-musl"</span>;
+}).buildPackages.gcc
+</code></pre>
+</div>
+<ul>
+<li>A C compiler that runs on 64-bit ARM:</li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-nix"><code trim>(<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {
+  <span class="org-nix-attribute">crossSystem</span> = <span class="org-string">"aarch64-unknown-linux-musl"</span>;
+}).gcc
+</code></pre>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-orgad9e854">
+<h2 id="orgad9e854"><span class="section-number-2">4</span> Specifying dependencies</h2>
+<div class="outline-text-2" id="text-4">
+</div>
+</section>
+<section id="slide-org51d950c">
+<h3 id="org51d950c"><span class="section-number-3">4.1</span> Overview</h3>
+<ul>
+<li>Specifying dependencies is an important part of Nix. Thinking about
+dependencies adds a second dimension to the system matrix above.</li>
+<li>Each dependency will be built <i>on</i> one system <i>for</i> another system.</li>
+<li>From each we get a tuple that can be used correctly.</li>
+
+</ul>
+</section>
+<section id="slide-org1793dce">
+<h3 id="org1793dce"><span class="section-number-3">4.2</span> List of dependency types</h3>
+<ul>
+<li>(<code>--build</code>,  <code>--build</code>) - depsBuildBuild</li>
+<li>(<code>--build</code>,  <code>--host</code>) - nativeBuildInputs</li>
+<li>(<code>--build</code>,  <code>--target</code>) - depsBuildTarget</li>
+<li>(<code>--host</code>,   <code>--host</code>) - depsHostHost</li>
+<li>(<code>--host</code>,   <code>--target</code>) - buildInputs</li>
+<li>(<code>--target</code>, <code>--target</code>) - depsTargetTarget</li>
+
+</ul>
+</section>
+<section id="slide-orgad124ce">
+<h3 id="orgad124ce"><span class="section-number-3">4.3</span> Diagram</h3>
+
+<div class="figure">
+<p><img src="deps.png" alt="deps.png" />
+</p>
+</div>
+</section>
+</section>
+<section>
+<section id="slide-org7c920b4">
+<h2 id="org7c920b4"><span class="section-number-2">5</span> Other applications</h2>
+</section>
+</section>
+<section>
+<section id="slide-orgb577df0">
+<h2 id="orgb577df0"><span class="section-number-2">6</span> Static compilation</h2>
+<div class="outline-text-2" id="text-6">
+</div>
+</section>
+<section id="slide-org3688c6b">
+<h3 id="org3688c6b"><span class="section-number-3">6.1</span> Problem</h3>
+<ul>
+<li>By default, Nixpkgs disables static libraries when configuring. We
+prefer shared libraries to reduce closure sizes and force linking
+between packages.</li>
+<li>You’ve been able to override this behavior for a while by setting
+<code>dontDisableStatic</code>. This could be added to an overlay so that
+everything in the package set builds statically.</li>
+<li>But, doing this is not easy because it requires a mass rebuild of
+everything, buildtime and runtime.</li>
+
+</ul>
+</section>
+<section id="slide-orgdb5822f">
+<h3 id="orgdb5822f"><span class="section-number-3">6.2</span> Solution</h3>
+<ul>
+<li>We don’t really need to rebuild all of this stuff, it’s just
+<code>overlays</code> applies things to our entire toolchain and everything
+that depends on it.</li>
+<li>Static compilation can be treated as just a special case of
+cross-compilation. We may not actually be targeting another system,
+but just building for our own system.</li>
+
+</ul>
+</section>
+<section id="slide-orgd5758af">
+<h3 id="orgd5758af"><span class="section-number-3">6.3</span> crossOverlays</h3>
+<ul>
+<li><code>crossOverlays</code> applies an overlay to just the last package set in
+cross compilation. This means the amount of things we have to
+rebuild is limited to just runtime dependencies of static packages.</li>
+<li>This mechanism is used in <code>pkgsStatic</code> to build arbitrary packages
+statically.</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-org4aaa483">
+<h2 id="org4aaa483"><span class="section-number-2">7</span> Bootstrapping</h2>
+<ul>
+<li>Bootstrapping can also benefit from thinking in cross-compilation.</li>
+<li>TBD</li>
+<li>&#x2026;</li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orge73320e">
+<h2 id="orge73320e"><span class="section-number-2">8</span> strictDeps and the future</h2>
+<div class="outline-text-2" id="text-8">
+</div>
+</section>
+<section id="slide-org450c260">
+<h3 id="org450c260"><span class="section-number-3">8.1</span> strictDeps</h3>
+<ul>
+<li><code>strictDeps</code> is used only when cross-compiling to tell the Nixpkgs
+setup script to only include things in the <code>PATH</code> which can actually
+be executed on the build machine.</li>
+<li>It is one of the last remaining special cases left to remove.</li>
+
+</ul>
+</section>
+<section id="slide-org38ad54f">
+<h3 id="org38ad54f"><span class="section-number-3">8.2</span> Issues with strictDeps</h3>
+<ul>
+<li>The main issue with <code>strictDeps</code> is it makes a significant chance to
+how <code>buildInputs</code> and <code>nativeBuildInputs</code> works.
+<ul>
+<li>Some compromise might be possible. We could make <code>buildInputs</code>
+imply <code>depsBuildHost</code> in addition to <code>depsHostTarget</code>.</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orga3263a1">
+<h3 id="orga3263a1"><span class="section-number-3">8.3</span> superStrictDeps</h3>
+<ul>
+<li>There are more things we can do to enforce that our dependencies are
+being used as expected.</li>
+<li>Nix provides special variables to “allow” and “disallow” things.
+<ul>
+<li><code>disallowedReferences</code> / <code>allowedReferences</code> - specify what is or
+isn’t allowed directly in a packages’ output.</li>
+<li><code>disallowedRequisites</code> / <code>allowedRequisites</code> - specify what is or
+isn’t allowed in the entire packages’ closure.</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-orgaa927c8">
+<h3 id="orgaa927c8"><span class="section-number-3">8.4</span> superStrictDeps: Proposal</h3>
+<ul>
+<li>We can use <code>disallowedReferences</code> to disallow <code>nativeBuildInputs</code> in
+the package output in the same way that we disallow <code>buildInputs</code>
+from being executed. This prevents <code>nativeBuildInputs</code> from being
+used after a package is built.
+<ul>
+<li>Proposal:</li>
+
+</ul></li>
+
+</ul>
+<div class="org-src-container">
+
+<pre  class="src src-nix"><code trim><span class="org-nix-attribute">disallowedReferences</span> =
+     depsBuildBuild ++ nativeBuildInputs ++ depsBuildTarget
+  -- (depsHostHost ++ buildInputs ++ depsTargetTarget);
+</code></pre>
+</div>
+</section>
+<section id="slide-orgedabee1">
+<h3 id="orgedabee1"><span class="section-number-3">8.5</span> Other improvements</h3>
+<ul>
+<li>Other improvements in cross-compilation infrastructure are
+necessary.</li>
+<li>Some examples of other open work:
+<ul>
+<li>Do propagation in Nix, instead of Bash.</li>
+<li>Correctly splice package overrides. (#49526)
+<ul>
+<li>Also, need to allow things outside of Nixpkgs to take advantage
+of splicing.</li>
+<li>Is there an alternative to splicing?</li>
+
+</ul></li>
+<li>Always prefix compilers. (#21471)</li>
+<li>Always set <code>--build</code>, <code>--host</code>, and <code>--target</code>. (#21471)</li>
+
+</ul></li>
+
+</ul>
+</section>
+</section>
+<section>
+<section id="slide-orgee5eee2">
+<h2 id="orgee5eee2"><span class="section-number-2">9</span> Conclusion</h2>
+<div class="outline-text-2" id="text-9">
+</div>
+</section>
+<section id="slide-org5fcae86">
+<h3 id="org5fcae86"><span class="section-number-3">9.1</span> About</h3>
+<ul>
+<li>Authors: <a href="https://matthewbauer.us">Matthew Bauer</a> &lt;<a href="mailto:matthew.bauer@obsidian.systems">matthew.bauer@obsidian.systems</a>&gt;, <a href="https://github.com/Ericson2314">John
+Ericson</a> &lt;<a href="mailto:john.ericson@obsidian.systems">john.ericson@obsidian.systems</a>&gt;</li>
+<li>Employer: <a href="https://obsidian.systems">Obsidian Systems LLC</a> &lt;<a href="mailto:info@obsidian.systems">info@obsidian.systems</a>&gt;
+<ul>
+<li>Available for Nix and Haskell consulting</li>
+
+</ul></li>
+
+</ul>
+</section>
+<section id="slide-org77780cf">
+<h3 id="org77780cf"><span class="section-number-3">9.2</span> Source code</h3>
+<ul>
+<li>Slide source is available at
+<a href="https://matthewbauer.us/slides/always-be-cross-compiling.org">https://matthewbauer.us/slides/always-be-cross-compiling.org</a></li>
+
+</ul>
+</section>
+<section id="slide-org08b6645">
+<h3 id="org08b6645"><span class="section-number-3">9.3</span> Further reading</h3>
+<ul>
+<li>Adapted from
+<a href="http://matthewbauer.us/blog/beginners-guide-to-cross.html">http://matthewbauer.us/blog/beginners-guide-to-cross.html</a></li>
+
+</ul>
+</section>
+</section>
+</div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/reveal.js/js/reveal.js"></script>
+
+<script>
+// Full list of configuration options available here:
+// https://github.com/hakimel/reveal.js#configuration
+Reveal.initialize({
+multiplex: {
+    secret: '', // null if client
+    id: '', // id, obtained from socket.io server
+    url: '' // Location of socket.io server
+},
+
+// Optional libraries used to extend on reveal.js
+dependencies: [
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/lib/js/classList.js', condition: function() { return !document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/zoom-js/zoom.js', async: true, condition: function() { return !!document.body.classList; } },
+ { src: 'https://cdn.jsdelivr.net/npm/reveal.js/plugin/notes/notes.js', async: true, condition: function() { return !!document.body.classList; } }]
+});
+</script>
+</body>
+</html>
