@@ -3,6 +3,8 @@
 #+OPTIONS: H:2
 #+REVEAL_ROOT: https://cdn.jsdelivr.net/npm/reveal.js
 * Overview
+** Always be cross compiling
+[[file:alec.png]]
 ** Who needs cross-compilation?
 - Used to create executables for a system different than we are
   currently on

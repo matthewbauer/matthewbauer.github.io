@@ -26,16 +26,24 @@
 <body>
 <div class="reveal">
 <div class="slides">
-<section id="sec-title-slide"><h1 class="title">Always be Cross-compiling</h1><h2 class="author"><a href="https://matthewbauer.us">Matthew Bauer</a>, <a href="https://github.com/Ericson2314">John Ericson</a></h2><p class="date">Created: 2019-10-05 Sat 16:57</p>
+<section id="sec-title-slide"><h1 class="title">Always be Cross-compiling</h1><h2 class="author"><a href="https://matthewbauer.us">Matthew Bauer</a>, <a href="https://github.com/Ericson2314">John Ericson</a></h2><p class="date">Created: 2019-10-09 Wed 14:01</p>
 </section>
 <section>
-<section id="slide-orgf0a7671">
-<h2 id="orgf0a7671"><span class="section-number-2">1</span> Overview</h2>
+<section id="slide-org5aa62cd">
+<h2 id="org5aa62cd"><span class="section-number-2">1</span> Overview</h2>
 <div class="outline-text-2" id="text-1">
 </div>
 </section>
-<section id="slide-org0889244">
-<h3 id="org0889244"><span class="section-number-3">1.1</span> Who needs cross-compilation?</h3>
+<section id="slide-orgd3f803c">
+<h3 id="orgd3f803c"><span class="section-number-3">1.1</span> Always be cross compiling</h3>
+
+<div class="figure">
+<p><img src="alec.png" alt="alec.png" />
+</p>
+</div>
+</section>
+<section id="slide-org6185420">
+<h3 id="org6185420"><span class="section-number-3">1.2</span> Who needs cross-compilation?</h3>
 <ul>
 <li>Used to create executables for a system different than we are
 currently on</li>
@@ -51,8 +59,8 @@ need cross-compilation for:
 
 </ul>
 </section>
-<section id="slide-org094ae81">
-<h3 id="org094ae81"><span class="section-number-3">1.2</span> History</h3>
+<section id="slide-orgd4dbd15">
+<h3 id="orgd4dbd15"><span class="section-number-3">1.3</span> History</h3>
 <ul>
 <li>Nixpkgs has had cross-compilation support for a while.</li>
 <li>But, it was considered separate from native compilation, requiring
@@ -65,13 +73,13 @@ package expressions.</li>
 </section>
 </section>
 <section>
-<section id="slide-org157a387">
-<h2 id="org157a387"><span class="section-number-2">2</span> Specifying systems</h2>
+<section id="slide-org15d0c53">
+<h2 id="org15d0c53"><span class="section-number-2">2</span> Specifying systems</h2>
 <div class="outline-text-2" id="text-2">
 </div>
 </section>
-<section id="slide-orgb1c3821">
-<h3 id="orgb1c3821"><span class="section-number-3">2.1</span> What is a system string?</h3>
+<section id="slide-org82f75cf">
+<h3 id="org82f75cf"><span class="section-number-3">2.1</span> What is a system string?</h3>
 <ul>
 <li>Two ways to specify target systems exist. Both are supported in
 Nixpkgs through <code>crossSystem</code> and <code>localSystem</code> mechanisms.</li>
@@ -80,8 +88,8 @@ architecture, operating system, or ABI.</li>
 
 </ul>
 </section>
-<section id="slide-orgb13bfd5">
-<h3 id="orgb13bfd5"><span class="section-number-3">2.2</span> Nix system tuple (<code>system</code>)</h3>
+<section id="slide-org444ee02">
+<h3 id="org444ee02"><span class="section-number-3">2.2</span> Nix system tuple (<code>system</code>)</h3>
 <ul>
 <li>Format: <code>&lt;arch&gt;-&lt;os&gt;</code></li>
 <li>Examples:
@@ -97,8 +105,8 @@ architecture, operating system, or ABI.</li>
 
 </ul>
 </section>
-<section id="slide-org47f1e1f">
-<h3 id="org47f1e1f"><span class="section-number-3">2.3</span> LLVM triple, also know as GNU config (<code>config</code>)</h3>
+<section id="slide-org3d5f40c">
+<h3 id="org3d5f40c"><span class="section-number-3">2.3</span> LLVM triple, also know as GNU config (<code>config</code>)</h3>
 <ul>
 <li>Format: <code>&lt;arch&gt;-&lt;vendor&gt;-&lt;os&gt;-&lt;libc&gt;</code></li>
 <li>Examples:
@@ -116,8 +124,8 @@ Libc.</li>
 
 </ul>
 </section>
-<section id="slide-org6af59f3">
-<h3 id="org6af59f3"><span class="section-number-3">2.4</span> History</h3>
+<section id="slide-org5075070">
+<h3 id="org5075070"><span class="section-number-3">2.4</span> History</h3>
 <ul>
 <li>Original GNU config just had 3 parts. <code>linux-gnu</code> was used by
 GNU people to emphasize GNU/Linux. The <code>gnu</code> part was retconned
@@ -128,13 +136,13 @@ on Linux: Bionic (<code>linux-android</code>) and Musl (<code>linux-musl</code>)
 </section>
 </section>
 <section>
-<section id="slide-orgbc22f37">
-<h2 id="orgbc22f37"><span class="section-number-2">3</span> Toolchains</h2>
+<section id="slide-orgd7d829b">
+<h2 id="orgd7d829b"><span class="section-number-2">3</span> Toolchains</h2>
 <div class="outline-text-2" id="text-3">
 </div>
 </section>
-<section id="slide-org1141db0">
-<h3 id="org1141db0"><span class="section-number-3">3.1</span> Building a toolchain</h3>
+<section id="slide-orge318263">
+<h3 id="orge318263"><span class="section-number-3">3.1</span> Building a toolchain</h3>
 <ul>
 <li>Nixpkgs needs to support many different use cases of
 cross-compilation.</li>
@@ -143,8 +151,8 @@ we have 3 systems we need to identify.</li>
 
 </ul>
 </section>
-<section id="slide-org6f3dd24">
-<h3 id="org6f3dd24"><span class="section-number-3">3.2</span> Autoconf arguments</h3>
+<section id="slide-orgd945305">
+<h3 id="orgd945305"><span class="section-number-3">3.2</span> Autoconf arguments</h3>
 <ul>
 <li>We borrow naming from Autoconf for this:
 <ul>
@@ -169,8 +177,8 @@ compiled.</li>
 
 </ul>
 </section>
-<section id="slide-org9e2d569">
-<h3 id="org9e2d569"><span class="section-number-3">3.3</span> How they work</h3>
+<section id="slide-org3f09122">
+<h3 id="org3f09122"><span class="section-number-3">3.3</span> How they work</h3>
 <ul>
 <li>Most users only need to care about the first 2, but <code>--target</code> is
 still needed to prevent adding a special case for building toolchain
@@ -184,8 +192,8 @@ know where they will run. They just need to know about <code>--build</code> and
 
 </ul>
 </section>
-<section id="slide-org6643f34">
-<h3 id="org6643f34"><span class="section-number-3">3.4</span> Compilation terminology</h3>
+<section id="slide-orgc1d4298">
+<h3 id="orgc1d4298"><span class="section-number-3">3.4</span> Compilation terminology</h3>
 <ul>
 <li><code>--build == --host == --target</code>
 <ul>
@@ -210,8 +218,8 @@ know where they will run. They just need to know about <code>--build</code> and
 
 </ul>
 </section>
-<section id="slide-org5b1eb21">
-<h3 id="org5b1eb21"><span class="section-number-3">3.5</span> Cross toolchains</h3>
+<section id="slide-orgde1e089">
+<h3 id="orgde1e089"><span class="section-number-3">3.5</span> Cross toolchains</h3>
 <ul>
 <li>Cross toolchains are provided in Nixpkgs as separate <b>package sets</b>.</li>
 <li>These package sets will produce packages that will run on a machine
@@ -219,8 +227,8 @@ different than your own.</li>
 
 </ul>
 </section>
-<section id="slide-org883ef58">
-<h3 id="org883ef58"><span class="section-number-3">3.6</span> Cross toolchains examples</h3>
+<section id="slide-org54fb7f3">
+<h3 id="org54fb7f3"><span class="section-number-3">3.6</span> Cross toolchains examples</h3>
 <ul>
 <li>Some examples are necessary.
 <ul>
@@ -261,13 +269,13 @@ different than your own.</li>
 </section>
 </section>
 <section>
-<section id="slide-orga2ba114">
-<h2 id="orga2ba114"><span class="section-number-2">4</span> Specifying dependencies</h2>
+<section id="slide-org06231c8">
+<h2 id="org06231c8"><span class="section-number-2">4</span> Specifying dependencies</h2>
 <div class="outline-text-2" id="text-4">
 </div>
 </section>
-<section id="slide-orgd1944b1">
-<h3 id="orgd1944b1"><span class="section-number-3">4.1</span> Overview</h3>
+<section id="slide-org9001371">
+<h3 id="org9001371"><span class="section-number-3">4.1</span> Overview</h3>
 <ul>
 <li>Specifying dependencies is an important part of Nix. Thinking about
 dependencies adds a second dimension to the system matrix above.</li>
@@ -276,8 +284,8 @@ dependencies adds a second dimension to the system matrix above.</li>
 
 </ul>
 </section>
-<section id="slide-orgf7e3557">
-<h3 id="orgf7e3557"><span class="section-number-3">4.2</span> List of dependency types</h3>
+<section id="slide-org32f0fd1">
+<h3 id="org32f0fd1"><span class="section-number-3">4.2</span> List of dependency types</h3>
 <ul>
 <li>(<code>--build</code>,  <code>--build</code>) - depsBuildBuild</li>
 <li>(<code>--build</code>,  <code>--host</code>) - nativeBuildInputs</li>
@@ -288,8 +296,8 @@ dependencies adds a second dimension to the system matrix above.</li>
 
 </ul>
 </section>
-<section id="slide-org601ae94">
-<h3 id="org601ae94"><span class="section-number-3">4.3</span> Diagram</h3>
+<section id="slide-orga7142b6">
+<h3 id="orga7142b6"><span class="section-number-3">4.3</span> Diagram</h3>
 
 <div class="figure">
 <p><img src="deps.png" alt="deps.png" />
@@ -298,13 +306,13 @@ dependencies adds a second dimension to the system matrix above.</li>
 </section>
 </section>
 <section>
-<section id="slide-org897499d">
-<h2 id="org897499d"><span class="section-number-2">5</span> Case study 1: Static compilation</h2>
+<section id="slide-org6187c20">
+<h2 id="org6187c20"><span class="section-number-2">5</span> Case study 1: Static compilation</h2>
 <div class="outline-text-2" id="text-5">
 </div>
 </section>
-<section id="slide-org6c63d9e">
-<h3 id="org6c63d9e"><span class="section-number-3">5.1</span> Problem</h3>
+<section id="slide-org4a99046">
+<h3 id="org4a99046"><span class="section-number-3">5.1</span> Problem</h3>
 <ul>
 <li>By default, Nixpkgs disables static libraries when configuring. We
 prefer shared libraries to reduce closure sizes and force linking
@@ -317,8 +325,8 @@ everything, buildtime and runtime.</li>
 
 </ul>
 </section>
-<section id="slide-org623920d">
-<h3 id="org623920d"><span class="section-number-3">5.2</span> Solution</h3>
+<section id="slide-orga4cfc1c">
+<h3 id="orga4cfc1c"><span class="section-number-3">5.2</span> Solution</h3>
 <ul>
 <li>We don’t really need to rebuild all of this stuff, it’s just
 <code>overlays</code> applies things to our entire toolchain and everything
@@ -329,8 +337,8 @@ but just building for our own system.</li>
 
 </ul>
 </section>
-<section id="slide-org2567ea2">
-<h3 id="org2567ea2"><span class="section-number-3">5.3</span> crossOverlays</h3>
+<section id="slide-org48be5f9">
+<h3 id="org48be5f9"><span class="section-number-3">5.3</span> crossOverlays</h3>
 <ul>
 <li><code>crossOverlays</code> applies an overlay to just the last package set in
 cross compilation. This means the amount of things we have to
@@ -342,13 +350,13 @@ statically.</li>
 </section>
 </section>
 <section>
-<section id="slide-orgf36549c">
-<h2 id="orgf36549c"><span class="section-number-2">6</span> Case study 2: Bootstrapping</h2>
+<section id="slide-org0496583">
+<h2 id="org0496583"><span class="section-number-2">6</span> Case study 2: Bootstrapping</h2>
 <div class="outline-text-2" id="text-6">
 </div>
 </section>
-<section id="slide-orgabcb897">
-<h3 id="orgabcb897"><span class="section-number-3">6.1</span> Cross-compilation in bootstrapping</h3>
+<section id="slide-org9e369b3">
+<h3 id="org9e369b3"><span class="section-number-3">6.1</span> Cross-compilation in bootstrapping</h3>
 <ul>
 <li>Bootstrapping can also benefit from thinking in cross-compilation.</li>
 <li>TBD</li>
@@ -358,13 +366,13 @@ statically.</li>
 </section>
 </section>
 <section>
-<section id="slide-org85f8200">
-<h2 id="org85f8200"><span class="section-number-2">7</span> strictDeps and the future</h2>
+<section id="slide-org7d43a2e">
+<h2 id="org7d43a2e"><span class="section-number-2">7</span> strictDeps and the future</h2>
 <div class="outline-text-2" id="text-7">
 </div>
 </section>
-<section id="slide-orgb33e96f">
-<h3 id="orgb33e96f"><span class="section-number-3">7.1</span> strictDeps</h3>
+<section id="slide-org7012916">
+<h3 id="org7012916"><span class="section-number-3">7.1</span> strictDeps</h3>
 <ul>
 <li><code>strictDeps</code> is used only when cross-compiling to tell the Nixpkgs
 setup script to only include things in the <code>PATH</code> which can actually
@@ -373,8 +381,8 @@ be executed on the build machine.</li>
 
 </ul>
 </section>
-<section id="slide-orgab6dcba">
-<h3 id="orgab6dcba"><span class="section-number-3">7.2</span> Issues with strictDeps</h3>
+<section id="slide-org6002840">
+<h3 id="org6002840"><span class="section-number-3">7.2</span> Issues with strictDeps</h3>
 <ul>
 <li>The main issue with <code>strictDeps</code> is it makes a significant chance to
 how <code>buildInputs</code> and <code>nativeBuildInputs</code> works.
@@ -386,8 +394,8 @@ imply <code>depsBuildHost</code> in addition to <code>depsHostTarget</code>.</li
 
 </ul>
 </section>
-<section id="slide-org4b8bbed">
-<h3 id="org4b8bbed"><span class="section-number-3">7.3</span> superStrictDeps</h3>
+<section id="slide-orgf092047">
+<h3 id="orgf092047"><span class="section-number-3">7.3</span> superStrictDeps</h3>
 <ul>
 <li>There are more things we can do to enforce that our dependencies are
 being used as expected.</li>
@@ -402,8 +410,8 @@ isn’t allowed in the entire packages’ closure.</li>
 
 </ul>
 </section>
-<section id="slide-org5de0fbf">
-<h3 id="org5de0fbf"><span class="section-number-3">7.4</span> superStrictDeps: Proposal</h3>
+<section id="slide-orge7b3966">
+<h3 id="orge7b3966"><span class="section-number-3">7.4</span> superStrictDeps: Proposal</h3>
 <ul>
 <li>We can use <code>disallowedReferences</code> to disallow <code>nativeBuildInputs</code> in
 the package output in the same way that we disallow <code>buildInputs</code>
@@ -423,8 +431,8 @@ used after a package is built.
 </code></pre>
 </div>
 </section>
-<section id="slide-org528a765">
-<h3 id="org528a765"><span class="section-number-3">7.5</span> Other improvements</h3>
+<section id="slide-org488b30b">
+<h3 id="org488b30b"><span class="section-number-3">7.5</span> Other improvements</h3>
 <ul>
 <li>Other improvements in cross-compilation infrastructure are
 necessary.</li>
@@ -447,13 +455,13 @@ of splicing.</li>
 </section>
 </section>
 <section>
-<section id="slide-org6aef59a">
-<h2 id="org6aef59a"><span class="section-number-2">8</span> Conclusion</h2>
+<section id="slide-org520460a">
+<h2 id="org520460a"><span class="section-number-2">8</span> Conclusion</h2>
 <div class="outline-text-2" id="text-8">
 </div>
 </section>
-<section id="slide-org1b1a3c3">
-<h3 id="org1b1a3c3"><span class="section-number-3">8.1</span> About</h3>
+<section id="slide-org2981071">
+<h3 id="org2981071"><span class="section-number-3">8.1</span> About</h3>
 <ul>
 <li>Authors: <a href="https://matthewbauer.us">Matthew Bauer</a> &lt;<a href="mailto:matthew.bauer@obsidian.systems">matthew.bauer@obsidian.systems</a>&gt;, <a href="https://github.com/Ericson2314">John
 Ericson</a> &lt;<a href="mailto:john.ericson@obsidian.systems">john.ericson@obsidian.systems</a>&gt;</li>
@@ -465,8 +473,8 @@ Ericson</a> &lt;<a href="mailto:john.ericson@obsidian.systems">john.ericson@obsi
 
 </ul>
 </section>
-<section id="slide-org47ebb01">
-<h3 id="org47ebb01"><span class="section-number-3">8.2</span> Source code and other versions</h3>
+<section id="slide-org2c4c427">
+<h3 id="org2c4c427"><span class="section-number-3">8.2</span> Source code and other versions</h3>
 <ul>
 <li>Slide source is available at
 <a href="https://matthewbauer.us/slides/always-be-cross-compiling.org">https://matthewbauer.us/slides/always-be-cross-compiling.org</a></li>
@@ -477,8 +485,8 @@ Ericson</a> &lt;<a href="mailto:john.ericson@obsidian.systems">john.ericson@obsi
 
 </ul>
 </section>
-<section id="slide-orgb16977c">
-<h3 id="orgb16977c"><span class="section-number-3">8.3</span> Further reading</h3>
+<section id="slide-org18df9d7">
+<h3 id="org18df9d7"><span class="section-number-3">8.3</span> Further reading</h3>
 <ul>
 <li>Adapted from
 <a href="http://matthewbauer.us/blog/beginners-guide-to-cross.html">http://matthewbauer.us/blog/beginners-guide-to-cross.html</a></li>
