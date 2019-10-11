@@ -671,7 +671,24 @@ a.name { font-weight: 500; }
 	font-weight: bolder;
 }
 
-#archive { margin-top: 2em; }
+#archive {
+	margin: 1em 4em 0 4em;
+	border-top: .1em solid rgb(50, 50, 50);
+	padding-top: .5em;
+	text-align: center;
+	text-transform: uppercase;
+	font-family: Fira, Helvetica, Arial, sans-serif;
+	font-weight: bolder;
+}
+
+h2.post-title {
+	border-bottom: .1em solid rgb(50, 50, 50);
+	padding-bottom: 1em;
+	padding-left: 1em;
+}
+
+.post-date { margin-top: 1em; }
+
 p.verse { margin-left: 3%; }
 
 pre.src {
@@ -817,8 +834,6 @@ pre span.org-nix-preprocessor {color:#808080;font-weight:bold;}
 pre span.org-nix-constant {color:#D0372D;}
 pre span.org-nix-comment-delimiter {color:#8D8D84;}
 pre span.org-nix-comment {color:#8D8D84;font-style:italic}
-
-.post-date { margin-top: 2em; }
 
 caption.t-above { caption-side: top; }
 caption.t-bottom { caption-side: bottom; }
