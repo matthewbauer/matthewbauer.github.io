@@ -444,6 +444,8 @@ h3 { font-size: 90%; }
 h4 { font-size: 80%; }
 h5 { font-size: 70%; }
 
+.hlist { line-height: 1.5; }
+
 pre, code {
 	font-family: "Source Code Pro", Courier, monospace;
 }
