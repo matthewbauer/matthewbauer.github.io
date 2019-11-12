@@ -335,6 +335,7 @@
 .fab { font-family: "Font Awesome 5 Brands"; }
 
 .fas.projects::before { content: "\f0ad"; }
+.far.slides::before { content: "\f1c4"; }
 .fab.github::before { content: "\f09b"; }
 .fas.work::before { content: "\f0b1"; }
 .fas.resume::before { content: "\f15b"; }
