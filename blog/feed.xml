@@ -1,503 +1,303 @@
 <?xml version="1.0" encoding="utf-8"?>
 <rss version="2.0">
 <channel>
-<title>Matthew Bauer’s Blog</title>
-<description>Matthew Bauer’s Blog</description>
+<title><![CDATA[Matthew Bauer’s Blog]]></title>
+<description><![CDATA[Matthew Bauer’s Blog]]></description>
 <link>https://matthewbauer.us/blog/</link>
-<lastBuildDate>Sun, 13 Oct 2019 19:51:57 -0400</lastBuildDate>
+<lastBuildDate>Mon, 23 Mar 2020 18:48:09 -0400</lastBuildDate>
 <item>
-  <title>Improved performance in Nixpkgs</title>
+  <title><![CDATA[Announcing Nixiosk]]></title>
   <description><![CDATA[
-
-<div id="outline-container-org9610d97" class="outline-2">
-<h2 id="org9610d97"><span class="section-number-2">1</span> Avoiding subshells</h2>
-<div class="outline-text-2" id="text-1">
 <p>
-A common complain in using Nixpkgs is that things can become slow when
-you have lots of dependencies. Processing of build inputs is processed
-in Bash which tends to be pretty hard to make performant. Bash doesn’t
-give us any way to loop through dependencies in parallel, so we end up
-with pretty slow Bash. Luckily, someone has found some ways to speed
-this up with some clever tricks in the <code>setup.sh</code> script.
+Today I’m announcing a project I’ve been working on for the last few
+weeks. I’m calling it Nixiosk which is kind of a smashing together of
+the words NixOS and Kiosk. The idea is to have an easy way to make
+locked down, declarative systems
 </p>
-</div>
 
-<div id="outline-container-orgd7f8feb" class="outline-3">
-<h3 id="orgd7f8feb"><span class="section-number-3">1.1</span> Pull request</h3>
+<p>
+My main application of this is my two Raspberry Pi systems that I own.
+Quite a few people have installed NixOS on these systems, but usually
+they are starting from some prebuilt image. A major goal of this
+project is to make it easy to build these images yourself. For this to
+work, I’ve had to make lots of changes to NixOS cross-compilation
+ecosystem, but the results seem to be very positive. I also want the
+system to be locked down so that no user can login directly on the
+machine. Instead, all administration is done on a remote machine, and
+deployed through SSH and Nix remote builders.
+</p>
+
+<p>
+Right now, I have RetroArch (a frontend for a bunch of emulators) on
+my Raspberry Pi 4, and Epiphany (a web browser) on my Raspberry Pi 0.
+Both systems seem to be working pretty well.
+</p>
+
+<p>
+GitHub: <a href="https://github.com/matthewbauer/nixiosk">https://github.com/matthewbauer/nixiosk</a>
+</p>
+
+<div id="outline-container-org8eb3f3e" class="outline-2">
+<h2 id="org8eb3f3e"><span class="section-number-2">1</span> Deploying</h2>
+<div class="outline-text-2" id="text-1">
+</div>
+<div id="outline-container-org10893fd" class="outline-3">
+<h3 id="org10893fd"><span class="section-number-3">1.1</span> Configuration</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-Albert Safin (<a href="https://github.com/xzfc">@xzfc</a> on GitHub) made an excellent PR that promises to
-improve performance for all users of Nixpkgs. The PR is available at
-<a href="https://github.com/NixOS/nixpkgs/pull/69131">PR #69131</a>. The basic idea is to avoid invoking “subshells” in Bash. A
-subshell is basically anything that uses <code>$(cmd ...)</code>. Each subshell
-requires forking a new process which has a constant time cost that
-ends up being ~2ms. This isn’t much in isolation, but adds up in big
-loops.
-</p>
-
-<p>
-Subshells are usually used in Bash because they are convenient and
-easy to reason about. It’s easy to understand how a subshell works as
-it’s just substituting the result of one command into another’s
-arguments. We don’t usually care about the performance cost of
-subshells. In the hot path of Nixpkgs’ <code>setup.sh</code>, however, it’s
-pretty important to squeeze every bit of performance we can.
-</p>
-
-<p>
-A few interesting changes were required to make this work. I’ll go
-through and document what there are. More information can be found at
-<a href="https://www.gnu.org/software/bash/manual/bash.html">the Bash manual</a>.
+To make things simple, it just reads from an ad-hoc JSON file that
+describe the hardware plus some other customizations. It looks like
+this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/stdenv/generic/setup.sh b/pkgs/stdenv/generic/setup.sh</span>
-<span class="org-diff-context">index 326a60676a26..60067a4051de 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-hunk-header">@@ -98,7 +98,7 @@</span><span class="org-diff-function"> _callImplicitHook() {</span>
-<span class="org-diff-context"> # hooks exits the hook, not the caller. Also will only pass args if</span>
-<span class="org-diff-context"> # command can take them</span>
-<span class="org-diff-context"> _eval() {</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    if [ "$(type -t "$1")" = function ]; then</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    if declare -F "$1" &gt; /dev/null 2&gt;&amp;1; then</span>
-<span class="org-diff-context">         set +u</span>
-<span class="org-diff-context">         "$@" # including args</span>
-<span class="org-diff-context">     else</span>
-
+<pre class="src src-json">{
+    <span class="org-keyword">"hostName"</span>: <span class="org-string">"nixiosk"</span>,
+    <span class="org-keyword">"hardware"</span>: <span class="org-string">"raspberryPi4"</span>,
+    <span class="org-keyword">"authorizedKeys"</span>: [],
+    <span class="org-keyword">"program"</span>: {
+        <span class="org-keyword">"package"</span>: <span class="org-string">"epiphany"</span>,
+        <span class="org-keyword">"executable"</span>: <span class="org-string">"/bin/epiphany"</span>,
+        <span class="org-keyword">"args"</span>: [<span class="org-string">"https://en.wikipedia.org/"</span>]
+    },
+    <span class="org-keyword">"networks"</span>: {
+        <span class="org-keyword">"my-router"</span>: <span class="org-string">"0000000000000000000000000000000000000000000000000000000000000000"</span>,
+    },
+    <span class="org-keyword">"locale"</span>: {
+        <span class="org-keyword">"timeZone"</span>: <span class="org-string">"America/New_York"</span>,
+        <span class="org-keyword">"regDom"</span>: <span class="org-string">"US"</span>,
+        <span class="org-keyword">"lang"</span>: <span class="org-string">"en_US.UTF-8"</span>
+    },
+    <span class="org-keyword">"localSystem"</span>: {
+        <span class="org-keyword">"system"</span>: <span class="org-string">"x86_64-linux"</span>,
+        <span class="org-keyword">"sshUser"</span>: <span class="org-string">"me"</span>,
+        <span class="org-keyword">"hostName"</span>: <span class="org-string">"my-laptop-host"</span>,
+    }
+}
 </pre>
 </div>
 
 <p>
-The first change is pretty easy to understand. It just replaces the
-<code>type</code> call with a <code>declare</code> call, utilizing an exit code in place of
-stdout. Unfortunately, <code>declare</code> is <a href="https://www.gnu.org/software/bash/manual/bash.html#index-declare">a Bashism</a> which is not available
-in all POSIX shells. It’s been ill defined whether Bashisms can be
-used in Nixpkgs, but we now will require Nixpkgs to be sourced with
-Bash 4+.
+Here’s a basic idea of what each of these fields do:
 </p>
 
-<div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/stdenv/generic/setup.sh b/pkgs/stdenv/generic/setup.sh</span>
-<span class="org-diff-context">index 60067a4051de..7e7f8739845b 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-hunk-header">@@ -403,6 +403,7 @@</span><span class="org-diff-function"> findInputs() {</span>
-<span class="org-diff-context">     # The current package's host and target offset together</span>
-<span class="org-diff-context">     # provide a &lt;=-preserving homomorphism from the relative</span>
-<span class="org-diff-context">     # offsets to current offset</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    local -i mapOffsetResult</span>
-<span class="org-diff-context">     function mapOffset() {</span>
-<span class="org-diff-context">         local -ri inputOffset="$1"</span>
-<span class="org-diff-context">         if (( "$inputOffset" &lt;= 0 )); then</span>
-<span class="org-diff-hunk-header">@@ -410,7 +411,7 @@</span><span class="org-diff-function"> findInputs() {</span>
-<span class="org-diff-context">         else</span>
-<span class="org-diff-context">             local -ri outputOffset="$inputOffset - 1 + $targetOffset"</span>
-<span class="org-diff-context">         fi</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        echo "$outputOffset"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        mapOffsetResult="$outputOffset"</span>
-<span class="org-diff-context">     }</span>
-
-<span class="org-diff-context">     # Host offset relative to that of the package whose immediate</span>
-<span class="org-diff-hunk-header">@@ -422,8 +423,8 @@</span><span class="org-diff-function"> findInputs() {</span>
-
-<span class="org-diff-context">         # Host offset relative to the package currently being</span>
-<span class="org-diff-context">         # built---as absolute an offset as will be used.</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        local -i hostOffsetNext</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        hostOffsetNext="$(mapOffset relHostOffset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        mapOffset relHostOffset</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local -i hostOffsetNext="$mapOffsetResult"</span>
-
-<span class="org-diff-context">         # Ensure we're in bounds relative to the package currently</span>
-<span class="org-diff-context">         # being built.</span>
-<span class="org-diff-hunk-header">@@ -441,8 +442,8 @@</span><span class="org-diff-function"> findInputs() {</span>
-
-<span class="org-diff-context">             # Target offset relative to the package currently being</span>
-<span class="org-diff-context">             # built.</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            local -i targetOffsetNext</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            targetOffsetNext="$(mapOffset relTargetOffset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">            mapOffset relTargetOffset</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">            local -i targetOffsetNext="$mapOffsetResult"</span>
-
-<span class="org-diff-context">             # Once again, ensure we're in bounds relative to the</span>
-<span class="org-diff-context">             # package currently being built.</span>
-
-</pre>
-</div>
-
-<p>
-Similarly, this change makes <code>mapOffset</code> set to it’s result to
-<code>mapOffsetResult</code> instead of printing it to stdout, avoiding the
-subshell. Less functional, but more performant!
-</p>
-
-<div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/stdenv/generic/setup.sh b/pkgs/stdenv/generic/setup.sh</span>
-<span class="org-diff-context">index 7e7f8739845b..e25ea735a93c 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-hunk-header">@@ -73,21 +73,18 @@</span><span class="org-diff-function"> _callImplicitHook() {</span>
-<span class="org-diff-context">     set -u</span>
-<span class="org-diff-context">     local def="$1"</span>
-<span class="org-diff-context">     local hookName="$2"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    case "$(type -t "$hookName")" in</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        (function|alias|builtin)</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            set +u</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            "$hookName";;</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        (file)</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            set +u</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            source "$hookName";;</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        (keyword) :;;</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        (*) if [ -z "${!hookName:-}" ]; then</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">                return "$def";</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            else</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">                set +u</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">                eval "${!hookName}"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            fi;;</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    esac</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    if declare -F "$hookName" &gt; /dev/null; then</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set +u</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        "$hookName"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    elif type -p "$hookName" &gt; /dev/null; then</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set +u</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        source "$hookName"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    elif [ -n "${!hookName:-}" ]; then</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set +u</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        eval "${!hookName}"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    else</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        return "$def"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    fi</span>
-<span class="org-diff-context">     # `_eval` expects hook to need nounset disable and leave it</span>
-<span class="org-diff-context">     # disabled anyways, so Ok to to delegate. The alternative of a</span>
-<span class="org-diff-context">     # return trap is no good because it would affect nested returns.</span>
-
-</pre>
-</div>
-
-<p>
-This change replaces the <code>type -t</code> command with calls to specific Bash
-builtins. <code>declare -F</code> tells us if the hook is a function, <code>type -p</code>
-tells us if <code>hookName</code> is a file, and otherwise <code>-n</code> tells us if the
-hook is non-empty. Again, this introduces a Bashism.
-</p>
-
-<p>
-In the worst case, this does replace one <code>case</code> with multiple <code>if</code>
-branches. But since most hooks are functions, most of the time this
-ends up being a single <code>if</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/stdenv/generic/setup.sh b/pkgs/stdenv/generic/setup.sh</span>
-<span class="org-diff-context">index e25ea735a93c..ea550a6d534b 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-hunk-header">@@ -449,7 +449,8 @@</span><span class="org-diff-function"> findInputs() {</span>
-<span class="org-diff-context">             [[ -f "$pkg/nix-support/$file" ]] || continue</span>
-
-<span class="org-diff-context">             local pkgNext</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">            for pkgNext in $(&lt; "$pkg/nix-support/$file"); do</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">            read -r -d '' pkgNext &lt; "$pkg/nix-support/$file" || true</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">            for pkgNext in $pkgNext; do</span>
-<span class="org-diff-context">                 findInputs "$pkgNext" "$hostOffsetNext" "$targetOffsetNext"</span>
-<span class="org-diff-context">             done</span>
-<span class="org-diff-context">         done</span>
-
-</pre>
-</div>
-
-<p>
-This change replaces the <code>$(&lt; )</code> call with a <code>read</code> call. This is a
-little surprising since <code>read</code> is using an empty delimiter <code>''</code>
-instead of a new line. This replaces one Bashsism <code>$(&lt; )</code> with another
-in <code>-d</code>. And, the result, gets rid of a remaining subshell usage.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/build-support/bintools-wrapper/setup-hook.sh b/pkgs/build-support/bintools-wrapper/setup-hook.sh</span>
-<span class="org-diff-context">index f65b792485a0..27d3e6ad5120 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/build-support/bintools-wrapper/setup-hook.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/build-support/bintools-wrapper/setup-hook.sh</span></span>
-<span class="org-diff-hunk-header">@@ -61,9 +61,8 @@</span><span class="org-diff-function"> do</span>
-<span class="org-diff-context">     if</span>
-<span class="org-diff-context">         PATH=$_PATH type -p "@targetPrefix@${cmd}" &gt; /dev/null</span>
-<span class="org-diff-context">     then</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        upper_case="$(echo "$cmd" | tr "[:lower:]" "[:upper:]")"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        export "${role_pre}${upper_case}=@targetPrefix@${cmd}";</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        export "${upper_case}${role_post}=@targetPrefix@${cmd}";</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        export "${role_pre}${cmd^^}=@targetPrefix@${cmd}";</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        export "${cmd^^}${role_post}=@targetPrefix@${cmd}";</span>
-<span class="org-diff-context">     fi</span>
-<span class="org-diff-context"> done</span>
-
-</pre>
-</div>
-
-<p>
-This replace a call to <code>tr</code> with a usage of the <code>^^</code>.
-<code>${parameter^^pattern}</code> is <a href="https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion">a Bash 4 feature</a> and allows you to
-upper-case a string without calling out to <code>tr</code>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/build-support/bintools-wrapper/setup-hook.sh b/pkgs/build-support/bintools-wrapper/setup-hook.sh</span>
-<span class="org-diff-context">index 27d3e6ad5120..2e15fa95c794 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/build-support/bintools-wrapper/setup-hook.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/build-support/bintools-wrapper/setup-hook.sh</span></span>
-<span class="org-diff-hunk-header">@@ -24,7 +24,8 @@</span><span class="org-diff-function"> bintoolsWrapper_addLDVars () {</span>
-<span class="org-diff-context">         # Python and Haskell packages often only have directories like $out/lib/ghc-8.4.3/ or</span>
-<span class="org-diff-context">         # $out/lib/python3.6/, so having them in LDFLAGS just makes the linker search unnecessary</span>
-<span class="org-diff-context">         # directories and bloats the size of the environment variable space.</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        if [[ -n "$(echo $1/lib/lib*)" ]]; then</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local -a glob=( $1/lib/lib* )</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        if [ "${#glob[*]}" -gt 0 ]; then</span>
-<span class="org-diff-context">             export NIX_${role_pre}LDFLAGS+=" -L$1/lib"</span>
-<span class="org-diff-context">         fi</span>
-     fi
-</pre>
-</div>
-
-<p>
-Here, we are checking for whether any files exist in <code>/lib/lib*</code> using
-a glob. It originally used a subshell to check if the result was
-empty, but this change replaces it with the Bash <code>${#parameter}</code>
-<a href="https://www.gnu.org/software/bash/manual/bash.html#Shell-Parameter-Expansion">length operation</a>.
-</p>
-
-<div class="org-src-container">
-<pre class="src src-diff"><span class="org-diff-context">diff --git a/pkgs/stdenv/generic/setup.sh b/pkgs/stdenv/generic/setup.sh</span>
-<span class="org-diff-context">index 311292169ecd..326a60676a26 100644</span>
-<span class="org-diff-header">--- </span><span class="org-diff-header"><span class="org-diff-file-header">a/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-header">+++ </span><span class="org-diff-header"><span class="org-diff-file-header">b/pkgs/stdenv/generic/setup.sh</span></span>
-<span class="org-diff-hunk-header">@@ -17,7 +17,8 @@</span><span class="org-diff-function"> fi</span>
-<span class="org-diff-context"> # code). The hooks for &lt;hookName&gt; are the shell function or variable</span>
-<span class="org-diff-context"> # &lt;hookName&gt;, and the values of the shell array &#8216;&lt;hookName&gt;Hooks&#8217;.</span>
-<span class="org-diff-context"> runHook() {</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">     set -u # May be called from elsewhere, so do `set -u`.</span>
-
-<span class="org-diff-context">     local hookName="$1"</span>
-<span class="org-diff-hunk-header">@@ -32,7 +33,7 @@</span><span class="org-diff-function"> runHook() {</span>
-<span class="org-diff-context">         set -u # To balance `_eval`</span>
-<span class="org-diff-context">     done</span>
-
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    eval "${oldOpts}"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    set "$oldOpts"</span>
-<span class="org-diff-context">     return 0</span>
-<span class="org-diff-context"> }</span>
-
-<span class="org-diff-hunk-header">@@ -40,7 +41,8 @@</span><span class="org-diff-function"> runHook() {</span>
-<span class="org-diff-context"> # Run all hooks with the specified name, until one succeeds (returns a</span>
-<span class="org-diff-context"> # zero exit code). If none succeed, return a non-zero exit code.</span>
-<span class="org-diff-context"> runOneHook() {</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">     set -u # May be called from elsewhere, so do `set -u`.</span>
-
-<span class="org-diff-context">     local hookName="$1"</span>
-<span class="org-diff-hunk-header">@@ -57,7 +59,7 @@</span><span class="org-diff-function"> runOneHook() {</span>
-<span class="org-diff-context">         set -u # To balance `_eval`</span>
-<span class="org-diff-context">     done</span>
-
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">    eval "${oldOpts}"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">    set "$oldOpts"</span>
-<span class="org-diff-context">     return "$ret"</span>
-<span class="org-diff-context"> }</span>
-
-<span class="org-diff-hunk-header">@@ -500,10 +502,11 @@</span><span class="org-diff-function"> activatePackage() {</span>
-<span class="org-diff-context">     (( "$hostOffset" &lt;= "$targetOffset" )) || exit -1</span>
-
-<span class="org-diff-context">     if [ -f "$pkg" ]; then</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">         set +u</span>
-<span class="org-diff-context">         source "$pkg"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        eval "$oldOpts"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set "$oldOpts"</span>
-<span class="org-diff-context">     fi</span>
-
-<span class="org-diff-context">     # Only dependencies whose host platform is guaranteed to match the</span>
-<span class="org-diff-hunk-header">@@ -522,10 +525,11 @@</span><span class="org-diff-function"> activatePackage() {</span>
-<span class="org-diff-context">     fi</span>
-
-<span class="org-diff-context">     if [[ -f "$pkg/nix-support/setup-hook" ]]; then</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">         set +u</span>
-<span class="org-diff-context">         source "$pkg/nix-support/setup-hook"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        eval "$oldOpts"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set "$oldOpts"</span>
-<span class="org-diff-context">     fi</span>
-<span class="org-diff-context"> }</span>
-
-<span class="org-diff-hunk-header">@@ -1273,17 +1277,19 @@</span><span class="org-diff-function"> showPhaseHeader() {</span>
-
-<span class="org-diff-context"> genericBuild() {</span>
-<span class="org-diff-context">     if [ -f "${buildCommandPath:-}" ]; then</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">         set +u</span>
-<span class="org-diff-context">         source "$buildCommandPath"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        eval "$oldOpts"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set "$oldOpts"</span>
-<span class="org-diff-context">         return</span>
-<span class="org-diff-context">     fi</span>
-<span class="org-diff-context">     if [ -n "${buildCommand:-}" ]; then</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">         set +u</span>
-<span class="org-diff-context">         eval "$buildCommand"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        eval "$oldOpts"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set "$oldOpts"</span>
-<span class="org-diff-context">         return</span>
-<span class="org-diff-context">     fi</span>
-
-<span class="org-diff-hunk-header">@@ -1313,10 +1319,11 @@</span><span class="org-diff-function"> genericBuild() {</span>
-
-<span class="org-diff-context">         # Evaluate the variable named $curPhase if it exists, otherwise the</span>
-<span class="org-diff-context">         # function named $curPhase.</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        local oldOpts="$(shopt -po nounset)"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        local oldOpts="-u"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        shopt -qo nounset || oldOpts="+u"</span>
-<span class="org-diff-context">         set +u</span>
-<span class="org-diff-context">         eval "${!curPhase:-$curPhase}"</span>
-<span class="org-diff-indicator-removed">-</span><span class="org-diff-removed">        eval "$oldOpts"</span>
-<span class="org-diff-indicator-added">+</span><span class="org-diff-added">        set "$oldOpts"</span>
-
-<span class="org-diff-context">         if [ "$curPhase" = unpackPhase ]; then</span>
-<span class="org-diff-context">             cd "${sourceRoot:-.}"</span>
-
-</pre>
-</div>
-
-<p>
-This last change is maybe the trickiest. <code>$(shopt -po nounset)</code> is
-used to get <a href="https://www.gnu.org/software/bash/manual/bash.html#The-Shopt-Builtin">the old value</a> of <code>nounset</code>. The <code>nounset</code> setting tells
-Bash to treat <a href="https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin">unset variables as an error</a>. This is used temporarily
-for phases and hooks to enforce this property. It will be reset to its
-previous value after we finish evaling the current phase or hook. To
-avoid the subshell here, the stdout provided in <code>shopt -po</code> is
-replaced with an exit code provided in <code>shopt -qo nounset</code>. If the
-<code>shopt -qo nounset</code> fails, we set <code>oldOpts</code> to <code>+u</code>, otherwise it is
-assumed that it is <code>-u</code>.
-</p>
-
-<p>
-This commit was first merged in on September 20, but it takes a while
-for it to hit master. Today, it was finally merged into master
-(October 13) in <a href="https://github.com/NixOS/nixpkgs/commits/4e6826a">4e6826a</a> so we can finally can see the benefits from
-it!
-</p>
+<ul class="org-ul">
+<li>hostName: Name of the host to use. If mDNS is configured on your
+network, this can be used to identify the IP address of the device
+via “&lt;hostName&gt;.local”.</li>
+<li>hardware: A string describing what hardware we are using. Valid
+values currently are “raspberryPi0”, “raspberryPi1”, “raspberryPi2”,
+“raspberryPi3”, “raspberryPi4”.</li>
+<li>authorizedKeys: A list of SSH public keys that are authorized to
+make changes to your device. Note this is required because no
+passwords will be set for this system.</li>
+<li>program: What to do in the kiosk. This should be a Nixpkgs attribute
+(<b>package</b>), an <b>executable</b> in that package, and a list of <b>args</b>.</li>
+<li>networks: This is a name/value pairing of SSIDs to PSK passphrases.
+This can be found with the wpa_passphrase(8) command from
+wpa_supplicant.</li>
+<li>locale: This provides some information of what localizations to use.
+You can set <a href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2">regulation domain</a>, <a href="https://www.gnu.org/software/libc/manual/html_node/Locale-Names.html#Locale-Names">language</a>, <a href="https://en.wikipedia.org/wiki/List_of_tz_database_time_zones">time zone</a> via “regDom”,
+“lang”, and “timeZone”. If unspecified, defaults to US / English /
+New York.</li>
+<li>localSystem: Information on system to use for <a href="https://github.com/matthewbauer/nixiosk#remote-builder-optional">remote builder</a>.
+Optional.</li>
+</ul>
 </div>
 </div>
 
-<div id="outline-container-org2621377" class="outline-3">
-<h3 id="org2621377"><span class="section-number-3">1.2</span> Benchmarking</h3>
+<div id="outline-container-org7de0a83" class="outline-3">
+<h3 id="org7de0a83"><span class="section-number-3">1.2</span> Initial deployment</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
-Hyperfine makes it easy to compare differences in timings. You can
-install it locally with:
+The deployment is pretty easy provided you have <a href="https://nixos.org/nix/">Nix installed</a>. Here
+are some steps:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">$ nix-env -iA nixpkgs.hyperfine
+<pre class="src src-sh">$ git clone https://github.com/matthewbauer/nixiosk.git
+$ cd nixiosk/
+$ cp nixiosk.json.sample nixiosk.json
 </pre>
 </div>
 
 <p>
-Here are some of the results:
+Now you need to make some changes to nixiosk.json to reflect what you
+want your system to do. The important ones are ‘authorizedKeys’ and
+‘networks’ so that your systems can startup and you can connect to it.
+</p>
+
+<p>
+If you have an SSH key setup, you can get its value with:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-shell">$ hyperfine --warmup 3 <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p stdenv --run :'</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p stdenv --run :'</span>
-Benchmark <span class="org-comment-delimiter">#</span><span class="org-comment">1: nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p stdenv --run :</span>
-  Time (mean &#177; &#963;):     436.4 ms &#177;   8.5 ms    [User: 324.7 ms, System: 107.8 ms]
-  Range (min &#8230; max):   430.8 ms &#8230; 459.6 ms    10 runs
-
-Benchmark <span class="org-comment-delimiter">#</span><span class="org-comment">2: nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p stdenv --run :</span>
-  Time (mean &#177; &#963;):     244.5 ms &#177;   2.3 ms    [User: 190.7 ms, System: 34.2 ms]
-  Range (min &#8230; max):   241.8 ms &#8230; 248.3 ms    12 runs
-
-Summary
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p stdenv --run :'</span> ran
-<span class="org-whitespace-line">    1.79 &#177; 0.04 times faster than </span><span class="org-string"><span class="org-whitespace-line">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p stdenv --run :'</span></span>
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ hyperfine --warmup 3 <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p i3.buildInputs --run :'</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p i3.buildInputs --run :'</span>
-Benchmark <span class="org-comment-delimiter">#</span><span class="org-comment">1: nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p i3.buildInputs --run :</span>
-  Time (mean &#177; &#963;):      3.428 s &#177;  0.015 s    [User: 2.489 s, System: 1.081 s]
-  Range (min &#8230; max):    3.404 s &#8230;  3.453 s    10 runs
-
-Benchmark <span class="org-comment-delimiter">#</span><span class="org-comment">2: nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p i3.buildInputs --run :</span>
-  Time (mean &#177; &#963;):     873.4 ms &#177;  12.2 ms    [User: 714.7 ms, System: 89.3 ms]
-  Range (min &#8230; max):   861.5 ms &#8230; 906.4 ms    10 runs
-
-Summary
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p i3.buildInputs --run :'</span> ran
-<span class="org-whitespace-line">    3.92 &#177; 0.06 times faster than </span><span class="org-string"><span class="org-whitespace-line">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p i3.buildInputs --run :'</span></span>
-</pre>
-</div>
-
-<div class="org-src-container">
-<pre class="src src-shell">$ hyperfine --warmup 3 <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p inkscape.buildInputs --run :'</span> <span class="org-sh-escaped-newline">\</span>
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p inkscape.buildInputs --run :'</span>
-<span class="org-whitespace-line">Benchmark </span><span class="org-comment-delimiter"><span class="org-whitespace-line">#</span></span><span class="org-comment"><span class="org-whitespace-line">1: nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p inkscape.buildInputs --run :</span></span>
-  Time (mean &#177; &#963;):      4.380 s &#177;  0.024 s    [User: 3.155 s, System: 1.443 s]
-  Range (min &#8230; max):    4.339 s &#8230;  4.409 s    10 runs
-
-<span class="org-whitespace-line">Benchmark </span><span class="org-comment-delimiter"><span class="org-whitespace-line">#</span></span><span class="org-comment"><span class="org-whitespace-line">2: nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p inkscape.buildInputs --run :</span></span>
-  Time (mean &#177; &#963;):      1.007 s &#177;  0.011 s    [User: 826.7 ms, System: 114.2 ms]
-  Range (min &#8230; max):    0.995 s &#8230;  1.026 s    10 runs
-
-Summary
-  <span class="org-string">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/4e6826a.tar.gz -p inkscape.buildInputs --run :'</span> ran
-<span class="org-whitespace-line">    4.35 &#177; 0.05 times faster than </span><span class="org-string"><span class="org-whitespace-line">'nix-shell -I nixpkgs=https://github.com/NixOS/nixpkgs/archive/33366cc.tar.gz -p inkscape.buildInputs --run :'</span></span>
+<pre class="src src-sh">$ cat $<span class="org-variable-name">HOME</span>/.ssh/id_rsa.pub
+<span class="org-whitespace-line">ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC050iPG8ckY/dj2O3ol20G2lTdr7ERFz4LD3R4yqoT5W0THjNFdCqavvduCIAtF1Xx/OmTISblnGKf10rYLNzDdyMMFy7tUSiC7/T37EW0s+EFGhS9yOcjCVvHYwgnGZCF4ec33toE8Htq2UKBVgtE0PMwPAyCGYhFxFLYN8J8/xnMNGqNE6iTGbK5qb4yg3rwyrKMXLNGVNsPVcMfdyk3xqUilDp4U7HHQpqX0wKrUvrBZ87LnO9z3X/QIRVQhS5GqnIjRYe4L9yxZtTjW5HdwIq1jcvZc/1Uu7bkMh3gkCwbrpmudSGpdUlyEreaHOJf3XH4psr6IMGVJvxnGiV9 mbauer@dellbook</span>
 </pre>
 </div>
 
 <p>
-Try running these commands yourself, and compare the results.
+which will give you a line for “authorizedKeys” like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json"><span class="org-keyword"><span class="org-whitespace-line">"authorizedKeys"</span></span><span class="org-whitespace-line">: [</span><span class="org-string"><span class="org-whitespace-line">"ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC050iPG8ckY/dj2O3ol20G2lTdr7ERFz4LD3R4yqoT5W0THjNFdCqavvduCIAtF1Xx/OmTISblnGKf10rYLNzDdyMMFy7tUSiC7/T37EW0s+EFGhS9yOcjCVvHYwgnGZCF4ec33toE8Htq2UKBVgtE0PMwPAyCGYhFxFLYN8J8/xnMNGqNE6iTGbK5qb4yg3rwyrKMXLNGVNsPVcMfdyk3xqUilDp4U7HHQpqX0wKrUvrBZ87LnO9z3X/QIRVQhS5GqnIjRYe4L9yxZtTjW5HdwIq1jcvZc/1Uu7bkMh3gkCwbrpmudSGpdUlyEreaHOJf3XH4psr6IMGVJvxnGiV9 mbauer@dellbook"</span></span><span class="org-whitespace-line">],</span>
+</pre>
+</div>
+
+<p>
+and you can get a PSK value for your WiFi network with:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix run nixpkgs.wpa_supplicant -c wpa_passphrase my-network
+<span class="org-variable-name">network</span>={
+        <span class="org-variable-name">ssid</span>=<span class="org-string">"my-network"</span>
+        <span class="org-comment-delimiter">#</span><span class="org-comment">psk="abcdefgh"</span>
+        <span class="org-variable-name">psk</span>=17e76a6490ac112dbeba996caa7cd1387c6ebf6ce721ef704f92b681bb2e9000
+}
+</pre>
+</div>
+
+<p>
+so your .json file looks like:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-json"><span class="org-keyword">"networks"</span>: {
+  <span class="org-keyword">"my-network"</span>: <span class="org-string">"17e76a6490ac112dbeba996caa7cd1387c6ebf6ce721ef704f92b681bb2e9000"</span>,
+},
+</pre>
+</div>
+
+<p>
+Now, after inserting your Raspberry Pi SD card into the primary slot,
+you can deploy to it with:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ ./deploy.sh /dev/mmcblk0
+</pre>
+</div>
+
+<p>
+Note that this will take quite a while right now because I don’t have
+a binary cache setup. Stay tuned so that this part hopefully gets
+easier. It will also take a few minutes to write to your SD card.
+</p>
+
+<p>
+You can now eject your SD card and insert it into your Raspberry Pi.
+It will boot immediately to an Epiphany browser, loading
+en.wikipedia.org. This gives you a
+</p>
+
+<p>
+<a href="https://github.com/matthewbauer/nixiosk#troubleshooting">Troubleshooting steps</a> can be found in the README.
 </p>
 </div>
 </div>
 
-<div id="outline-container-orgec0cdcf" class="outline-3">
-<h3 id="orgec0cdcf"><span class="section-number-3">1.3</span> Results</h3>
+<div id="outline-container-org6fb84dc" class="outline-3">
+<h3 id="org6fb84dc"><span class="section-number-3">1.3</span> Redeployments</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
-Avoiding subshells leads to a decrease in up to 4x of the time it used
-to take. That multiplier is going to depend on precisely how many
-inputs we are processing. It’s a pretty impressive improvement, and it
-comes with no added cost. These kind of easy wins in performance are
-pretty rare, and worth celebrating!
+You can pretty easily make changes to a running system given you have
+SSH access. This is as easy as cloning the running config:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ git clone ssh://root@nixiosk.local/etc/nixos/configuration.git nixiosk-configuration
+$ cd nixiosk-configuration
+</pre>
+</div>
+
+<p>
+Then, make some changes in your repo. After your done, you can just
+run ‘git push’ to redeploy.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ git add .
+$ git commit
+$ git push
+</pre>
+</div>
+
+<p>
+You’ll see the NixOS switch-to-configuration log in your command
+output. If all is successful, the system should immediately reflect
+your changes. If not, the output of Git should explain what went
+wrong.
+</p>
+
+<p>
+Note, that some versions of the Raspberry Pi like the 0 and the 1 are
+not big enough to redeploy the whole system. You will probably need to
+setup remote builders. This is <a href="https://github.com/matthewbauer/nixiosk#remote-builder-optional">described in the README</a>.
 </p>
 </div>
+</div>
+</div>
+
+<div id="outline-container-org23fe791" class="outline-2">
+<h2 id="org23fe791"><span class="section-number-2">2</span> Technology</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Here are some of the pieces that make the Kiosk system possible:
+</p>
+
+<ul class="org-ul">
+<li><a href="https://www.hjdskes.nl/projects/cage/">Cage</a> / <a href="https://wayland.freedesktop.org/">Wayland</a>: Cage is a Wayland compositor that allows only one
+application to display at a time. This makes the system a true
+Kiosk.</li>
+<li><a href="https://nixos.org/">NixOS</a> - A Linux distro built on top of functional package management.</li>
+<li><a href="https://gitlab.com/obsidian.systems/basalt/">Basalt</a>: A tool to manage NixOS directly from Git. This allows doing
+push-to-deploy directly to NixOS.</li>
+<li><a href="https://www.freedesktop.org/wiki/Software/Plymouth/">Plymouth</a>: Nice graphical boot animations. Right now, it uses the
+NixOS logo but in the future this should be configurable so that you
+can include your own branding.</li>
+<li><a href="https://www.openssh.com/">OpenSSH</a>: Since no direct login is available, SSH is required for
+remote administration.</li>
+<li><a href="http://www.avahi.org/">Avahi</a>: Configures mDNS registration for the system, allowing you to
+remember host names instead of IP addresses.</li>
+</ul>
+
+<p>
+I would also like to include some more tools to make administration
+easier:
+</p>
+
+<ul class="org-ul">
+<li>ddclient / miniupnp: Allow registering external IP address with a
+DNS provider. This would enable administration outside of the
+device’s immediate network.</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org7b27c6e" class="outline-2">
+<h2 id="org7b27c6e"><span class="section-number-2">3</span> Project</h2>
+<div class="outline-text-2" id="text-3">
+<p>
+You can try it out right now if you have an Raspberry Pi system. Other
+hardware is probably not too hard, but may require tweaking. The
+project page is available at <a href="https://github.com/matthewbauer/nixiosk">https://github.com/matthewbauer/nixiosk</a>
+and issues and pull requests are welcomed.
+</p>
 </div>
 </div>
 ]]></description>
-  <link>https://matthewbauer.us/blog/avoid-subshells.html</link>
-  <pubDate>Sat, 12 Oct 2019 20:00:00 -0400</pubDate>
+  <link>https://matthewbauer.us/blog/nixiosk.html</link>
+  <pubDate>Sun, 22 Mar 2020 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>All the versions with Nix</title>
+  <title><![CDATA[All the versions with Nix]]></title>
   <description><![CDATA[
 
-<div id="outline-container-orgb7de5cd" class="outline-2">
-<h2 id="orgb7de5cd"><span class="section-number-2">1</span> Background</h2>
+<div id="outline-container-org491dd6d" class="outline-2">
+<h2 id="org491dd6d"><span class="section-number-2">1</span> Background</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In <a href="channel-changing.html">Channel Changing with Nix</a>, I described how to move between channels
@@ -517,8 +317,8 @@ it will come with a Nix snippet that you can try out yourself.
 </div>
 </div>
 
-<div id="outline-container-org26bd870" class="outline-2">
-<h2 id="org26bd870"><span class="section-number-2">2</span> Code</h2>
+<div id="outline-container-orgbbeb742" class="outline-2">
+<h2 id="orgbbeb742"><span class="section-number-2">2</span> Code</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 So, what follows is some code that I wrote up that lets you find
@@ -528,28 +328,28 @@ at <a href="https://matthewbauer.us/generate-versions.nix">https://matthewbauer.
 
 <div class="org-src-container">
 <pre class="src src-nix">{ channels ? [ <span class="org-string">"19.03"</span> <span class="org-string">"18.09"</span> <span class="org-string">"18.03"</span> <span class="org-string">"17.09"</span> <span class="org-string">"17.03"</span>
-         <span class="org-string">"16.09"</span> <span class="org-string">"16.03"</span> <span class="org-string">"15.09"</span> <span class="org-string">"14.12"</span> <span class="org-string">"14.04"</span> <span class="org-string">"13.10"</span> ]
-, attrs ? <span class="org-nix-builtin">builtins</span>.attrNames (<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {})
-, system ? <span class="org-nix-builtin">builtins</span>.currentSystem
+               <span class="org-string">"16.09"</span> <span class="org-string">"16.03"</span> <span class="org-string">"15.09"</span> <span class="org-string">"14.12"</span> <span class="org-string">"14.04"</span> <span class="org-string">"13.10"</span> ]
+, attrs ? builtins.attrNames (<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {})
+, system ? builtins.currentSystem
 , args ? { <span class="org-nix-keyword">inherit</span> system; }
 }: <span class="org-nix-keyword">let</span>
 
   <span class="org-nix-attribute">getSet</span> = channel:
-    (<span class="org-nix-builtin">import</span> (<span class="org-nix-builtin">builtins</span>.<span class="org-nix-builtin">fetchTarball</span> <span class="org-string">"channel:nixos-</span><span class="org-nix-antiquote">${</span>channel<span class="org-nix-antiquote">}</span>") args).pkgs;
+    (<span class="org-nix-builtin">import</span> (builtins.fetchTarball <span class="org-string">"channel:nixos-</span><span class="org-nix-antiquote">${</span>channel<span class="org-nix-antiquote">}</span>") args).pkgs;
 
   <span class="org-nix-attribute">getPkg</span> = name: channel: <span class="org-nix-keyword">let</span>
     <span class="org-nix-attribute">pkgs</span> = getSet channel;
     <span class="org-nix-attribute">pkg</span> = pkgs.${name};
-    <span class="org-nix-attribute">version</span> = (<span class="org-nix-builtin">builtins</span>.parseDrvName pkg.name).version;
-  <span class="org-nix-keyword">in</span> <span class="org-nix-keyword">if</span> <span class="org-nix-builtin">builtins</span>.hasAttr name pkgs &amp;&amp; pkg ? name <span class="org-nix-keyword">then</span> {
+    <span class="org-nix-attribute">version</span> = (builtins.parseDrvName pkg.name).version;
+  <span class="org-nix-keyword">in</span> if builtins.hasAttr name pkgs &amp;&amp; pkg ? name <span class="org-nix-keyword">then</span> {
     <span class="org-nix-attribute">name</span> = version;
     <span class="org-nix-attribute">value</span> = pkg;
   } <span class="org-nix-keyword">else</span> <span class="org-nix-builtin">null</span>;
 
-<span class="org-nix-keyword">in</span> <span class="org-nix-builtin">builtins</span>.listToAttrs (<span class="org-nix-builtin">map</span> (name: {
+<span class="org-nix-keyword">in</span> builtins.listToAttrs (<span class="org-nix-builtin">map</span> (name: {
   <span class="org-nix-keyword">inherit</span> name;
-  <span class="org-nix-attribute">value</span> = <span class="org-nix-builtin">builtins</span>.listToAttrs
-    (<span class="org-nix-builtin">builtins</span>.filter (x: x != <span class="org-nix-builtin">null</span>)
+  <span class="org-nix-attribute">value</span> = builtins.listToAttrs
+    (builtins.filter (x: x != <span class="org-nix-builtin">null</span>)
       (<span class="org-nix-builtin">map</span> (getPkg name) channels));
 }) attrs)
 </pre>
@@ -572,8 +372,8 @@ requires no special library function.
 </div>
 </div>
 
-<div id="outline-container-orgc354525" class="outline-2">
-<h2 id="orgc354525"><span class="section-number-2">3</span> Usage</h2>
+<div id="outline-container-org4f18641" class="outline-2">
+<h2 id="org4f18641"><span class="section-number-2">3</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Working with this Nix expression is extremely interesting, and I’ve
@@ -582,8 +382,8 @@ usable on a Linux machine (or maybe macOS) with <a href="https://nixos.org/nix/"
 </p>
 </div>
 
-<div id="outline-container-org38e4a44" class="outline-3">
-<h3 id="org38e4a44"><span class="section-number-3">3.1</span> Query package versions</h3>
+<div id="outline-container-org0dec14b" class="outline-3">
+<h3 id="org0dec14b"><span class="section-number-3">3.1</span> Query package versions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 You can query what package versions are available through Nix’s
@@ -608,8 +408,8 @@ releases.
 </div>
 </div>
 
-<div id="outline-container-org9f956be" class="outline-3">
-<h3 id="org9f956be"><span class="section-number-3">3.2</span> Running an old version</h3>
+<div id="outline-container-org5a5c638" class="outline-3">
+<h3 id="org5a5c638"><span class="section-number-3">3.2</span> Running an old version</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A shown above, there are 5 versions of Emacs available to us. We can
@@ -644,8 +444,8 @@ very similar to the above:
 </div>
 </div>
 
-<div id="outline-container-org6bbb1f5" class="outline-3">
-<h3 id="org6bbb1f5"><span class="section-number-3">3.3</span> Firefox</h3>
+<div id="outline-container-org465717f" class="outline-3">
+<h3 id="org465717f"><span class="section-number-3">3.3</span> Firefox</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Another example using Firefox is pretty neat. The code is very similar
@@ -659,7 +459,7 @@ to Emacs:
 </div>
 
 <p>
-We get all 11 releases with unique Firefox versions this time.
+We get all 11 releases with unique Firefox versions this time. 
 </p>
 
 <p>
@@ -677,8 +477,8 @@ Amazing how notably Firefox has changed since then!
 </div>
 </div>
 
-<div id="outline-container-orgc9d9d14" class="outline-3">
-<h3 id="orgc9d9d14"><span class="section-number-3">3.4</span> Blender</h3>
+<div id="outline-container-orge7b8595" class="outline-3">
+<h3 id="orge7b8595"><span class="section-number-3">3.4</span> Blender</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Another example using Blender. The code is very similar to the two above:
@@ -702,8 +502,8 @@ You can run Blender 2.67 using this command:
 </div>
 </div>
 
-<div id="outline-container-org7000861" class="outline-2">
-<h2 id="org7000861"><span class="section-number-2">4</span> Rationale</h2>
+<div id="outline-container-org0868539" class="outline-2">
+<h2 id="org0868539"><span class="section-number-2">4</span> Rationale</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The reason that channels work better than commits is because every
@@ -730,8 +530,8 @@ quite ready for that yet.
 </div>
 </div>
 
-<div id="outline-container-org40894d5" class="outline-2">
-<h2 id="org40894d5"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-org07b8f6d" class="outline-2">
+<h2 id="org07b8f6d"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 This has hopefully shown how Nix’s functional dependency model makes
@@ -747,7 +547,7 @@ useful versions in the mean time.
   <pubDate>Tue, 20 Aug 2019 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>Nixpkgs macOS Stdenv Updates</title>
+  <title><![CDATA[Nixpkgs macOS Stdenv Updates]]></title>
   <description><![CDATA[
 <p>
 Over the past couple of months, I have been working on updating the
@@ -1107,7 +907,7 @@ version to avoid this issue.
   <pubDate>Sun, 05 May 2019 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>Static Nix: a command-line swiss army knife</title>
+  <title><![CDATA[Static Nix: a command-line swiss army knife]]></title>
   <description><![CDATA[
 <p>
 Nix is an extremely useful package manager. But, not all systems have
@@ -1123,15 +923,15 @@ context<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. To make this
 <a href="https://matthewbauer.us/nix">https://matthewbauer.us/nix</a> (5M download).
 </p>
 
-<div id="outline-container-org25c633a" class="outline-2">
-<h2 id="org25c633a"><span class="section-number-2">1</span> Trying it out</h2>
+<div id="outline-container-orgbdff208" class="outline-2">
+<h2 id="orgbdff208"><span class="section-number-2">1</span> Trying it out</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 You can use it like this,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="org-whitespace-line">$ curl https://matthewbauer.us/nix | sh -s run --store $</span><span class="org-variable-name"><span class="org-whitespace-line">HOME</span></span><span class="org-whitespace-line">/.cache/nix/store -f channel:nixpkgs-unstable hello -c hello</span>
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable hello -c hello
 Hello World!
 </pre>
 </div>
@@ -1146,8 +946,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </p>
 </div>
 
-<div id="outline-container-org45017a1" class="outline-3">
-<h3 id="org45017a1"><span class="section-number-3">1.1</span> Dev tools</h3>
+<div id="outline-container-org90e7110" class="outline-3">
+<h3 id="org90e7110"><span class="section-number-3">1.1</span> Dev tools</h3>
 <div class="outline-text-3" id="text-1-1">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -1160,8 +960,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgd6b41ff" class="outline-3">
-<h3 id="orgd6b41ff"><span class="section-number-3">1.2</span> Emacs</h3>
+<div id="outline-container-orgcb595d8" class="outline-3">
+<h3 id="orgcb595d8"><span class="section-number-3">1.2</span> Emacs</h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -1174,8 +974,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgd6d7635" class="outline-3">
-<h3 id="orgd6d7635"><span class="section-number-3">1.3</span> File manager</h3>
+<div id="outline-container-org313b39a" class="outline-3">
+<h3 id="org313b39a"><span class="section-number-3">1.3</span> File manager</h3>
 <div class="outline-text-3" id="text-1-3">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -1188,8 +988,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org90aa970" class="outline-3">
-<h3 id="org90aa970"><span class="section-number-3">1.4</span> Fire</h3>
+<div id="outline-container-org0b60c60" class="outline-3">
+<h3 id="org0b60c60"><span class="section-number-3">1.4</span> Fire</h3>
 <div class="outline-text-3" id="text-1-4">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -1200,8 +1000,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgb053e05" class="outline-3">
-<h3 id="orgb053e05"><span class="section-number-3">1.5</span> Fortune</h3>
+<div id="outline-container-org4ac552c" class="outline-3">
+<h3 id="org4ac552c"><span class="section-number-3">1.5</span> Fortune</h3>
 <div class="outline-text-3" id="text-1-5">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -1212,8 +1012,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgd9d66af" class="outline-3">
-<h3 id="orgd9d66af"><span class="section-number-3">1.6</span> Nethack</h3>
+<div id="outline-container-org6bb3c36" class="outline-3">
+<h3 id="org6bb3c36"><span class="section-number-3">1.6</span> Nethack</h3>
 <div class="outline-text-3" id="text-1-6">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -1226,8 +1026,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org5a5640c" class="outline-3">
-<h3 id="org5a5640c"><span class="section-number-3">1.7</span> Weather</h3>
+<div id="outline-container-org434618a" class="outline-3">
+<h3 id="org434618a"><span class="section-number-3">1.7</span> Weather</h3>
 <div class="outline-text-3" id="text-1-7">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -1238,8 +1038,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org5089ff5" class="outline-3">
-<h3 id="org5089ff5"><span class="section-number-3">1.8</span> World map</h3>
+<div id="outline-container-org2d52936" class="outline-3">
+<h3 id="org2d52936"><span class="section-number-3">1.8</span> World map</h3>
 <div class="outline-text-3" id="text-1-8">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -1253,21 +1053,21 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org7996c03" class="outline-3">
-<h3 id="org7996c03"><span class="section-number-3">1.9</span> Youtube</h3>
+<div id="outline-container-org68a2623" class="outline-3">
+<h3 id="org68a2623"><span class="section-number-3">1.9</span> Youtube</h3>
 <div class="outline-text-3" id="text-1-9">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
   sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
   bash youtube-dl mplayer -c sh -c <span class="org-sh-escaped-newline">\</span>
-<span class="org-whitespace-line">  </span><span class="org-string"><span class="org-whitespace-line">'mplayer -vo caca $(youtube-dl --no-check-certificate -g https://www.youtube.com/watch?v=dQw4w9WgXcQ)'</span></span>
+  <span class="org-string">'mplayer -vo caca $(youtube-dl --no-check-certificate -g https://www.youtube.com/watch?v=dQw4w9WgXcQ)'</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org544fdbf" class="outline-3">
-<h3 id="org544fdbf"><span class="section-number-3">1.10</span> And more&#x2026;</h3>
+<div id="outline-container-orgbe8dd9b" class="outline-3">
+<h3 id="orgbe8dd9b"><span class="section-number-3">1.10</span> And more&#x2026;</h3>
 <div class="outline-text-3" id="text-1-10">
 <p>
 Lots more cool things are possible. Look through <a href="https://nixos.org/nixos/packages.html#">the packages provided
@@ -1277,8 +1077,8 @@ by Nixpkgs</a> if you need inspiration.
 </div>
 </div>
 
-<div id="outline-container-org1431755" class="outline-2">
-<h2 id="org1431755"><span class="section-number-2">2</span> Avoid installing and extracting each time</h2>
+<div id="outline-container-orgdc04194" class="outline-2">
+<h2 id="orgdc04194"><span class="section-number-2">2</span> Avoid installing and extracting each time</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 This method of using Nix has some upfront cost. This is because
@@ -1300,7 +1100,7 @@ this script.
 </div>
 
 <p>
-The other is the &ldquo;safe&rdquo; way and involves running some commands in
+The other is the "safe" way and involves running some commands in
 order. These are the same commands run by the script, but this lets
 you audit everything being done line by line.
 </p>
@@ -1308,9 +1108,7 @@ you audit everything being done line by line.
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">t</span>=$(mktemp -d)
 $ curl https://matthewbauer.us/nix &gt; $<span class="org-variable-name">t</span>/nix.sh
-$ pushd $<span class="org-variable-name">t</span>
-$ sh nix.sh --extract
-$ popd
+$ (<span class="org-builtin">cd</span> $<span class="org-variable-name">t</span> &amp;&amp; sh nix.sh --extract)
 $ mkdir -p $<span class="org-variable-name">HOME</span>/bin/ $<span class="org-variable-name">HOME</span>/share/nix/corepkgs/
 $ mv $<span class="org-variable-name">t</span>/dat/nix $<span class="org-variable-name">HOME</span>/bin/
 $ mv $<span class="org-variable-name">t</span>/dat/share/nix/corepkgs/* $<span class="org-variable-name">HOME</span>/share/nix/corepkgs/
@@ -1331,8 +1129,8 @@ otherwise Nix will be confused on how to handle the missing
 </div>
 </div>
 
-<div id="outline-container-org14c8f86" class="outline-2">
-<h2 id="org14c8f86"><span class="section-number-2">3</span> Build it yourself</h2>
+<div id="outline-container-orgf3e1fa2" class="outline-2">
+<h2 id="orgf3e1fa2"><span class="section-number-2">3</span> Build it yourself</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This is certainly a security vulnerability so you may want to build
@@ -1389,7 +1187,7 @@ any time.
   <pubDate>Sat, 23 Feb 2019 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>Call for proofreaders and beta testers for 19.03</title>
+  <title><![CDATA[Call for proofreaders and beta testers for 19.03]]></title>
   <description><![CDATA[
 <p>
 This was originally published on <a href="https://discourse.nixos.org/t/call-for-proofreaders-and-beta-testers-for-19-03/">Discourse</a>. I am putting it here for
@@ -1521,7 +1319,7 @@ the problem for themselves.
   <pubDate>Thu, 07 Feb 2019 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>Subjective ranking of build systems</title>
+  <title><![CDATA[Subjective ranking of build systems]]></title>
   <description><![CDATA[
 
 <div id="outline-container-org6e664e2" class="outline-2">
@@ -1663,7 +1461,7 @@ something else!
   <pubDate>Sun, 25 Nov 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>Beginner’s guide to cross compilation in Nixpkgs</title>
+  <title><![CDATA[Beginner’s guide to cross compilation in Nixpkgs]]></title>
   <description><![CDATA[
 
 <div id="outline-container-org840b947" class="outline-2">
@@ -1993,7 +1791,7 @@ framework.
   <pubDate>Tue, 24 Jul 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>Channel Changing with Nix</title>
+  <title><![CDATA[Channel Changing with Nix]]></title>
   <description><![CDATA[
 
 <div id="outline-container-orge44ee24" class="outline-2">
@@ -2465,7 +2263,7 @@ See release <a href="https://github.com/NixOS/nixpkgs/tree/0.5">0.5</a>.
   <pubDate>Sat, 12 May 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>2018 Summer</title>
+  <title><![CDATA[2018 Summer]]></title>
   <description><![CDATA[
 <p>
 Quick post to annouce summer plans. I have accepted a summer
@@ -2477,7 +2275,7 @@ world</a>. Very excited to be working with a team of really smart people.
   <pubDate>Fri, 30 Mar 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>66% of Nixpkgs are up-to-date</title>
+  <title><![CDATA[66% of Nixpkgs are up-to-date]]></title>
   <description><![CDATA[
 <p>
 Just wanted to congratulate everyone for all of the work in keeping
@@ -2539,7 +2337,7 @@ please be sure to open an issue.
   <pubDate>Wed, 28 Mar 2018 20:00:00 -0400</pubDate>
 </item>
 <item>
-  <title>nix-buffer: nix-shell in Emacs</title>
+  <title><![CDATA[nix-buffer: nix-shell in Emacs]]></title>
   <description><![CDATA[
 <p>
 Shea Levy has a wonderful package out for users of Nix and Emacs. It’s
@@ -2580,7 +2378,7 @@ dependencies you need based on your <code>default.nix</code> file.
   <pubDate>Sat, 10 Feb 2018 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>Why Nix?</title>
+  <title><![CDATA[Why Nix?]]></title>
   <description><![CDATA[
 <p>
 <b>THIS IS A WORK IN PROGRESS ESSAY</b>
@@ -2670,7 +2468,7 @@ For more features of Nix, you can checkout the <a href="https://nixos.org/nix/">
   <pubDate>Mon, 20 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>Reproducible résumés</title>
+  <title><![CDATA[Reproducible résumés]]></title>
   <description><![CDATA[
 <p>
 Recently, ‘reproducible’ papers have appeared in Academia. The idea is to make
@@ -3474,7 +3272,7 @@ you can email me at <a href="mailto:mjbauer95@gmail.com">mjbauer95@gmail.com</a>
   <pubDate>Sun, 12 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>bauer: an Emacs+Nix IDE</title>
+  <title><![CDATA[bauer: an Emacs+Nix IDE]]></title>
   <description><![CDATA[
 <p>
 <b>Note: the updated version of this is available at <a href="https://matthewbauer.us/bauer/">https://matthewbauer.us/bauer/</a></b>
@@ -8513,7 +8311,7 @@ your channel. Having this file available means you can place this repo in
   <pubDate>Sun, 05 Nov 2017 19:00:00 -0500</pubDate>
 </item>
 <item>
-  <title>Nix and Org</title>
+  <title><![CDATA[Nix and Org]]></title>
   <description><![CDATA[
 <p>
 This is a guide on getting Org to work with Nix. Specifically, I want to show

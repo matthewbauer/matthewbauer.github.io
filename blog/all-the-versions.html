@@ -14,10 +14,10 @@
 <div id="preamble" class="status">
 <h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">20 Aug 2019</div><h1 class="post-title"><a href="all-the-versions.html">All the versions with Nix</a></h1>
+<div class="post-date">20 Aug 2019</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/all-the-versions.html">All the versions with Nix</a></h1>
 
-<div id="outline-container-org37169ba" class="outline-2">
-<h2 id="org37169ba"><span class="section-number-2">1</span> Background</h2>
+<div id="outline-container-org491dd6d" class="outline-2">
+<h2 id="org491dd6d"><span class="section-number-2">1</span> Background</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In <a href="channel-changing.html">Channel Changing with Nix</a>, I described how to move between channels
@@ -37,8 +37,8 @@ it will come with a Nix snippet that you can try out yourself.
 </div>
 </div>
 
-<div id="outline-container-orgf951af3" class="outline-2">
-<h2 id="orgf951af3"><span class="section-number-2">2</span> Code</h2>
+<div id="outline-container-orgbbeb742" class="outline-2">
+<h2 id="orgbbeb742"><span class="section-number-2">2</span> Code</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 So, what follows is some code that I wrote up that lets you find
@@ -48,28 +48,28 @@ at <a href="https://matthewbauer.us/generate-versions.nix">https://matthewbauer.
 
 <div class="org-src-container">
 <pre class="src src-nix">{ channels ? [ <span class="org-string">"19.03"</span> <span class="org-string">"18.09"</span> <span class="org-string">"18.03"</span> <span class="org-string">"17.09"</span> <span class="org-string">"17.03"</span>
-         <span class="org-string">"16.09"</span> <span class="org-string">"16.03"</span> <span class="org-string">"15.09"</span> <span class="org-string">"14.12"</span> <span class="org-string">"14.04"</span> <span class="org-string">"13.10"</span> ]
-, attrs ? <span class="org-nix-builtin">builtins</span>.attrNames (<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {})
-, system ? <span class="org-nix-builtin">builtins</span>.currentSystem
+               <span class="org-string">"16.09"</span> <span class="org-string">"16.03"</span> <span class="org-string">"15.09"</span> <span class="org-string">"14.12"</span> <span class="org-string">"14.04"</span> <span class="org-string">"13.10"</span> ]
+, attrs ? builtins.attrNames (<span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {})
+, system ? builtins.currentSystem
 , args ? { <span class="org-nix-keyword">inherit</span> system; }
 }: <span class="org-nix-keyword">let</span>
 
   <span class="org-nix-attribute">getSet</span> = channel:
-    (<span class="org-nix-builtin">import</span> (<span class="org-nix-builtin">builtins</span>.<span class="org-nix-builtin">fetchTarball</span> <span class="org-string">"channel:nixos-</span><span class="org-nix-antiquote">${</span>channel<span class="org-nix-antiquote">}</span>") args).pkgs;
+    (<span class="org-nix-builtin">import</span> (builtins.fetchTarball <span class="org-string">"channel:nixos-</span><span class="org-nix-antiquote">${</span>channel<span class="org-nix-antiquote">}</span>") args).pkgs;
 
   <span class="org-nix-attribute">getPkg</span> = name: channel: <span class="org-nix-keyword">let</span>
     <span class="org-nix-attribute">pkgs</span> = getSet channel;
     <span class="org-nix-attribute">pkg</span> = pkgs.${name};
-    <span class="org-nix-attribute">version</span> = (<span class="org-nix-builtin">builtins</span>.parseDrvName pkg.name).version;
-  <span class="org-nix-keyword">in</span> <span class="org-nix-keyword">if</span> <span class="org-nix-builtin">builtins</span>.hasAttr name pkgs &amp;&amp; pkg ? name <span class="org-nix-keyword">then</span> {
+    <span class="org-nix-attribute">version</span> = (builtins.parseDrvName pkg.name).version;
+  <span class="org-nix-keyword">in</span> if builtins.hasAttr name pkgs &amp;&amp; pkg ? name <span class="org-nix-keyword">then</span> {
     <span class="org-nix-attribute">name</span> = version;
     <span class="org-nix-attribute">value</span> = pkg;
   } <span class="org-nix-keyword">else</span> <span class="org-nix-builtin">null</span>;
 
-<span class="org-nix-keyword">in</span> <span class="org-nix-builtin">builtins</span>.listToAttrs (<span class="org-nix-builtin">map</span> (name: {
+<span class="org-nix-keyword">in</span> builtins.listToAttrs (<span class="org-nix-builtin">map</span> (name: {
   <span class="org-nix-keyword">inherit</span> name;
-  <span class="org-nix-attribute">value</span> = <span class="org-nix-builtin">builtins</span>.listToAttrs
-    (<span class="org-nix-builtin">builtins</span>.filter (x: x != <span class="org-nix-builtin">null</span>)
+  <span class="org-nix-attribute">value</span> = builtins.listToAttrs
+    (builtins.filter (x: x != <span class="org-nix-builtin">null</span>)
       (<span class="org-nix-builtin">map</span> (getPkg name) channels));
 }) attrs)
 </pre>
@@ -92,8 +92,8 @@ requires no special library function.
 </div>
 </div>
 
-<div id="outline-container-org92fe22d" class="outline-2">
-<h2 id="org92fe22d"><span class="section-number-2">3</span> Usage</h2>
+<div id="outline-container-org4f18641" class="outline-2">
+<h2 id="org4f18641"><span class="section-number-2">3</span> Usage</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Working with this Nix expression is extremely interesting, and I’ve
@@ -102,8 +102,8 @@ usable on a Linux machine (or maybe macOS) with <a href="https://nixos.org/nix/"
 </p>
 </div>
 
-<div id="outline-container-org029aecf" class="outline-3">
-<h3 id="org029aecf"><span class="section-number-3">3.1</span> Query package versions</h3>
+<div id="outline-container-org0dec14b" class="outline-3">
+<h3 id="org0dec14b"><span class="section-number-3">3.1</span> Query package versions</h3>
 <div class="outline-text-3" id="text-3-1">
 <p>
 You can query what package versions are available through Nix’s
@@ -128,8 +128,8 @@ releases.
 </div>
 </div>
 
-<div id="outline-container-orge3669c1" class="outline-3">
-<h3 id="orge3669c1"><span class="section-number-3">3.2</span> Running an old version</h3>
+<div id="outline-container-org5a5c638" class="outline-3">
+<h3 id="org5a5c638"><span class="section-number-3">3.2</span> Running an old version</h3>
 <div class="outline-text-3" id="text-3-2">
 <p>
 A shown above, there are 5 versions of Emacs available to us. We can
@@ -164,8 +164,8 @@ very similar to the above:
 </div>
 </div>
 
-<div id="outline-container-org6716407" class="outline-3">
-<h3 id="org6716407"><span class="section-number-3">3.3</span> Firefox</h3>
+<div id="outline-container-org465717f" class="outline-3">
+<h3 id="org465717f"><span class="section-number-3">3.3</span> Firefox</h3>
 <div class="outline-text-3" id="text-3-3">
 <p>
 Another example using Firefox is pretty neat. The code is very similar
@@ -179,7 +179,7 @@ to Emacs:
 </div>
 
 <p>
-We get all 11 releases with unique Firefox versions this time.
+We get all 11 releases with unique Firefox versions this time. 
 </p>
 
 <p>
@@ -197,8 +197,8 @@ Amazing how notably Firefox has changed since then!
 </div>
 </div>
 
-<div id="outline-container-org6ed135f" class="outline-3">
-<h3 id="org6ed135f"><span class="section-number-3">3.4</span> Blender</h3>
+<div id="outline-container-orge7b8595" class="outline-3">
+<h3 id="orge7b8595"><span class="section-number-3">3.4</span> Blender</h3>
 <div class="outline-text-3" id="text-3-4">
 <p>
 Another example using Blender. The code is very similar to the two above:
@@ -222,8 +222,8 @@ You can run Blender 2.67 using this command:
 </div>
 </div>
 
-<div id="outline-container-org9e939a1" class="outline-2">
-<h2 id="org9e939a1"><span class="section-number-2">4</span> Rationale</h2>
+<div id="outline-container-org0868539" class="outline-2">
+<h2 id="org0868539"><span class="section-number-2">4</span> Rationale</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The reason that channels work better than commits is because every
@@ -250,8 +250,8 @@ quite ready for that yet.
 </div>
 </div>
 
-<div id="outline-container-org5856f26" class="outline-2">
-<h2 id="org5856f26"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-org07b8f6d" class="outline-2">
+<h2 id="org07b8f6d"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 This has hopefully shown how Nix’s functional dependency model makes

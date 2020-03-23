@@ -9,15 +9,12 @@
 <title>Static Nix: a command-line swiss army knife</title>
   <meta name="author" content="Matthew Bauer">
   <meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1">
-  <link rel="stylesheet" href="../style.css">
-</head>
+  <link rel="stylesheet" href="../style.css"></head>
 <body>
 <div id="preamble" class="status">
-<h1>
-<a class="name" href="/">Matthew Bauer</a> ◌ <a href>Blog</a> ◌ <a class="name" href="feed.xml">RSS</a>
-</h1></div>
+<h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">23 Feb 2019</div><h1 class="post-title"><a href="static-nix.html">Static Nix: a command-line swiss army knife</a></h1>
+<div class="post-date">23 Feb 2019</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/static-nix.html">Static Nix: a command-line swiss army knife</a></h1>
 <p>
 Nix is an extremely useful package manager. But, not all systems have
 it installed. Without root priveleges, you cannot create the
@@ -32,15 +29,15 @@ context<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>. To make this
 <a href="https://matthewbauer.us/nix">https://matthewbauer.us/nix</a> (5M download).
 </p>
 
-<div id="outline-container-org25c633a" class="outline-2">
-<h2 id="org25c633a"><span class="section-number-2">1</span> Trying it out</h2>
+<div id="outline-container-orgbdff208" class="outline-2">
+<h2 id="orgbdff208"><span class="section-number-2">1</span> Trying it out</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 You can use it like this,
 </p>
 
 <div class="org-src-container">
-<pre class="src src-sh"><span class="org-whitespace-line">$ curl https://matthewbauer.us/nix | sh -s run --store $</span><span class="org-variable-name"><span class="org-whitespace-line">HOME</span></span><span class="org-whitespace-line">/.cache/nix/store -f channel:nixpkgs-unstable hello -c hello</span>
+<pre class="src src-sh">$ curl https://matthewbauer.us/nix | sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable hello -c hello
 Hello World!
 </pre>
 </div>
@@ -55,8 +52,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </p>
 </div>
 
-<div id="outline-container-org45017a1" class="outline-3">
-<h3 id="org45017a1"><span class="section-number-3">1.1</span> Dev tools</h3>
+<div id="outline-container-org90e7110" class="outline-3">
+<h3 id="org90e7110"><span class="section-number-3">1.1</span> Dev tools</h3>
 <div class="outline-text-3" id="text-1-1">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -69,8 +66,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgd6b41ff" class="outline-3">
-<h3 id="orgd6b41ff"><span class="section-number-3">1.2</span> Emacs</h3>
+<div id="outline-container-orgcb595d8" class="outline-3">
+<h3 id="orgcb595d8"><span class="section-number-3">1.2</span> Emacs</h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -83,8 +80,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgd6d7635" class="outline-3">
-<h3 id="orgd6d7635"><span class="section-number-3">1.3</span> File manager</h3>
+<div id="outline-container-org313b39a" class="outline-3">
+<h3 id="org313b39a"><span class="section-number-3">1.3</span> File manager</h3>
 <div class="outline-text-3" id="text-1-3">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -97,8 +94,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org90aa970" class="outline-3">
-<h3 id="org90aa970"><span class="section-number-3">1.4</span> Fire</h3>
+<div id="outline-container-org0b60c60" class="outline-3">
+<h3 id="org0b60c60"><span class="section-number-3">1.4</span> Fire</h3>
 <div class="outline-text-3" id="text-1-4">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -109,8 +106,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgb053e05" class="outline-3">
-<h3 id="orgb053e05"><span class="section-number-3">1.5</span> Fortune</h3>
+<div id="outline-container-org4ac552c" class="outline-3">
+<h3 id="org4ac552c"><span class="section-number-3">1.5</span> Fortune</h3>
 <div class="outline-text-3" id="text-1-5">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -121,8 +118,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgd9d66af" class="outline-3">
-<h3 id="orgd9d66af"><span class="section-number-3">1.6</span> Nethack</h3>
+<div id="outline-container-org6bb3c36" class="outline-3">
+<h3 id="org6bb3c36"><span class="section-number-3">1.6</span> Nethack</h3>
 <div class="outline-text-3" id="text-1-6">
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">nix</span>=$(mktemp); <span class="org-sh-escaped-newline">\</span>
@@ -135,8 +132,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org5a5640c" class="outline-3">
-<h3 id="org5a5640c"><span class="section-number-3">1.7</span> Weather</h3>
+<div id="outline-container-org434618a" class="outline-3">
+<h3 id="org434618a"><span class="section-number-3">1.7</span> Weather</h3>
 <div class="outline-text-3" id="text-1-7">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -147,8 +144,8 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org5089ff5" class="outline-3">
-<h3 id="org5089ff5"><span class="section-number-3">1.8</span> World map</h3>
+<div id="outline-container-org2d52936" class="outline-3">
+<h3 id="org2d52936"><span class="section-number-3">1.8</span> World map</h3>
 <div class="outline-text-3" id="text-1-8">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
@@ -162,21 +159,21 @@ directories<sup><a id="fnr.2" class="footref" href="#fn.2">2</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-org7996c03" class="outline-3">
-<h3 id="org7996c03"><span class="section-number-3">1.9</span> Youtube</h3>
+<div id="outline-container-org68a2623" class="outline-3">
+<h3 id="org68a2623"><span class="section-number-3">1.9</span> Youtube</h3>
 <div class="outline-text-3" id="text-1-9">
 <div class="org-src-container">
 <pre class="src src-sh">$ curl https://matthewbauer.us/nix | <span class="org-sh-escaped-newline">\</span>
   sh -s run --store $<span class="org-variable-name">HOME</span>/.cache/nix/store -f channel:nixpkgs-unstable <span class="org-sh-escaped-newline">\</span>
   bash youtube-dl mplayer -c sh -c <span class="org-sh-escaped-newline">\</span>
-<span class="org-whitespace-line">  </span><span class="org-string"><span class="org-whitespace-line">'mplayer -vo caca $(youtube-dl --no-check-certificate -g https://www.youtube.com/watch?v=dQw4w9WgXcQ)'</span></span>
+  <span class="org-string">'mplayer -vo caca $(youtube-dl --no-check-certificate -g https://www.youtube.com/watch?v=dQw4w9WgXcQ)'</span>
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org544fdbf" class="outline-3">
-<h3 id="org544fdbf"><span class="section-number-3">1.10</span> And more&#x2026;</h3>
+<div id="outline-container-orgbe8dd9b" class="outline-3">
+<h3 id="orgbe8dd9b"><span class="section-number-3">1.10</span> And more&#x2026;</h3>
 <div class="outline-text-3" id="text-1-10">
 <p>
 Lots more cool things are possible. Look through <a href="https://nixos.org/nixos/packages.html#">the packages provided
@@ -186,8 +183,8 @@ by Nixpkgs</a> if you need inspiration.
 </div>
 </div>
 
-<div id="outline-container-org1431755" class="outline-2">
-<h2 id="org1431755"><span class="section-number-2">2</span> Avoid installing and extracting each time</h2>
+<div id="outline-container-orgdc04194" class="outline-2">
+<h2 id="orgdc04194"><span class="section-number-2">2</span> Avoid installing and extracting each time</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 This method of using Nix has some upfront cost. This is because
@@ -209,7 +206,7 @@ this script.
 </div>
 
 <p>
-The other is the &ldquo;safe&rdquo; way and involves running some commands in
+The other is the "safe" way and involves running some commands in
 order. These are the same commands run by the script, but this lets
 you audit everything being done line by line.
 </p>
@@ -217,9 +214,7 @@ you audit everything being done line by line.
 <div class="org-src-container">
 <pre class="src src-sh">$ <span class="org-variable-name">t</span>=$(mktemp -d)
 $ curl https://matthewbauer.us/nix &gt; $<span class="org-variable-name">t</span>/nix.sh
-$ pushd $<span class="org-variable-name">t</span>
-$ sh nix.sh --extract
-$ popd
+$ (<span class="org-builtin">cd</span> $<span class="org-variable-name">t</span> &amp;&amp; sh nix.sh --extract)
 $ mkdir -p $<span class="org-variable-name">HOME</span>/bin/ $<span class="org-variable-name">HOME</span>/share/nix/corepkgs/
 $ mv $<span class="org-variable-name">t</span>/dat/nix $<span class="org-variable-name">HOME</span>/bin/
 $ mv $<span class="org-variable-name">t</span>/dat/share/nix/corepkgs/* $<span class="org-variable-name">HOME</span>/share/nix/corepkgs/
@@ -240,8 +235,8 @@ otherwise Nix will be confused on how to handle the missing
 </div>
 </div>
 
-<div id="outline-container-org14c8f86" class="outline-2">
-<h2 id="org14c8f86"><span class="section-number-2">3</span> Build it yourself</h2>
+<div id="outline-container-orgf3e1fa2" class="outline-2">
+<h2 id="orgf3e1fa2"><span class="section-number-2">3</span> Build it yourself</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 This is certainly a security vulnerability so you may want to build
@@ -294,8 +289,6 @@ any time.
 
 </div>
 </div></div>
-<div id="postamble" class="status"><div id="archive">
-  <a href="archive.html">Other posts</a>
-</div></div>
+<div id="postamble" class="status"></div>
 </body>
 </html>
