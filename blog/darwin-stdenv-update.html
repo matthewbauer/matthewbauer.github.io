@@ -12,9 +12,9 @@
   <link rel="stylesheet" href="../style.css"></head>
 <body>
 <div id="preamble" class="status">
-<h1><a class="name" href>Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
+<h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">05 May 2019</div><h1 class="post-title"><a href="darwin-stdenv-update.html">Nixpkgs macOS Stdenv Updates</a></h1>
+<div class="post-date">05 May 2019</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/darwin-stdenv-update.html">Nixpkgs macOS Stdenv Updates</a></h1>
 <p>
 Over the past couple of months, I have been working on updating the
 macOS stdenv in Nixpkgs. This has significant impact on users of
@@ -22,8 +22,8 @@ Nix/Nixpkgs on macOS. So, I want to explain what’s being updated, what
 the benefits are, and how we can minimize breakages.
 </p>
 
-<div id="outline-container-orga945576" class="outline-2">
-<h2 id="orga945576"><span class="section-number-2">1</span> macOS/Darwin stdenv changes</h2>
+<div id="outline-container-orgbb04dec" class="outline-2">
+<h2 id="orgbb04dec"><span class="section-number-2">1</span> macOS/Darwin stdenv changes</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 First, to summarize the changes that impact stdenv and the Darwin
@@ -51,8 +51,8 @@ compatibility with macOS before 10.12.
 </div>
 </div>
 
-<div id="outline-container-org8fa4e66" class="outline-2">
-<h2 id="org8fa4e66"><span class="section-number-2">2</span> Why do we need to set a minimum macOS version?</h2>
+<div id="outline-container-org12667fa" class="outline-2">
+<h2 id="org12667fa"><span class="section-number-2">2</span> Why do we need to set a minimum macOS version?</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Without knowing internals of Nixpkgs, it might not be clear why we
@@ -77,8 +77,8 @@ Unix-like kernels maintain compatibility with their userspace binaries.
 </p>
 </div>
 
-<div id="outline-container-org97271c0" class="outline-3">
-<h3 id="org97271c0"><span class="section-number-3">2.1</span> Linux syscall compatibility</h3>
+<div id="outline-container-org1208a19" class="outline-3">
+<h3 id="org1208a19"><span class="section-number-3">2.1</span> Linux syscall compatibility</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 The kernel is responsible for managing core operating system functions
@@ -121,8 +121,8 @@ libraries<sup><a id="fnr.1" class="footref" href="#fn.1">1</a></sup>.
 </div>
 </div>
 
-<div id="outline-container-orgdb21355" class="outline-3">
-<h3 id="orgdb21355"><span class="section-number-3">2.2</span> macOS Libc compatibility</h3>
+<div id="outline-container-orgd9b5855" class="outline-3">
+<h3 id="orgd9b5855"><span class="section-number-3">2.2</span> macOS Libc compatibility</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 The macOS Libc is called libSystem. It is available on all macOS
@@ -165,8 +165,8 @@ binaries. Go eventually <a href="https://github.com/golang/go/issues/17490">aban
 </div>
 </div>
 
-<div id="outline-container-org8a04bff" class="outline-3">
-<h3 id="org8a04bff"><span class="section-number-3">2.3</span> Others</h3>
+<div id="outline-container-orgc0b15d1" class="outline-3">
+<h3 id="orgc0b15d1"><span class="section-number-3">2.3</span> Others</h3>
 <div class="outline-text-3" id="text-2-3">
 <p>
 Some other examples may be useful. They mostly fall on one side or the
@@ -186,8 +186,8 @@ and how they handle binary compatibility.</li>
 </div>
 </div>
 
-<div id="outline-container-org137f925" class="outline-3">
-<h3 id="org137f925"><span class="section-number-3">2.4</span> LLVM triple</h3>
+<div id="outline-container-org7894f87" class="outline-3">
+<h3 id="org7894f87"><span class="section-number-3">2.4</span> LLVM triple</h3>
 <div class="outline-text-3" id="text-2-4">
 <p>
 As a side note, this difference can be clearly seen in how we specify
@@ -239,8 +239,8 @@ kernel. Examples of BSD triples include,
 </div>
 </div>
 
-<div id="outline-container-org7ec308c" class="outline-2">
-<h2 id="org7ec308c"><span class="section-number-2">3</span> Compatibility table</h2>
+<div id="outline-container-orgfd2d483" class="outline-2">
+<h2 id="orgfd2d483"><span class="section-number-2">3</span> Compatibility table</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 Looking through the old versions, I’ve compiled a list of what I think
@@ -317,8 +317,8 @@ version along with your update to Nixpkgs 19.09.
 </div>
 </div>
 
-<div id="outline-container-org41e26b8" class="outline-2">
-<h2 id="org41e26b8"><span class="section-number-2">4</span> Conclusion</h2>
+<div id="outline-container-orgf212ed5" class="outline-2">
+<h2 id="orgf212ed5"><span class="section-number-2">4</span> Conclusion</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 My main goal has been to show better how Nixpkgs and macOS system

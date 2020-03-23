@@ -7,20 +7,17 @@
       href="https://matthewbauer.us/blog/feed.xml"
       title="RSS feed for https://matthewbauer.us/blog/"/>
 <title>Channel Changing with Nix</title>
-<meta  name="author" content="Matthew Bauer" />
-<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
-<link rel=stylesheet href="../fonts.css" />
-<link rel=stylesheet href="../style.css" /></head>
+  <meta name="author" content="Matthew Bauer">
+  <meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1">
+  <link rel="stylesheet" href="../style.css"></head>
 <body>
 <div id="preamble" class="status">
-<h1>
-<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</h1></div>
+<h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">12 May 2018</div><h1 class="post-title"><a href="channel-changing.html">Channel Changing with Nix</a></h1>
+<div class="post-date">12 May 2018</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/channel-changing.html">Channel Changing with Nix</a></h1>
 
-<div id="outline-container-orge44ee24" class="outline-2">
-<h2 id="orge44ee24"><span class="section-number-2">1</span> Introduction to channels</h2>
+<div id="outline-container-orgaf92fe0" class="outline-2">
+<h2 id="orgaf92fe0"><span class="section-number-2">1</span> Introduction to channels</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 One of the many underappreciated feature of Nix is its ability to
@@ -41,8 +38,8 @@ history.
 </div>
 </div>
 
-<div id="outline-container-orgce32985" class="outline-2">
-<h2 id="orgce32985"><span class="section-number-2">2</span> Channel changing</h2>
+<div id="outline-container-org3e4cfdf" class="outline-2">
+<h2 id="org3e4cfdf"><span class="section-number-2">2</span> Channel changing</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here is my script that I will refer to later on in the post
@@ -50,9 +47,9 @@ as “channels.nix” (be sure to try it out yourself!)<sup><a id="fnr.2" class=
 </p>
 
 <div class="org-src-container">
-<pre class="src src-nix"><span class="org-nix-keyword">let</span> <span class="org-nix-attribute">mapAttrs</span> = f: set: <span class="org-nix-builtin">builtins</span>.listToAttrs (
+<pre class="src src-nix"><span class="org-nix-keyword">let</span> <span class="org-nix-attribute">mapAttrs</span> = f: set: builtins.listToAttrs (
       <span class="org-nix-builtin">map</span> (attr: { <span class="org-nix-attribute">name</span> = attr; <span class="org-nix-attribute">value</span> = f set.${attr}; })
-    (<span class="org-nix-builtin">builtins</span>.attrNames set));
+          (builtins.attrNames set));
     <span class="org-nix-attribute">channels</span> = {
       <span class="org-nix-attribute">aardvark</span>    = <span class="org-string">"13.10"</span>;
       <span class="org-nix-attribute">baboon</span>      = <span class="org-string">"14.04"</span>;
@@ -65,8 +62,8 @@ as “channels.nix” (be sure to try it out yourself!)<sup><a id="fnr.2" class=
       <span class="org-nix-attribute">impala</span>      = <span class="org-string">"18.03"</span>;
     };
 <span class="org-nix-keyword">in</span> mapAttrs (v:
-     <span class="org-nix-builtin">import</span> (<span class="org-nix-builtin">builtins</span>.<span class="org-nix-builtin">fetchTarball</span>
-       <span class="org-string">"https://nixos.org/channels/nixos-</span><span class="org-nix-antiquote">${</span>v<span class="org-nix-antiquote">}</span><span class="org-string">/nixexprs.tar.xz"</span>) {})
+     <span class="org-nix-builtin">import</span> (builtins.fetchTarball
+             <span class="org-string">"https://nixos.org/channels/nixos-</span><span class="org-nix-antiquote">${</span>v<span class="org-nix-antiquote">}</span><span class="org-string">/nixexprs.tar.xz"</span>) {})
    channels
 </pre>
 </div>
@@ -82,8 +79,8 @@ distros.
 </div>
 </div>
 
-<div id="outline-container-orgee2c402" class="outline-2">
-<h2 id="orgee2c402"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
+<div id="outline-container-orgf30cd27" class="outline-2">
+<h2 id="orgf30cd27"><span class="section-number-2">3</span> ‘nix run’ magic</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 In my Nix script, I have created an “attribute” for each version that
@@ -98,8 +95,8 @@ them. Here is the command to run <code>hello</code> world from Hummingbird.
 
 <pre class="example">
 Hello, world!
-
 </pre>
+
 
 <p>
 This has run the <code>hello</code> executable from the hummingbird release.
@@ -121,16 +118,16 @@ ourselves to just hello. Let’s try out cowsay first.
 </div>
 
 <pre class="example">
- _______
+ _______ 
 &lt; hello &gt;
- -------
+ ------- 
         \   ^__^
          \  (oo)\_______
             (__)\       )\/\
                 ||----w |
                 ||     ||
-
 </pre>
+
 
 <p>
 There are many, many more of these commands. I’ve included a few below
@@ -164,8 +161,8 @@ nix run -f channels.nix impala.fortune -c fortune
 </div>
 </div>
 
-<div id="outline-container-orgc3f0240" class="outline-2">
-<h2 id="orgc3f0240"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
+<div id="outline-container-orgde41ef0" class="outline-2">
+<h2 id="orgde41ef0"><span class="section-number-2">4</span> The macOS+Nix odyssey</h2>
 <div class="outline-text-2" id="text-4">
 <p>
 The fact that Nix works so well on macOS is a miracle in its own
@@ -253,8 +250,8 @@ tester, of course, not comprehensive.
 
 <pre class="example">
 Hello, world!
-
 </pre>
+
 
 <div class="org-src-container">
 <pre class="src src-sh">nix run -f channels.nix hummingbird.hello -c hello
@@ -263,8 +260,8 @@ Hello, world!
 
 <pre class="example">
 Hello, world!
-
 </pre>
+
 
 <p>
 But now let’s test Gorilla. It was released when macOS Sierra was
@@ -281,8 +278,8 @@ dyld: Library not loaded: /usr/lib/system/libsystem_coretls.dylib
  Referenced from: /nix/store/v7i520r9c2p8z6vk26n53hfrxgqn8cl9-Libsystem-osx-10.11.6/lib/libSystem.B.dylib
  Reason: image not found
 sh: line 1: 23628 Abort trap: 6           nix run -f channels.nix gorilla.hello -c hello
-
 </pre>
+
 
 <p>
 Oh no!
@@ -307,8 +304,8 @@ backwards. But, I want to try Flounder just to see what happens.
 
 <pre class="example">
 Hello, world!
-
 </pre>
+
 
 <p>
 Amazingly, it worked! I am still not sure what the differences are,
@@ -324,8 +321,8 @@ out Emu to see what happens there.
 <pre class="example">
 builder for '/nix/store/s41jnb4kmxxbwj40c5l88k9ma0mwfy0b-hello-2.10.drv' failed due to signal 4 (Illegal instruction: 4)
 error: build of '/nix/store/s41jnb4kmxxbwj40c5l88k9ma0mwfy0b-hello-2.10.drv' failed
-
 </pre>
+
 
 <p>
 Wow! Again we hit an issue. This is the infamouse <code>Illegal
@@ -353,7 +350,7 @@ builder for '/nix/store/1cyagihl211vsis9bz09cqaz3h2yyc23-libxml2-2.9.3.drv' fail
  configure: error: in `/private/tmp/nix-build-libxml2-2.9.3.drv-0/libxml2-2.9.3':
  configure: error: C compiler cannot create executables
  See `config.log' for more details
-
+ 
 cannot build derivation '/nix/store/jd4y5aps1z61jqbhsz1gy408zwwa49w4-clang-3.6.2.drv': 1 dependencies couldn't be built
 cannot build derivation '/nix/store/n4q29z97dc1p9mqrn2ydhlfmsqwbgx0j-libarchive-3.1.2.drv': 1 dependencies couldn't be built
 cannot build derivation '/nix/store/vh2bh7gaw2m0rgxscf3mhm1d3rz3xwfg-clang-wrapper-3.6.2.drv': 1 dependencies couldn't be built
@@ -362,8 +359,8 @@ cannot build derivation '/nix/store/45ndaky3079nd78042384f8hbidq7f7q-libc++abi-3
 cannot build derivation '/nix/store/mmyz6rrddfahwl23i9d9vjh7wa8irp5k-stdenv-darwin-boot-3.drv': 1 dependencies couldn't be built
 cannot build derivation '/nix/store/lqjabx84kndk75y8m0lq7zh5190k6zzz-hello-2.10.drv': 1 dependencies couldn't be built
 error: build of '/nix/store/lqjabx84kndk75y8m0lq7zh5190k6zzz-hello-2.10.drv' failed
-
 </pre>
+
 
 <p>
 This is a curious error because it is very different from the previous
@@ -380,8 +377,8 @@ remembers that time better. Let’s keep going.
 
 <pre class="example">
 error: attribute 'hello' in selection path 'caterpillar.hello' not found
-
 </pre>
+
 
 <div class="org-src-container">
 <pre class="src src-sh">nix run -f channels.nix baboon.hello -c hello
@@ -390,8 +387,8 @@ error: attribute 'hello' in selection path 'caterpillar.hello' not found
 
 <pre class="example">
 error: attribute 'hello' in selection path 'baboon.hello' not found
-
 </pre>
+
 
 <div class="org-src-container">
 <pre class="src src-sh">nix run -f channels.nix aardvark.hello -c hello
@@ -400,8 +397,8 @@ error: attribute 'hello' in selection path 'baboon.hello' not found
 
 <pre class="example">
 error: attribute 'hello' in selection path 'aardvark.hello' not found
-
 </pre>
+
 
 <p>
 I’ve grouped them together because they have the same output. It
@@ -413,8 +410,8 @@ packages to be packaged in the Nix language<sup><a id="fnr.8" class="footref" hr
 </div>
 </div>
 
-<div id="outline-container-orgbd5a3c1" class="outline-2">
-<h2 id="orgbd5a3c1"><span class="section-number-2">5</span> Conclusion</h2>
+<div id="outline-container-org1abfa7b" class="outline-2">
+<h2 id="org1abfa7b"><span class="section-number-2">5</span> Conclusion</h2>
 <div class="outline-text-2" id="text-5">
 <p>
 I wanted to also look at what happens on Linux when you go back
@@ -484,8 +481,6 @@ See release <a href="https://github.com/NixOS/nixpkgs/tree/0.5">0.5</a>.
 
 </div>
 </div></div>
-<div id="postamble" class="status"><div id="archive">
-  <a href="archive.html">Other posts</a>
-</div></div>
+<div id="postamble" class="status"></div>
 </body>
 </html>

@@ -7,17 +7,14 @@
       href="https://matthewbauer.us/blog/feed.xml"
       title="RSS feed for https://matthewbauer.us/blog/"/>
 <title>Portable Packaging in Nix</title>
-<meta  name="author" content="Matthew Bauer" />
-<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
-<link rel=stylesheet href="../fonts.css" />
-<link rel=stylesheet href="../style.css" /></head>
+  <meta name="author" content="Matthew Bauer">
+  <meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1">
+  <link rel="stylesheet" href="../style.css"></head>
 <body>
 <div id="preamble" class="status">
-<h1>
-<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</h1></div>
+<h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">27 Mar 2018</div><h1 class="post-title"><a href="portable-packaging.html">Portable Packaging in Nix</a></h1>
+<div class="post-date">27 Mar 2018</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/portable-packaging.html">Portable Packaging in Nix</a></h1>
 <p>
 One of the goals of Nixpkgs is to ensure that packages are portable.
 This means that when a package builds on an Intel64 Linux machine
@@ -192,7 +189,7 @@ Nixpkgs.
 
 <p>
 The tools in the standard environment have a long history dating back
-to the original version of Unix (1975)<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. While Nix
+to the original version of Unix (1975)<sup><a id="fnr.3" class="footref" href="#fn.3">3</a></sup>. While Nix 
 </p>
 
 <table>
@@ -428,20 +425,20 @@ For instance, both Glibc and libSystem provides a number of built-in
 </table>
 
 <p>
-This presents a challenge to
+This presents a challenge to 
 </p>
 
-<div id="outline-container-orgd20b26c" class="outline-2">
-<h2 id="orgd20b26c"><span class="section-number-2">1</span> FAQs</h2>
+<div id="outline-container-org5667731" class="outline-2">
+<h2 id="org5667731"><span class="section-number-2">1</span> FAQs</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-org06b2906" class="outline-3">
-<h3 id="org06b2906"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
+<div id="outline-container-orgd95be88" class="outline-3">
+<h3 id="orgd95be88"><span class="section-number-3">1.1</span> What to do when a package really does need GCC?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Not all packages are portable. In these cases we have a way to
 ensure that GCC is used as the compiler. For example, the tool
-&ldquo;masscan&rdquo; will only build with GCC.
+"masscan" will only build with GCC.
 </p>
 
 <div class="org-src-container">
@@ -467,8 +464,8 @@ do the same.
 </div>
 </div>
 
-<div id="outline-container-orga5711d1" class="outline-3">
-<h3 id="orga5711d1"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
+<div id="outline-container-org8eae209" class="outline-3">
+<h3 id="org8eae209"><span class="section-number-3">1.2</span> What to do when a package needs true util-linux</h3>
 <div class="outline-text-3" id="text-1-2">
 </div>
 </div>
@@ -484,18 +481,16 @@ a fork of Homebrew.
 
 <div class="footdef"><sup><a id="fn.2" class="footnum" href="#fnr.2">2</a></sup> <div class="footpara"><p class="footpara">
 While rms insists we always call it GNU/Linux, in Nixpkgs, at
-least in theory we can build a Linux
+least in theory we can build a Linux 
 </p></div></div>
 
 <div class="footdef"><sup><a id="fn.3" class="footnum" href="#fnr.3">3</a></sup> <div class="footpara"><p class="footpara">
-You will find a few notable additions
+You will find a few notable additions 
 </p></div></div>
 
 
 </div>
 </div></div>
-<div id="postamble" class="status"><div id="archive">
-  <a href="archive.html">Other posts</a>
-</div></div>
+<div id="postamble" class="status"></div>
 </body>
 </html>

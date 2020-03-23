@@ -7,17 +7,14 @@
       href="https://matthewbauer.us/blog/feed.xml"
       title="RSS feed for https://matthewbauer.us/blog/"/>
 <title>nix-buffer: nix-shell in Emacs</title>
-<meta  name="author" content="Matthew Bauer" />
-<meta name=viewport content="initial-scale=1,width=device-width,minimum-scale=1">
-<link rel=stylesheet href="../fonts.css" />
-<link rel=stylesheet href="../style.css" /></head>
+  <meta name="author" content="Matthew Bauer">
+  <meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1">
+  <link rel="stylesheet" href="../style.css"></head>
 <body>
 <div id="preamble" class="status">
-<h1>
-<a href="..">Matthew Bauer</a> ◌ <a href="./">Blog</a> ◌ <a href="./feed.xml">RSS</a>
-</h1></div>
+<h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">10 Feb 2018</div><h1 class="post-title"><a href="nix-buffer.html">nix-buffer: nix-shell in Emacs</a></h1>
+<div class="post-date">10 Feb 2018</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/nix-buffer.html">nix-buffer: nix-shell in Emacs</a></h1>
 <p>
 Shea Levy has a wonderful package out for users of Nix and Emacs. It’s
 called <a href="https://github.com/shlevy/nix-buffer">nix-buffer</a> and it greatly improves working on Nix stuff in
@@ -37,7 +34,7 @@ To setup, just create <code>dir-locals.nix</code> that looks like this:
 
 <div class="org-src-container">
 <pre class="src src-nix"><span class="org-nix-keyword">let</span> <span class="org-nix-attribute">pkgs</span> = <span class="org-nix-builtin">import</span> <span class="org-nix-constant">&lt;nixpkgs&gt;</span> {};
-<span class="org-nix-keyword">in</span> <span class="org-nix-keyword">with</span> pkgs; nixBufferBuilders.withPackages [ &#8230; ]
+<span class="org-nix-keyword">in</span> with pkgs; nixBufferBuilders.withPackages [ &#8230; ]
 </pre>
 </div>
 
@@ -53,8 +50,6 @@ the <code>dir-locals.nix</code> configuration and automatically detect what
 dependencies you need based on your <code>default.nix</code> file.
 </p>
 </div>
-<div id="postamble" class="status"><div id="archive">
-  <a href="archive.html">Other posts</a>
-</div></div>
+<div id="postamble" class="status"></div>
 </body>
 </html>

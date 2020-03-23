@@ -4,15 +4,17 @@
 <meta charset="UTF-8">
 <link rel="alternate"
       type="application/rss+xml"
-      href="https://matthewbauer.us/blog/rss.xml"
+      href="https://matthewbauer.us/blog/feed.xml"
       title="RSS feed for https://matthewbauer.us/blog/"/>
 <title>How to bisect issues in NixOS and Nixpkgs</title>
-</head>
+  <meta name="author" content="Matthew Bauer">
+  <meta name="viewport" content="initial-scale=1,width=device-width,minimum-scale=1">
+  <link rel="stylesheet" href="../style.css"></head>
 <body>
 <div id="preamble" class="status">
-</div>
+<h1>♟<a class="name" href="..">Matthew Bauer</a> ◌ <a href=".">Blog</a> ◌ <a class="name" href="feed.xml">RSS</a></h1></div>
 <div id="content">
-<div class="post-date">13 May 2019</div><h1 class="post-title"><a href="nix-bisect.html">How to bisect issues in NixOS and Nixpkgs</a></h1>
+<div class="post-date">13 May 2019</div><h1 class="post-title"><a href="https://matthewbauer.us/blog/nix-bisect.html">How to bisect issues in NixOS and Nixpkgs</a></h1>
 <p>
 When running updates on any system, it’s fairly common for issues to
 arise. It’s inevitable that any changes to your system are going to
@@ -42,8 +44,8 @@ better at tracking down what commit caused there issues. First, we
 need to go over how
 </p>
 
-<div id="outline-container-org88ad10d" class="outline-2">
-<h2 id="org88ad10d"><span class="section-number-2">1</span> Git bisect commands</h2>
+<div id="outline-container-org1f3f3db" class="outline-2">
+<h2 id="org1f3f3db"><span class="section-number-2">1</span> Git bisect commands</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 Git bisect is an extremely powerful tool. It’s also not as well known
@@ -70,37 +72,22 @@ There are five commands you need to know to use <code>git bisect</code>.
 </p>
 </div>
 
-<div id="outline-container-orgff05ba5" class="outline-3">
-<h3 id="orgff05ba5"><span class="section-number-3">1.1</span> <code>git bisect start</code></h3>
+<div id="outline-container-org418bcdc" class="outline-3">
+<h3 id="org418bcdc"><span class="section-number-3">1.1</span> <code>git bisect start &lt;good&gt; &lt;bad&gt;</code></h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
-This tells Git to enter bisect mode.
-</p>
-</div>
-</div>
-
-<div id="outline-container-orgf579c9e" class="outline-3">
-<h3 id="orgf579c9e"><span class="section-number-3">1.2</span> <code>git bisect good</code></h3>
-<div class="outline-text-3" id="text-1-2">
-<p>
-This tells Git t
+This tells Git to enter bisect mode. It expects two arguments
 </p>
 </div>
 </div>
 </div>
 
-<div id="outline-container-org9f5f503" class="outline-2">
-<h2 id="org9f5f503"><span class="section-number-2">2</span> Example</h2>
+<div id="outline-container-orgefeba57" class="outline-2">
+<h2 id="orgefeba57"><span class="section-number-2">2</span> Example</h2>
 <div class="outline-text-2" id="text-2">
-<p>
-To better understrand how Nix and Git work together, I have an active
-example. The issue is available at <a href="https://github.com/NixOS/nixpkgs/issues/61501">https://github.com/NixOS/nixpkgs/issues/61501</a>.
-</p>
 </div>
-
-
-<div id="outline-container-org9a721df" class="outline-3">
-<h3 id="org9a721df"><span class="section-number-3">2.1</span> Finding last good commit</h3>
+<div id="outline-container-org74d9ac0" class="outline-3">
+<h3 id="org74d9ac0"><span class="section-number-3">2.1</span> Finding last good commit</h3>
 <div class="outline-text-3" id="text-2-1">
 <p>
 Each NixOS generation has a Git commit associated with it. You can
@@ -122,9 +109,9 @@ The output looks like this:
 </p>
 
 <div class="org-src-container">
-<pre class="src src-text">33   2019-05-06 12:57:00
-34   2019-05-12 16:31:21
-35   2019-05-12 16:44:43
+<pre class="src src-text">33   2019-05-06 12:57:00   
+34   2019-05-12 16:31:21   
+35   2019-05-12 16:44:43   
 36   2019-05-13 11:12:12   (current)
 </pre>
 </div>
@@ -149,8 +136,8 @@ Combining these into a shell script:
 </div>
 </div>
 
-<div id="outline-container-orgd915baf" class="outline-3">
-<h3 id="orgd915baf"><span class="section-number-3">2.2</span> Final script</h3>
+<div id="outline-container-org2b9ec05" class="outline-3">
+<h3 id="org2b9ec05"><span class="section-number-3">2.2</span> Final script</h3>
 <div class="outline-text-3" id="text-2-2">
 <p>
 This is the script I used to find this:
@@ -161,8 +148,7 @@ git bisect start
 git bisect bad 190727db4ea
 git bisect good acbdaa5
 git bisect run sh -c '
-  touch a.s
-  nix run -f. llvmPackages_8.clang-unwrapped -c clang -cc1as -triple x86_64-unknown-linux-gnu a.s
+  ...
 '
 </pre>
 
