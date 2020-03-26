@@ -44,13 +44,52 @@ Both systems seem to be working pretty well.
 GitHub: <a href="https://github.com/matthewbauer/nixiosk">https://github.com/matthewbauer/nixiosk</a>
 </p>
 
-<div id="outline-container-orgc261150" class="outline-2">
-<h2 id="orgc261150"><span class="section-number-2">1</span> Deploying</h2>
+<div id="outline-container-org11baea3" class="outline-2">
+<h2 id="org11baea3"><span class="section-number-2">1</span> Deploying</h2>
 <div class="outline-text-2" id="text-1">
 </div>
-<div id="outline-container-orga1d9978" class="outline-3">
-<h3 id="orga1d9978"><span class="section-number-3">1.1</span> Configuration</h3>
+<div id="outline-container-org3936587" class="outline-3">
+<h3 id="org3936587"><span class="section-number-3">1.1</span> Install Nix</h3>
 <div class="outline-text-3" id="text-1-1">
+<p>
+If you haven’t already, you need to install Nix. This can be done
+through the installer:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ bash &lt;(curl -L https://nixos.org/nix/install)
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org9c45d30" class="outline-3">
+<h3 id="org9c45d30"><span class="section-number-3">1.2</span> Cache</h3>
+<div class="outline-text-3" id="text-1-2">
+<p>
+To speed things up, you should setup a binary cache for nixiosk. This
+can be done easily through <a href="https://nixiosk.cachix.org/">Cachix</a>. First, install Cachix:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ nix-env -iA cachix -f https://cachix.org/api/v1/install
+</pre>
+</div>
+
+<p>
+Then, use the nixiosk cache:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-sh">$ cachix use nixiosk
+</pre>
+</div>
+</div>
+</div>
+
+<div id="outline-container-org16dc38e" class="outline-3">
+<h3 id="org16dc38e"><span class="section-number-3">1.3</span> Configuration</h3>
+<div class="outline-text-3" id="text-1-3">
 <p>
 To make things simple, it just reads from an ad-hoc JSON file that
 describe the hardware plus some other customizations. It looks like
@@ -113,9 +152,9 @@ Optional.</li>
 </div>
 </div>
 
-<div id="outline-container-org1923fca" class="outline-3">
-<h3 id="org1923fca"><span class="section-number-3">1.2</span> Initial deployment</h3>
-<div class="outline-text-3" id="text-1-2">
+<div id="outline-container-orgddeb048" class="outline-3">
+<h3 id="orgddeb048"><span class="section-number-3">1.4</span> Initial deployment</h3>
+<div class="outline-text-3" id="text-1-4">
 <p>
 The deployment is pretty easy provided you have <a href="https://nixos.org/nix/">Nix installed</a>. Here
 are some steps:
@@ -189,15 +228,9 @@ you can deploy to it with:
 </div>
 
 <p>
-Note that this will take quite a while right now because I don’t have
-a binary cache setup. Stay tuned so that this part hopefully gets
-easier. It will also take a few minutes to write to your SD card.
-</p>
-
-<p>
 You can now eject your SD card and insert it into your Raspberry Pi.
 It will boot immediately to an Epiphany browser, loading
-en.wikipedia.org. This gives you a
+en.wikipedia.org.
 </p>
 
 <p>
@@ -206,9 +239,9 @@ en.wikipedia.org. This gives you a
 </div>
 </div>
 
-<div id="outline-container-org184a3e9" class="outline-3">
-<h3 id="org184a3e9"><span class="section-number-3">1.3</span> Redeployments</h3>
-<div class="outline-text-3" id="text-1-3">
+<div id="outline-container-orgefabaf8" class="outline-3">
+<h3 id="orgefabaf8"><span class="section-number-3">1.5</span> Redeployments</h3>
+<div class="outline-text-3" id="text-1-5">
 <p>
 You can pretty easily make changes to a running system given you have
 SSH access. This is as easy as cloning the running config:
@@ -248,8 +281,8 @@ setup remote builders. This is <a href="https://github.com/matthewbauer/nixiosk#
 </div>
 </div>
 
-<div id="outline-container-org0c43bf0" class="outline-2">
-<h2 id="org0c43bf0"><span class="section-number-2">2</span> Technology</h2>
+<div id="outline-container-org6df267f" class="outline-2">
+<h2 id="org6df267f"><span class="section-number-2">2</span> Technology</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Here are some of the pieces that make the Kiosk system possible:
@@ -284,8 +317,8 @@ device’s immediate network.</li>
 </div>
 </div>
 
-<div id="outline-container-orgfcdc177" class="outline-2">
-<h2 id="orgfcdc177"><span class="section-number-2">3</span> Project</h2>
+<div id="outline-container-org6777f70" class="outline-2">
+<h2 id="org6777f70"><span class="section-number-2">3</span> Project</h2>
 <div class="outline-text-2" id="text-3">
 <p>
 You can try it out right now if you have an Raspberry Pi system. Other
