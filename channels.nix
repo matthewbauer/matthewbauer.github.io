@@ -1,9 +1,7 @@
 let mapAttrs = f: set: builtins.listToAttrs (
       map (attr: { name = attr; value = f attr set.${attr}; })
           (builtins.attrNames set));
-in mapAttrs (n: v:
-     (import (builtins.fetchTarball
-             "https://nixos.org/channels/nixos-${v}/nixexprs.tar.xz") {}).pkgs)
+in mapAttrs (n: v: (import (builtins.fetchTarball "channel:${v}") {}).pkgs)
     {
       aardvark = "13.10";
       baboon = "14.04";
@@ -17,4 +15,5 @@ in mapAttrs (n: v:
       jellyfish = "18.09";
       koi = "19.03";
       loris = "19.09";
+      markhor = "20.03";
     }
