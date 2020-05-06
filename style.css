@@ -358,9 +358,7 @@ html, body {
 }
 
 @viewport { width: device-width; }
-@media all { html { font-size: 24px; } }
-@media all and (max-width:1000px) { html { font-size: 24px; } }
-@media all and (max-width:960px) { html { font-size: 23px; } }
+@media all { html { font-size: 22px; } }
 @media all and (max-width:920px) { html { font-size: 22px; } }
 @media all and (max-width:880px) { html { font-size: 21px; } }
 @media all and (max-width:840px) { html { font-size: 20px; } }
@@ -492,7 +490,7 @@ dt { font-weight: bold; }
 
 p {
 	margin-bottom: 1em;
-	line-height: 1.35;
+	line-height: 1.5;
 	hyphens: auto;
 	/* text-align: justify; */
 }
