@@ -1,7 +1,7 @@
 let mapAttrs = f: set: builtins.listToAttrs (
       map (attr: { name = attr; value = f attr set.${attr}; })
           (builtins.attrNames set));
-in mapAttrs (n: v: (import (builtins.fetchTarball "channel:${v}") {}).pkgs)
+in mapAttrs (n: v: (import (builtins.fetchTarball "channel:nixos-${v}") {}).pkgs)
     {
       aardvark = "13.10";
       baboon = "14.04";
