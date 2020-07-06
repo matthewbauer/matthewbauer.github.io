@@ -1,4 +1,6 @@
 #!/usr/bin/env sh
+set -e
+
 echo This script will install Nix and Git
 echo if they are not already installed.
 
@@ -48,7 +50,7 @@ echo
 echo To do this, just run:
 echo $ source $HOME/.nix-profile/etc/profile
 
-if [ -n "$ZSH_NAME" ]; then
+if [ -n "${ZSH_NAME-}" ]; then
     source $HOME/.nix-profile/etc/zshrc
     echo $ source $HOME/.nix-profile/etc/zshrc
 fi
