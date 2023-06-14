@@ -549,6 +549,10 @@ ul.cv-list li {
 	line-height: 1.35;
 }
 
+ul.cv-list li.focused {
+	font-weight: bold;
+}
+
 ul.cv-list li:before {
 	content: "⇒";
 	margin-left: -1.25em;
