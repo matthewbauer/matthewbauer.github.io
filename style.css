@@ -554,6 +554,11 @@ ul.cv-list li:before {
 	margin-left: -1.25em;
 }
 
+ul.cv-list li.focused:before {
+	content: "❦ ⇒";
+	margin-left: -2.28em;
+}
+
 ul.children {
 	font-size: 90%;
 	column-count: 2;
