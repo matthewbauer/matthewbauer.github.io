@@ -406,7 +406,7 @@ ul {
 	list-style-type: square;
 }
 
-li p {
+.cv-list li p {
 	display: inline;
 }
 
@@ -854,6 +854,20 @@ th.center { text-align: center; }
 td.right { text-align: right;	}
 td.left	{ text-align: left;	}
 td.center { text-align: center; }
+
+.equation-container {
+  display: table;
+  text-align: center;
+  width: 100%;
+}
+.equation {
+  vertical-align: middle;
+}
+.equation-label {
+  display: table-cell;
+  text-align: right;
+  vertical-align: middle;
+}
 
 /* Local Variables: */
 /* indent-tabs-mode: t */
